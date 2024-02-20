@@ -1,9 +1,18 @@
-/vendor/
+# Vue
+/dist
+/node_modules
+/public/hot
+/public/storage
+/.env
+/.env.local
+/.env..local
+
+/vendor
 node_modules/
 npm-debug.log
 yarn-error.log
 
-# Laravel 4 specific
+# Laravel 4 specific  
 bootstrap/compiled.php
 app/storage/
 
@@ -15,9 +24,21 @@ public/hot
 public_html/storage
 public_html/hot
 
-storage/*.key
+storage/.key
 .env
 Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+# Inertia
+/node_modules
+/public/build
+
+# Vite
+/dist
+/node_modules
+
+# Other
+.DS_Store
+.env*
