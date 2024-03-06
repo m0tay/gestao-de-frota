@@ -1,2 +1,7 @@
 models:
-    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    User: { id: id, name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable', relationships: { hasOne: Role } }
+    Vehicle: { id: id, plate: 'tinyText unique', brand: tinyText, model: tinyText, group: 'enum:"private","public" default:"private"', category: 'enum:"light","heavy"', status: 'enum:"available","reserved","maintenance","sold","retired" default:"available"', timestamps: timestamps }
+    AssignedVehicle: { id: id, driver_id: 'id foreign:users.id', vehicle_id: 'id foreign:vehicles.id', start: timestamp, end: 'timestamp nullable', status: 'enum:"active","inactive" default:"active"', relationships: { belongsTo: 'Vehicle, User:driver' } }
+    Event: { id: id, start: timestamp, end: timestamp, rrule: 'text nullable', status: 'enum:"allowed","denied","done" default:"allowed"', created_by: 'id foreign:users.id', driver_id: 'id foreign:users.id', vehicle_id: 'id foreign:vehicles.id', description: text, previous_event: 'bigInteger nullable', relationships: { belongsTo: 'Vehicle, User:driver', hasOne: 'Event:previous_event' } }
+    Role: { id: id, name: 'string unique', description: 'text nullable' }
+    Reminder: { id: id, date: date, time: 'time nullable', rrule: 'text nullable', created_by: 'id foreign:users.id', title: tinyText, description: text, sender: tinyText, recipient: json, cc: json, bcc: json, importance: 'enum:"normal","high" default:"normal"', status: 'enum:"active","inactive" default:"active"', relationships: { belongsTo: User } }
