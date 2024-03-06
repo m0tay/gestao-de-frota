@@ -1,9 +1,26 @@
 models:
   # ...
   Role:
-    title: string:required:unique:255
-    description: text:required
+    role: string:255 unique
+    description: text
+    relationships:
+      belongsToMany: User
+
+  Abastecimento:
+
+
+  Lembrete:
+
+
+  Agendamento:
 
 
 controllers:
   # ...
+  Abastecimento:
+
+
+  Lembrete:
+
+
+  Agendamento:
