@@ -24,7 +24,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $roleId = Role::where('name', 'user')->first()->id;
+        $roleId = Role::where('name', 'user')->firstOrFail()->id;
 
         return [
             'name' => fake()->name(),

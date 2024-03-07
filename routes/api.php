@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/users', function () {
-    return User::all()->map(function ($user) {
-        return [
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->role->name,
-            'company' => $user->company,
-        ];
-    });
-});
+
+
