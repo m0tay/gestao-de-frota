@@ -12,13 +12,14 @@ return new class extends Migration {
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start');
+            $table->timestamp('end');
             $table->string('rrule')->nullable();
             $table->enum('status', ['accepted', 'denied', 'done']);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('driver_id')->constrained('users');
             $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->string('title');
             $table->text('description');
             $table->foreignId('previous_reservation')->nullable()->constrained('reservations');
             $table->timestamps();

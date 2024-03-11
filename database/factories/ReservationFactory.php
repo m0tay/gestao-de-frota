@@ -19,11 +19,14 @@ class ReservationFactory extends Factory
    */
   public function definition()
   {
-    $start_date = fake()->dateTimeBetween('2024-02-01', '2024-03-31');
+    $start_date = fake()->dateTimeBetween('2024-03-01', '2024-03-31');
+    $end_date = $start_date;
+    $end_date->modify('+1 hour');
 
     return [
-      'start_date' => $start_date,
-      'end_date' => $start_date->modify('+1 hour'),
+      'title' => fake()->word(),
+      'start' => $start_date,
+      'end' => $end_date,
       'rrule' => fake()->randomElement([null, 'RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR']), // Optional repeat rule
       'status' => fake()->randomElement(['accepted', 'denied', 'done']),
       'created_by' => fake()->randomElement(User::all()), // Generate a user and use the ID
