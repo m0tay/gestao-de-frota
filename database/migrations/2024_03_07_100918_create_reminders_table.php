@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('rrule')->nullable();
             $table->foreignId('created_by')->constrained('users');
             $table->string('title');
-            $table->text('description');
+            $table->text('content');
             $table->string('sender');
             $table->json('recipients');
             $table->json('cc');

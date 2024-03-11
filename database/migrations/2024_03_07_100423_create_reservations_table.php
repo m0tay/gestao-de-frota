@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->foreignId('driver_id')->constrained('users');
             $table->foreignId('vehicle_id')->constrained('vehicles');
             $table->text('description');
-            $table->foreignId('previous_event')->nullable()->constrained('events');
+            $table->foreignId('previous_reservation')->nullable()->constrained('reservations');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('reservations');
     }
 };
