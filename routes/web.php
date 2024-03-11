@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -20,27 +21,37 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+  return Inertia::render('Welcome', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+    'laravelVersion' => Application::VERSION,
+    'phpVersion' => PHP_VERSION,
+  ]);
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+  return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'index')->name('users.index');
-    Route::get('/users/{user}', 'show')->name('users.show');
+  Route::get('/users', 'index')->name('users.index');
+  Route::get('/users/{user}', 'show')->name('users.show');
 });
+
+Route::controller(ReservationController::class)->group(function () {
+  Route::get('/reservations', 'index')->name('reservations.index');
+  Route::get('/reservations', 'index')->name('reservations.index');
+  Route::post('/reservations', 'store')->name('reservations.store');
+  Route::get('/reservations/{reservation}', 'show')->name('reservations.show');
+  Route::get('/reservations/edit', 'edit')->name('reservations.edit');
+  Route::put('/reservations/{reservation}', 'update')->name('reservations.update');
+  Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
+})->middleware('auth');
