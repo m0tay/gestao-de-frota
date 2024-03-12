@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -15,10 +15,13 @@ const props = defineProps({
 })
 
 const form = useForm({
-  id: props.reservation?.id,
-  start: props.reservation?.start,
-  end: props.reservation?.end,
-  title: props.reservation?.title,
+  id: props.reservation.id,
+  start: props.reservation.start,
+  end: props.reservation.end,
+  title: props.reservation.title,
+  vehicle: props.reservation.vehicle,
+  driver: props.reservation.driver,
+  creator: props.reservation.creator,
 })
 
 
@@ -28,39 +31,58 @@ const updatedReservation = ref({}); //  To capture changes locally
 
 const handleSubmit = () => {
 
-  form.put(route(`reservations.update`, {reservation: form.id}), {
-    preserveScroll: true,
-    onSuccess: () => form.reset(),
+  form.put(route('reservations.update', {reservation: form.id}), {
+    onSuccess: () => {
+      console.log(form)
+      form.reset()
+      emit('update-reservation', updatedReservation.value); // Emit updated info
+      emit('close'); // Close the modal
+    }
   })
-
-
-  emit('update-reservation', updatedReservation.value); // Emit updated info
-  emit('close'); // Close the modal
 }
 
-
+watch(() => props.show, (newValue) => {
+  if (!newValue) {
+    form.reset();
+  }
+});
 </script>
 
 <template>
   <Modal v-model:show="props.show" @close="$emit('close')">
-    <section class="space-y-6 p-8">
+    <section class="space-y-6 p-8 w-full">
       <header>
-        <h2 class="text-xl font-bold text-gray-900">{{ form.title }}</h2>
+        <h2 class="text-xl font-bold text-gray-900">[{{ props.reservation.vehicle.plate.toUpperCase() }}]
+          {{ props.reservation.driver.name }} <span class="text-gray-200">{{ props.reservation.id }}</span></h2>
       </header>
 
+      <div class="mt-6 max-w-full flex flex-col gap-x-4 gap-y-4">
+        <div class="w-full">
+          <InputLabel value="De:" for="start"/>
+          <TextInput class="w-full" id="start" v-model="form.start"/>
+        </div>
+        <div class="w-full">
+          <InputLabel value="Até:" for="end"/>
+          <TextInput class="w-full" id="end" v-model="form.end"/>
+        </div>
+      </div>
+
       <div class="mt-6 max-w-full">
-        <InputLabel for="title" value="Título" class="sr-only"/>
+        <InputLabel value="Título" for="title"/>
+        <TextInput class="w-full" id="title" v-model="form.title"/>
+        <InputError :message="form.errors.title"/>
+      </div>
 
-        <TextInput
-          id="title"
-          v-model="form.title"
-          class="mt-1 block w-full"
-          autofocus
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Condutor" for="driver"/>
+        <TextInput class="w-full" id="driver" v-model="form.driver.id"/>
+        <InputError :message="form.errors.driver"/>
+      </div>
 
-        />
-
-        <InputError :message="form.errors.title" class="mt-2"/>
-
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Veículo" for="vehicle"/>
+        <TextInput class="w-full" id="vehicle" v-model="form.vehicle.id"/>
+        <InputError :message="form.errors.vehicle"/>
       </div>
 
       <div class="mt-6 flex justify-end">
