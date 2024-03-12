@@ -51,7 +51,7 @@ Route::controller(ReservationController::class)->group(function () {
   Route::get('/reservations/create', 'create')->name('reservations.create');
   Route::post('/reservations', 'store')->name('reservations.store');
   Route::get('/reservations/{reservation}', 'show')->name('reservations.show');
-  Route::get('/reservations/edit', 'edit')->name('reservations.edit');
+  Route::get('/reservations/{reservation}/edit', 'edit')->name('reservations.edit');
   Route::put('/reservations/{reservation}', 'update')->name('reservations.update');
   Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
 })->middleware('auth');
