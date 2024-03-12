@@ -44,6 +44,7 @@ const handleSubmit = () => {
 watch(() => props.show, (newValue) => {
   if (!newValue) {
     form.reset();
+
   }
 });
 </script>
@@ -53,7 +54,8 @@ watch(() => props.show, (newValue) => {
     <section class="space-y-6 p-8 w-full">
       <header>
         <h2 class="text-xl font-bold text-gray-900">[{{ props.reservation.vehicle.plate.toUpperCase() }}]
-          {{ props.reservation.driver.name }} <span class="text-gray-200">{{ props.reservation.id }}</span></h2>
+          {{ props.reservation.driver.name }} <span class="text-gray-200">{{ props.reservation.id }}</span> <span
+            class="text-gray-200">{{ props.reservation.status }}</span></h2>
       </header>
 
       <div class="mt-6 max-w-full flex flex-col gap-x-4 gap-y-4">

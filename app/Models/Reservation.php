@@ -15,6 +15,15 @@ class Reservation extends Model
 
 
   // Reservation Model
+  protected $fillable = [
+    'title',
+    'start',
+    'end',
+    'driver_id',
+    'created_by',
+    'vehicle_id',
+    'status',
+  ];
 
   /**
    * @return BelongsTo

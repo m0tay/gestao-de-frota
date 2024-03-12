@@ -22,8 +22,8 @@ const showModalEdit = ref(false)
 const selectedEvent = ref(null); // Store the clicked event
 
 const closeModal = () => {
-  showModalEdit.value = false
   selectedEvent.value = null;
+  showModalEdit.value = false
 }
 
 const updateReservation = () => {

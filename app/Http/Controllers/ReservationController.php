@@ -68,14 +68,20 @@ class ReservationController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update( $request, Reservation $reservation)
+  public function update(UpdateReservationRequest $request, Reservation $reservation)
   {
+    $this->authorize('update', [Reservation::class, $reservation]);
+
     $data = $request->validated();
 
-    dd($data);
+    $reservation->update(['status' => 'denied']);
+
+    // todo: create new reservation from here
+
 
     return back();
   }
+
 
   /**
    * Remove the specified resource from storage.
