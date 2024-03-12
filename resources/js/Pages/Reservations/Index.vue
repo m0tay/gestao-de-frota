@@ -12,6 +12,7 @@ import moment from "moment";
 import {ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
 
 
 const props = defineProps({
@@ -19,10 +20,11 @@ const props = defineProps({
 })
 
 const showModalEdit = ref(false)
-const selectedEvent = ref(null); // Store the clicked event
+const showModalCreate = ref(false)
+const selectedEvent = ref(null)
 
 const closeModal = () => {
-  selectedEvent.value = null;
+  showModalCreate.value = false
   showModalEdit.value = false
 }
 
@@ -43,6 +45,7 @@ const calendarApp = createCalendar({
      * */
     onClickDate(date) {
       console.log('onClickDate', date) // e.g. 2024-01-01
+      showModalCreate.value = true
     },
 
     /**
@@ -50,6 +53,7 @@ const calendarApp = createCalendar({
      * */
     onClickDateTime(dateTime) {
       console.log('onClickDateTime', dateTime) // e.g. 2024-01-01 12:37
+      showModalCreate.value = true
     },
 
     /**
@@ -94,5 +98,9 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :reservation="selectedEvent"
     @update-reservation="updateReservation"
+  />
+  <CreateReservationForm
+    :show="showModalCreate"
+    @close="closeModal"
   />
 </template>
