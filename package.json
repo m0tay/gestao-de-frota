@@ -21,6 +21,12 @@
         "@schedule-x/calendar": "^1.22.0",
         "@schedule-x/theme-default": "^1.22.0",
         "@schedule-x/vue": "^1.18.0",
-        "moment": "^2.30.1"
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.0",
+        "lucide-vue-next": "^0.356.0",
+        "moment": "^2.30.1",
+        "radix-vue": "^1.5.2",
+        "tailwind-merge": "^2.2.1",
+        "tailwindcss-animate": "^1.0.7"
     }
 }
