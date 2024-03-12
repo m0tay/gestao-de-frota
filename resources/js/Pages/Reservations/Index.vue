@@ -9,6 +9,13 @@ import {
 } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
 import moment from "moment";
+import {router} from "@inertiajs/vue3";
+import {ref} from "vue";
+import Modal from "@/Components/Modal.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+const showModalEdit = ref(false)
+
 
 const props = defineProps({
   reservations: Array
@@ -48,7 +55,10 @@ const calendarApp = createCalendar({
      * */
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
+      // showModalEdit.value = true
+      router.visit(route('reservations.show', calendarEvent))
     },
+
 
     /**
      * Is called when clicking a date in the month grid
