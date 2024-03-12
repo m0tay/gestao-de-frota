@@ -18,7 +18,7 @@ class ReservationController extends Controller
    */
   public function index()
   {
-    Auth::loginUsingId(3); // Temporary login for development
+//    Auth::loginUsingId(3); // Temporary login for development
 
     $this->authorize('viewAny', Reservation::class); // Enforce authorization policy
 
@@ -44,20 +44,11 @@ class ReservationController extends Controller
   }
 
   /**
-   * Displays detailed information about a specific reservation.
-   *
-   * @param  \App\Models\Reservation $reservation  The reservation to be displayed
-   * @return \Inertia\Response  Renders the Inertia 'Reservations/Show' view with a transformed reservation
+   * Show a specific reservation
    */
   public function show(Reservation $reservation)
   {
-    $reservation->load('driver', 'vehicle', 'creator'); // Load related models
-
-    $reservationResource = new ReservationResource($reservation); // Create a Laravel resource
-
-    return Inertia::render('Reservations/Show', [
-      'reservation' => $reservationResource->toArray(request())
-    ]);
+    //
   }
 
   /**
@@ -65,7 +56,13 @@ class ReservationController extends Controller
    */
   public function edit(Reservation $reservation)
   {
-    //
+//    $reservation->load('driver', 'vehicle', 'creator'); // Load related models
+//
+//    $reservationResource = new ReservationResource($reservation); // Create a Laravel resource
+//
+//    return Inertia::render('Reservations/Edit', [
+//      'reservation' => $reservationResource->toArray(request())
+//    ]);
   }
 
   /**
@@ -73,7 +70,9 @@ class ReservationController extends Controller
    */
   public function update(UpdateReservationRequest $request, Reservation $reservation)
   {
-    //
+    $this->authorize('update', [Reservation::class, $reservation]);
+
+    dd($reservation);
   }
 
   /**
