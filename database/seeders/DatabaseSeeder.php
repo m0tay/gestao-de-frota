@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
     $adminUser = User::factory()->create([
       'name' => 'admin',
       'email' => 'admin@admin.com',
-      'password' => bcrypt('password'),
       'company' => 'roboplan',
       'role_id' => $roles['admin']
     ]);
@@ -47,7 +46,6 @@ class DatabaseSeeder extends Seeder
     $userUser = User::factory()->create([
       'name' => 'user2',
       'email' => 'user2@user.com',
-      'password' => bcrypt('password'),
       'company' => 'robowork',
     ]);
 
