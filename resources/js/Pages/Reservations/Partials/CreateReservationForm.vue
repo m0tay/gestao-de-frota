@@ -14,12 +14,12 @@ const props = defineProps({
 })
 
 const form = useForm({
-  start: Date,
-  end: Date,
-  title: String,
-  vehicle: Object,
-  driver: Object,
-  creator: Object,
+  start: '',
+  end: '',
+  title: '',
+  vehicle: '',
+  driver: '',
+  creator: '',
   status: 'accepted',
 })
 

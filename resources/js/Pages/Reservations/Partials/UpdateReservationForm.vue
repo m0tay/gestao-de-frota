@@ -14,15 +14,17 @@ const props = defineProps({
   reservation: Object, // Define the type of calendarEvent
 })
 
-const form = useForm({
-  id: props.reservation.id,
-  start: props.reservation.start,
-  end: props.reservation.end,
-  title: props.reservation.title,
-  vehicle: props.reservation.vehicle,
-  driver: props.reservation.driver,
-  creator: props.reservation.creator,
-})
+if (props.reservation) {
+  const form = useForm({
+    id: props.reservation.id,
+    start: props.reservation.start,
+    end: props.reservation.end,
+    title: props.reservation.title,
+    vehicle: props.reservation.vehicle,
+    driver: props.reservation.driver,
+    creator: props.reservation.creator,
+  })
+}
 
 
 const emit = defineEmits(['close', 'update-reservation']);
