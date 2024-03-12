@@ -22,7 +22,7 @@ class ReservationController extends Controller
 
     $this->authorize('viewAny', Reservation::class); // Enforce authorization policy
 
-    $reservations = Reservation::with('vehicle')->get(); // Fetch reservations with eager loading
+    $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
 
     return Inertia::render('Reservations/Index', compact('reservations'));
   }
@@ -68,11 +68,13 @@ class ReservationController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(UpdateReservationRequest $request, Reservation $reservation)
+  public function update( $request, Reservation $reservation)
   {
-    $this->authorize('update', [Reservation::class, $reservation]);
+    $data = $request->validated();
 
-    dd($reservation);
+    dd($data);
+
+    return back();
   }
 
   /**
