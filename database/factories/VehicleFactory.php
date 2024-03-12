@@ -17,7 +17,7 @@ class VehicleFactory extends Factory
   public function definition()
   {
     return [
-      'plate' => fake()->bothify('?? ## ?? ##'), // Simulate a license plate format
+      'plate' => fake()->bothify('??-##-??'), // Simulate a license plate format
       'brand' => fake()->randomElement(['Ford', 'Toyota', 'Honda', 'BMW', 'Volkswagen']),
       'model' => fake()->word() . ' ' . fake()->randomNumber(3), // Basic model name
       'group' => fake()->randomElement(['private', 'public']),
