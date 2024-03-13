@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import {onUpdated, ref, watch} from "vue";
+import {onUpdated, ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
