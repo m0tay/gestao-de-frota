@@ -62,17 +62,17 @@ class ReservationController extends Controller
 
     $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-//    dd($data);
+    dd($data);
 
-    Reservation::create([
-      'title' => $data['title'],
-      'description' => $data['description'] ?? 'no desc',
-      'driver_id' => $data['driver'],
-      'vehicle_id' => $data['vehicle'],
-      'created_by' => $data['creator'],
-      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
-      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
-    ]);
+//    Reservation::create([
+//      'title' => $data['title'],
+//      'description' => $data['description'] ?? 'no desc',
+//      'driver_id' => $data['driver'],
+//      'vehicle_id' => $data['vehicle'],
+//      'created_by' => $data['creator'],
+//      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
+//      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
+//    ]);
 
     return back();
   }
@@ -112,7 +112,6 @@ class ReservationController extends Controller
     $reservation->update(['status' => 'denied']);
 
     // todo: create new reservation from here
-
 
     return back();
   }
