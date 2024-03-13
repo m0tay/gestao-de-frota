@@ -22,16 +22,20 @@ class ReservationFactory extends Factory
     $start_date = fake()->dateTimeBetween('2024-03-01', '2024-03-31');
     $end_date = $start_date;
     $end_date->modify('+1 hour');
+    $vehicle = fake()->randomElement(Vehicle::all());
+    $driver = fake()->randomElement(User::all());
+    $title = strtoupper($vehicle->plate) . " " . $driver->name;
 
     return [
-      'title' => fake()->word(),
+      'title' => $title,
       'start' => $start_date,
       'end' => $end_date,
-      'rrule' => fake()->randomElement([null, 'RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR']), // Optional repeat rule
+//      'rrule' => fake()->randomElement([null, 'RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR']), // Optional repeat rule
+      'rrule' => '',
       'status' => fake()->randomElement(['accepted', 'denied', 'done']),
       'created_by' => fake()->randomElement(User::all()), // Generate a user and use the ID
-      'driver_id' => fake()->randomElement(User::all()), // Generate another user for the driver
-      'vehicle_id' => fake()->randomElement(Vehicle::all()), // Generate a vehicle
+      'driver_id' => $driver, // Generate another user for the driver
+      'vehicle_id' => $vehicle, // Generate a vehicle
       'description' => fake()->sentence(6), // Short description
 //      'previous_reservation' => fake()->boolean(20) ? Reservation::factory()->create()->id : null, // 20% chance of having a previous reservation
     ];

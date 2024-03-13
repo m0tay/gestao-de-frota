@@ -20,7 +20,7 @@ class ReservationPolicy
    */
   public function viewAny(User $user): bool
   {
-    return (bool)Auth::user();
+    return true;
   }
 
   /**
@@ -37,7 +37,7 @@ class ReservationPolicy
    */
   public function create(User $user): bool
   {
-    return false;
+    return true;
 
   }
 
@@ -56,8 +56,7 @@ class ReservationPolicy
    */
   public function delete(User $user, Reservation $reservation): bool
   {
-    return false;
-
+    return $user->role->name === $this->authorized['admin'];
   }
 
   /**

@@ -6,8 +6,12 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
+use App\Models\User;
+use App\Models\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use function MongoDB\BSON\toJSON;
 
 class ReservationController extends Controller
 {
@@ -24,7 +28,16 @@ class ReservationController extends Controller
 
     $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
 
-    return Inertia::render('Reservations/Index', compact('reservations'));
+    $drivers = User::query(function ($query) {
+      return $query->select('id', 'name');
+    })->get();
+
+    $vehicles = Vehicle::query(function ($query) {
+      return $query->select('id', 'plate');
+    })->get();
+
+
+    return Inertia::render('Reservations/Index', compact('reservations', 'drivers', 'vehicles'));
   }
 
   /**
@@ -40,8 +53,30 @@ class ReservationController extends Controller
    */
   public function store(StoreReservationRequest $request)
   {
-    //
+    $this->authorize('create', Reservation::class);
+
+    $data = $request->validated();
+
+    $driverName = User::find($data['driver'])->name;
+    $vehiclePlate = Vehicle::find($data['vehicle'])->plate;
+
+    $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
+
+//    dd($data);
+
+    Reservation::create([
+      'title' => $data['title'],
+      'description' => $data['description'] ?? 'no desc',
+      'driver_id' => $data['driver'],
+      'vehicle_id' => $data['vehicle'],
+      'created_by' => $data['creator'],
+      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
+      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
+    ]);
+
+    return back();
   }
+
 
   /**
    * Show a specific reservation

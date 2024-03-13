@@ -13,8 +13,15 @@ class StoreReservationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+      return [
+        'title' => 'nullable',
+        'start' => 'required|after_or_equal:now',
+        'end' => 'required|after:start',
+        'driver' => 'required',
+        'creator' => 'required',
+        'vehicle'=> 'required',
+        'description' => 'required',
+        'status' => 'required',
+      ];
     }
 }
