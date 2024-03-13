@@ -20,7 +20,7 @@ class ReservationFactory extends Factory
   public function definition()
   {
     $start_date = fake()->dateTimeBetween('2024-03-01', '2024-03-31');
-    $end_date = $start_date;
+    $end_date = clone $start_date;
     $end_date->modify('+1 hour');
     $vehicle = fake()->randomElement(Vehicle::all());
     $driver = fake()->randomElement(User::all());

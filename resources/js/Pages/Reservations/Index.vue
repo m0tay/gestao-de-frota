@@ -61,7 +61,7 @@ const calendarApp = createCalendar({
      * */
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
-      selectedEvent.value = calendarEvent; // Pass event data to the form
+      selectedEvent.value = calendarEvent
       showModalEdit.value = true
     },
 
@@ -94,13 +94,22 @@ const calendarApp = createCalendar({
     </div>
   </AuthenticatedLayout>
   <UpdateReservationForm
-    :show="showModalEdit"
     @close="closeModal"
-    :reservation="selectedEvent"
-    @update-reservation="updateReservation"
+    :show="showModalEdit"
+    :selected-event
   />
   <CreateReservationForm
-    :show="showModalCreate"
     @close="closeModal"
+    :show="showModalCreate"
   />
+  <!--  <UpdateReservationForm-->
+  <!--    :show="showModalEdit"-->
+  <!--    @close="closeModal"-->
+  <!--    :reservation="selectedEvent"-->
+  <!--    @update-reservation="updateReservation"-->
+  <!--  />-->
+  <!--  <CreateReservationForm-->
+  <!--    :show="showModalCreate"-->
+  <!--    @close="closeModal"-->
+  <!--  />-->
 </template>
