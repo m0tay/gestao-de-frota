@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import {ref, watch} from "vue";
+import {onUpdated, ref, watch} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -39,11 +39,10 @@ const handleSubmit = () => {
   })
 }
 
-watch(() => props.show, (newValue) => {
-  if (!newValue) {
-    form.reset()
-  }
-});
+onUpdated(() => {
+  form.reset()
+  form.clearErrors()
+})
 </script>
 
 <template>

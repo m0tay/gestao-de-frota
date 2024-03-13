@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import {ref, watch} from "vue";
+import {onUpdated, ref, watch} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -14,17 +14,15 @@ const props = defineProps({
   reservation: Object, // Define the type of calendarEvent
 })
 
-if (props.reservation) {
-  const form = useForm({
-    id: props.reservation.id,
-    start: props.reservation.start,
-    end: props.reservation.end,
-    title: props.reservation.title,
-    vehicle: props.reservation.vehicle,
-    driver: props.reservation.driver,
-    creator: props.reservation.creator,
-  })
-}
+const form = useForm({
+  id: props.reservation.id,
+  start: props.reservation.start,
+  end: props.reservation.end,
+  title: props.reservation.title,
+  vehicle: props.reservation.vehicle,
+  driver: props.reservation.driver,
+  creator: props.reservation.creator,
+})
 
 
 const emit = defineEmits(['close', 'update-reservation']);
@@ -43,12 +41,10 @@ const handleSubmit = () => {
   })
 }
 
-watch(() => props.show, (newValue) => {
-  if (!newValue) {
-    form.reset();
-
-  }
-});
+onUpdated(() => {
+  form.reset()
+  form.clearErrors()
+})
 </script>
 
 <template>
