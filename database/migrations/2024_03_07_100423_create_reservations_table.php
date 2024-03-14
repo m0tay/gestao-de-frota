@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->timestamp('start');
             $table->timestamp('end');
             $table->string('rrule')->nullable();
-            $table->enum('status', ['accepted', 'denied', 'done']);
+            $table->enum('status', ['accepted', 'denied', 'done', 'rescheduled']);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('driver_id')->constrained('users');
             $table->foreignId('vehicle_id')->constrained('vehicles');
