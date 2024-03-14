@@ -9,15 +9,17 @@ import {
 } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
 import moment from "moment";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
 import {Button} from "@/Components/ui/button/index.js";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { useWindowSize } from '@vueuse/core'
+import {useWindowSize} from '@vueuse/core'
+import ListEvents from "@/Pages/Reservations/Partials/ListReservations.vue";
+import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
 
-const { width, height } = useWindowSize()
+const {width, height} = useWindowSize()
 
 
 const props = defineProps({
@@ -28,6 +30,7 @@ const props = defineProps({
 
 const showModalEdit = ref(false)
 const showModalCreate = ref(false)
+const showModalList = ref(false)
 const selectedEvent = ref(null)
 // const selectedDate = ref(null)
 // const selectedId = ref(null)
@@ -35,6 +38,7 @@ const selectedEvent = ref(null)
 const closeModal = () => {
   showModalCreate.value = false
   showModalEdit.value = false
+  showModalList.value= false
 }
 
 const handleAgendar = () => {
@@ -43,10 +47,10 @@ const handleAgendar = () => {
 }
 
 
-
 const calendarApp = createCalendar({
   selectedDate: moment.now(),
-  views: [viewMonthAgenda, viewMonthGrid, viewWeek, viewDay],
+  // views: [viewMonthAgenda, viewMonthGrid, viewWeek, viewDay],
+  views: [viewMonthAgenda, viewMonthGrid, viewWeek],
   defaultView: viewMonthGrid.name,
   events: [...props.reservations],
   locale: 'pt-BR',
@@ -57,7 +61,9 @@ const calendarApp = createCalendar({
      * */
     onClickDate(date) {
       console.log('onClickDate', date) // e.g. 2024-01-01
-      showModalCreate.value = true
+      // showModalCreate.value = true
+      showModalList.value = true
+
     },
 
     /**
@@ -65,7 +71,8 @@ const calendarApp = createCalendar({
      * */
     onClickDateTime(dateTime) {
       console.log('onClickDateTime', dateTime) // e.g. 2024-01-01 12:37
-      showModalCreate.value = true
+      // showModalCreate.value = true
+      // showModalList.value = true
     },
 
     /**
@@ -74,7 +81,15 @@ const calendarApp = createCalendar({
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
 
-      if(calendarEvent.status !== 'accepted') return
+      if (calendarEvent.status === 'denied')  {
+        console.log('denied')
+        return
+      }
+
+      if (calendarEvent.status === 'done')  {
+        console.log('done')
+        return
+      }
 
       selectedEvent.value = calendarEvent
       showModalEdit.value = true
@@ -108,10 +123,53 @@ const calendarApp = createCalendar({
       <div v-show="width < 700" class="flex justify-center my-4">
         <PrimaryButton
           @click="handleAgendar"
-        >Agendar</PrimaryButton>
+        >Agendar
+        </PrimaryButton>
       </div>
 
-      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>
+      <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
+      <ScheduleXCalendar class="sm:h-screen"
+                         :calendar-app="calendarApp"
+      >
+        <template #monthGridEvent="{ calendarEvent }">
+          <div class="event px-2 mx-2 font-semibold text-nowrap rounded"
+               :class="{ 'cursor-not-allowed': calendarEvent.status !== 'accepted',
+                         'cursor-pointer': calendarEvent.status === 'accepted',
+                          'bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-400': calendarEvent.status === 'done',
+                          }">
+            <div>{{ calendarEvent.title }}
+            </div>
+
+          </div>
+        </template>
+        <template #monthAgendaEvent="{ calendarEvent }">
+          <div class="event m-2 p-2 font-semibold"
+               :class="{ 'cursor-not-allowed': calendarEvent.status !== 'accepted',
+                         'cursor-pointer': calendarEvent.status === 'accepted',
+                          'bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-400': calendarEvent.status === 'done',
+                          }">
+            <div>{{ calendarEvent.title }}</div>
+            <div class="font-normal text-gray-700">{{ moment(calendarEvent.start).format('HH[h]mm') }} até
+              {{ moment(calendarEvent.end).format('HH[h]mm') }}
+            </div>
+          </div>
+        </template>
+        <template #timeGridEvent="{ calendarEvent }">
+          <div class="event m-2 p-2 font-semibold"
+               :class="{ 'cursor-not-allowed': calendarEvent.status !== 'accepted',
+                         'cursor-pointer': calendarEvent.status === 'accepted',
+                          'bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-400': calendarEvent.status === 'done',
+                          }">
+            {{ calendarEvent.title }}
+          </div>
+        </template>
+      </ScheduleXCalendar>
     </div>
   </AuthenticatedLayout>
   <UpdateReservationForm
@@ -124,5 +182,10 @@ const calendarApp = createCalendar({
   <CreateReservationForm
     @close="closeModal"
     :show="showModalCreate"
+  />
+  <ListReservations
+    @close="closeModal"
+    :show="showModalList"
+    :reservations
   />
 </template>
