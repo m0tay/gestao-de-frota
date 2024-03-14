@@ -6,7 +6,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
   show: Boolean,
-  reservations: Array,
+  eventsList: Array,
 })
 
 const emit = defineEmits(['close']);
@@ -15,11 +15,11 @@ const emit = defineEmits(['close']);
 
 <template>
   <Modal v-model:show="props.show" @close="$emit('close')">
-    <section class="space-y-6 p-8 w-full">
+    <section class="space-y-6 p-8 w-full" @contextmenu.prevent>
       <header>
         <h2 class="text-xl font-bold text-gray-900">Lista de Requisições</h2>
       </header>
-      <div v-for="reservation in reservations" :key="reservation.id">{{reservation.title}}</div>
+      <div v-for="reservation in eventsList" :key="reservation.id">{{reservation.title}}</div>
 
       <div class="mt-6 flex justify-end">
 
