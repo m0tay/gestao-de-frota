@@ -133,11 +133,11 @@ class ReservationController extends Controller
 
 
     // Create a new reservation with the prepared data
-    Reservation::create($newReservationData);
+    Reservation::insert($newReservationData);
 
     $reservation->update(['status' => 'denied']);
 
-    return to_route(route('reservations.index'));
+    return back();
   }
 
 
