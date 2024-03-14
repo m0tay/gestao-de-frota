@@ -13,13 +13,11 @@ import {computed, ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
-import {Button} from "@/Components/ui/button/index.js";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useWindowSize} from '@vueuse/core'
-import ListEvents from "@/Pages/Reservations/Partials/ListReservations.vue";
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
 
-const {width, height} = useWindowSize()
+const {width} = useWindowSize()
 
 
 const props = defineProps({
@@ -32,25 +30,22 @@ const showModalEdit = ref(false)
 const showModalCreate = ref(false)
 const showModalList = ref(false)
 const selectedEvent = ref(null)
-// const selectedDate = ref(null)
-// const selectedId = ref(null)
+const eventsList = ref(false)
 
 const closeModal = () => {
   showModalCreate.value = false
   showModalEdit.value = false
-  showModalList.value= false
+  showModalList.value = false
 }
 
 const handleAgendar = () => {
-  // console.log('agendado!')
   showModalCreate.value = true
 }
-
 
 const calendarApp = createCalendar({
   selectedDate: moment.now(),
   // views: [viewMonthAgenda, viewMonthGrid, viewWeek, viewDay],
-  views: [viewMonthAgenda, viewMonthGrid, viewWeek],
+  views: [viewMonthAgenda, viewMonthGrid],
   defaultView: viewMonthGrid.name,
   events: [...props.reservations],
   locale: 'pt-BR',
@@ -61,19 +56,29 @@ const calendarApp = createCalendar({
      * */
     onClickDate(date) {
       console.log('onClickDate', date) // e.g. 2024-01-01
-      // showModalCreate.value = true
-      showModalList.value = true
+      showModalCreate.value = true
 
+      //
+      // const filteredEvents = props.reservations.filter(event => {
+      //   const eventDate = moment(event.start).format('YYYY-MM-DD');
+      //   return eventDate === date;
+      // });
+      //
+      // if (!filteredEvents.length) return
+      //
+      // eventsList.value = filteredEvents;
+      //
+      // showModalList.value = true;
     },
 
-    /**
-     * Is called when clicking somewhere in the time grid of a week or day view
-     * */
-    onClickDateTime(dateTime) {
-      console.log('onClickDateTime', dateTime) // e.g. 2024-01-01 12:37
-      // showModalCreate.value = true
-      // showModalList.value = true
-    },
+    // /**
+    //  * Is called when clicking somewhere in the time grid of a week or day view
+    //  * */
+    // onClickDateTime(dateTime) {
+    //   console.log('onClickDateTime', dateTime) // e.g. 2024-01-01 12:37
+    //   // showModalCreate.value = true
+    //   // showModalList.value = true
+    // },
 
     /**
      * Is called when an event is clicked
@@ -81,27 +86,29 @@ const calendarApp = createCalendar({
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
 
-      if (calendarEvent.status === 'denied')  {
+      if (calendarEvent.status === 'denied') {
         console.log('denied')
         return
       }
 
-      if (calendarEvent.status === 'done')  {
+      if (calendarEvent.status === 'done') {
         console.log('done')
         return
       }
+
+      console.log('accepted')
 
       selectedEvent.value = calendarEvent
       showModalEdit.value = true
     },
 
 
-    /**
-     * Is called when an event is updated through drag and drop
-     * */
-    onEventUpdate(updatedEvent) {
-      console.log('onEventUpdate', updatedEvent)
-    },
+    // /**
+    //  * Is called when an event is updated through drag and drop
+    //  * */
+    // onEventUpdate(updatedEvent) {
+    //   // console.log('onEventUpdate', updatedEvent)
+    // },
 
     /**
      * Is called when:
@@ -109,11 +116,12 @@ const calendarApp = createCalendar({
      * 2. Selecting a new view
      * */
     onRangeUpdate(range) {
-      console.log('new calendar range start date', range.start)
-      console.log('new calendar range end date', range.end)
+      // console.log('new calendar range start date', range.start)
+      // console.log('new calendar range end date', range.end)
     }
   },
 })
+
 
 </script>
 
@@ -137,10 +145,10 @@ const calendarApp = createCalendar({
                          'cursor-pointer': calendarEvent.status === 'accepted',
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
+                          'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
                           }">
-            <div>{{ calendarEvent.title }}
-            </div>
+            {{ calendarEvent.title }}
 
           </div>
         </template>
@@ -150,6 +158,7 @@ const calendarApp = createCalendar({
                          'cursor-pointer': calendarEvent.status === 'accepted',
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
+                          'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
                           }">
             <div>{{ calendarEvent.title }}</div>
@@ -186,6 +195,6 @@ const calendarApp = createCalendar({
   <ListReservations
     @close="closeModal"
     :show="showModalList"
-    :reservations
+    :events-list
   />
 </template>
