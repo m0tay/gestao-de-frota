@@ -82,7 +82,8 @@ onBeforeUpdate(() => {
             <h2 class="text-xl font-bold text-gray-300 group-hover:text-gray-900">Status</h2>
             <div class="flex items-start gap-x-2 text-gray-300 group-hover:text-gray-900">
               <small v-if="props.selectedEvent.status === 'accepted'">Aceite</small>
-              <small v-if="props.selectedEvent.status === 'denied'">Cancelado/Reagendado</small>
+              <small v-if="props.selectedEvent.status === 'denied'">Cancelado</small>
+              <small v-if="props.selectedEvent.status === 'rescheduled'">Reagendado</small>
               <small v-if="props.selectedEvent.status === 'done'">Concluído</small>
             </div>
           </div>

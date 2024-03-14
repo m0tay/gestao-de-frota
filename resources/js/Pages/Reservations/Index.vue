@@ -91,8 +91,13 @@ const calendarApp = createCalendar({
 
       selectedEvent.value = calendarEvent
 
+      if (calendarEvent.status === 'rescheduled') {
+        console.log('rescheduled')
+        showViewReservation.value = true
+        return
+      }
 
-      if (calendarEvent.status === 'denied') {
+        if (calendarEvent.status === 'denied') {
         console.log('denied')
         showViewReservation.value = true
         return
