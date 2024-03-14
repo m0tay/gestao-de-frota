@@ -13,6 +13,11 @@ import {ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
+import {Button} from "@/Components/ui/button/index.js";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { useWindowSize } from '@vueuse/core'
+
+const { width, height } = useWindowSize()
 
 
 const props = defineProps({
@@ -22,15 +27,19 @@ const props = defineProps({
 const showModalEdit = ref(false)
 const showModalCreate = ref(false)
 const selectedEvent = ref(null)
+const selectedDate = ref(null)
 
 const closeModal = () => {
   showModalCreate.value = false
   showModalEdit.value = false
 }
 
-const updateReservation = () => {
-  selectedEvent.value = null
+const handleAgendar = () => {
+  // console.log('agendado!')
+  showModalCreate.value = true
 }
+
+
 
 const calendarApp = createCalendar({
   selectedDate: moment.now(),
@@ -62,6 +71,7 @@ const calendarApp = createCalendar({
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
       selectedEvent.value = calendarEvent
+      selectedDate.value = calendarEvent.start
       showModalEdit.value = true
     },
 
@@ -90,6 +100,12 @@ const calendarApp = createCalendar({
 <template>
   <AuthenticatedLayout>
     <div>
+      <div v-show="width < 700" class="flex justify-center my-4">
+        <PrimaryButton
+          @click="handleAgendar"
+        >Agendar</PrimaryButton>
+      </div>
+
       <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>
     </div>
   </AuthenticatedLayout>
@@ -97,19 +113,10 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :show="showModalEdit"
     :selected-event
+    :selected-date
   />
   <CreateReservationForm
     @close="closeModal"
     :show="showModalCreate"
   />
-  <!--  <UpdateReservationForm-->
-  <!--    :show="showModalEdit"-->
-  <!--    @close="closeModal"-->
-  <!--    :reservation="selectedEvent"-->
-  <!--    @update-reservation="updateReservation"-->
-  <!--  />-->
-  <!--  <CreateReservationForm-->
-  <!--    :show="showModalCreate"-->
-  <!--    @close="closeModal"-->
-  <!--  />-->
 </template>
