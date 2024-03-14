@@ -30,6 +30,7 @@ const props = defineProps({
 const showModalEdit = ref(false)
 const showModalCreate = ref(false)
 const showModalList = ref(false)
+const showViewReservation = ref(false)
 const selectedEvent = ref(null)
 const eventsList = ref(false)
 
@@ -37,6 +38,7 @@ const closeModal = () => {
   showModalCreate.value = false
   showModalEdit.value = false
   showModalList.value = false
+  showViewReservation.value = false
 }
 
 const handleAgendar = () => {
@@ -87,19 +89,23 @@ const calendarApp = createCalendar({
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
 
+      selectedEvent.value = calendarEvent
+
+
       if (calendarEvent.status === 'denied') {
         console.log('denied')
+        showViewReservation.value = true
         return
       }
 
       if (calendarEvent.status === 'done') {
         console.log('done')
+        showViewReservation.value = true
         return
       }
 
       console.log('accepted')
 
-      selectedEvent.value = calendarEvent
       showModalEdit.value = true
     },
 
@@ -198,5 +204,9 @@ const calendarApp = createCalendar({
     :show="showModalList"
     :events-list
   />
-  <ViewReservation />
+  <ViewReservation
+    @close="closeModal"
+    :show="showViewReservation"
+    :selected-event
+  />
 </template>

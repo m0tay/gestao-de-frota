@@ -73,7 +73,8 @@ onBeforeUpdate(() => {
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
               </svg>
-              <small v-if="props.selectedEvent.status === 'denied'" class="lg:my-auto">Esta requisição foi reagendada.</small>
+              <small v-if="props.selectedEvent.status === 'rescheduled'" class="lg:my-auto">Esta requisição foi reagendada.</small>
+              <small v-if="props.selectedEvent.status === 'denied'" class="lg:my-auto">Esta requisição foi cancelada.</small>
               <small v-if="props.selectedEvent.status === 'done'" class="lg:my-auto">Esta requisição está concluída.</small>
             </div>
           </div>
