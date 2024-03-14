@@ -14,7 +14,6 @@ class UpdateReservationRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'title' => 'min:8',
       'start' => 'required|after_or_equal:now',
       'end' => 'required|after:start',
       'driver' => 'required',
