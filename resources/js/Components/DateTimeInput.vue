@@ -27,7 +27,7 @@ const date = defineModel({
         )"
       >
         <CalendarIcon class="mr-2 h-4 w-4"/>
-        <span>{{ date ? moment(date).format('d MMMM HH:mm') : "Escolha uma data e hora" }}</span>
+        <span>{{ date ? moment(date).format('DD MMM HH:mm') : "Escolha uma data e hora" }}</span>
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-auto p-0">
