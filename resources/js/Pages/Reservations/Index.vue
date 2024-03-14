@@ -16,6 +16,7 @@ import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservati
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useWindowSize} from '@vueuse/core'
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
+import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue";
 
 const {width} = useWindowSize()
 
@@ -197,4 +198,5 @@ const calendarApp = createCalendar({
     :show="showModalList"
     :events-list
   />
+  <ViewReservation />
 </template>
