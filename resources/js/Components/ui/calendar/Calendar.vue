@@ -24,6 +24,9 @@ const modelValue = useVModel(props, "modelValue", emits, {
 
 const datePicker = ref();
 const calendarRef = computed(() => datePicker.value.calendarRef);
+const rules = ref({
+    minutes: [0, 10, 20, 30, 40, 50],
+})
 
 function handleNav(direction) {
   if (!calendarRef.value) return;
@@ -88,6 +91,13 @@ const vCalendarSlots = computed(() => {
       trim-weeks
       :transition="'none'"
       :columns="columns"
+      is24hr
+      :rules
+      locale="pt-PT"
+      hide-time-header
+      first-day-of-week="1.0"
+      timezone="utc"
+
     >
       <template v-for="(_, slot) of vCalendarSlots" #[slot]="scope">
         <slot :name="slot" v-bind="scope" />
