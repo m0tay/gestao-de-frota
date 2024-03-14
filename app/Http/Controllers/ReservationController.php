@@ -104,13 +104,15 @@ class ReservationController extends Controller
    */
   public function update(UpdateReservationRequest $request, Reservation $reservation)
   {
-    $this->authorize('update', [Reservation::class, $reservation]);
+//    $this->authorize('update', [Reservation::class, $reservation]);
 
     $data = $request->validated();
 
     $reservation->update(['status' => 'denied']);
 
     // todo: create new reservation from here
+
+    dd($reservation);
 
     return back();
   }

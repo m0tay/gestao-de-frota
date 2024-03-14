@@ -73,9 +73,10 @@ const calendarApp = createCalendar({
      * */
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
+
+      if(calendarEvent.status !== 'accepted') return
+
       selectedEvent.value = calendarEvent
-      // selectedDate.value = calendarEvent.start
-      // selectedId.value = calendarEvent.id
       showModalEdit.value = true
     },
 
