@@ -21,13 +21,16 @@ const { width, height } = useWindowSize()
 
 
 const props = defineProps({
-  reservations: Array
+  reservations: Array,
+  drivers: Array,
+  vehicles: Array,
 })
 
 const showModalEdit = ref(false)
 const showModalCreate = ref(false)
 const selectedEvent = ref(null)
-const selectedDate = ref(null)
+// const selectedDate = ref(null)
+// const selectedId = ref(null)
 
 const closeModal = () => {
   showModalCreate.value = false
@@ -71,7 +74,8 @@ const calendarApp = createCalendar({
     onEventClick(calendarEvent) {
       console.log('onEventClick', calendarEvent)
       selectedEvent.value = calendarEvent
-      selectedDate.value = calendarEvent.start
+      // selectedDate.value = calendarEvent.start
+      // selectedId.value = calendarEvent.id
       showModalEdit.value = true
     },
 
@@ -113,7 +117,8 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :show="showModalEdit"
     :selected-event
-    :selected-date
+    :drivers
+    :vehicles
   />
   <CreateReservationForm
     @close="closeModal"

@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
-//        \App\Models\User::factory(10)->create();
 
     $this->call([
       RoleSeeder::class,
@@ -48,6 +47,8 @@ class DatabaseSeeder extends Seeder
       'email' => 'user2@user.com',
       'company' => 'robowork',
     ]);
+
+    User::factory(10)->create();
 
     Vehicle::factory(5)->create();
 
