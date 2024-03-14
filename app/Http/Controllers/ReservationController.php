@@ -135,7 +135,7 @@ class ReservationController extends Controller
     // Create a new reservation with the prepared data
     Reservation::insert($newReservationData);
 
-    $reservation->update(['status' => 'denied']);
+    $reservation->update(['status' => 'rescheduled']);
 
     return back();
   }
