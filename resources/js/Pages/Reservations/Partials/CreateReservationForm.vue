@@ -40,7 +40,7 @@ onUpdated(() => {
 
 <template>
   <Modal v-model:show="props.show" @close="$emit('close')">
-    <section class="space-y-6 p-8 w-full">
+    <section class="space-y-6 p-8 w-full" @contextmenu.prevent>
       <header>
         <h2 class="text-xl font-bold text-gray-900">Agendar Requisição</h2>
       </header>

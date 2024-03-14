@@ -11,6 +11,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import DateTimeInput from "@/Components/DateTimeInput.vue";
 import moment from "moment";
 import {Textarea} from "@/Components/ui/textarea/index.js";
+import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
 
 
 const props = defineProps({
@@ -26,7 +27,7 @@ const form = useForm({
   driver: Number,
   vehicle: Number,
   creator: Number,
-  description: '',
+  description: String,
   id: Number,
 })
 
@@ -61,7 +62,7 @@ onBeforeUpdate(() => {
 
 <template>
   <Modal :show="props.show" @close="$emit('close')">
-    <section class="space-y-6 p-8 w-full">
+    <section class="space-y-6 p-8 w-full" @contextmenu.prevent>
       <header>
         <section class="flex flex-col lg:flex-row justify-between">
           <div>
@@ -86,6 +87,11 @@ onBeforeUpdate(() => {
 
         </section>
       </header>
+
+      <div class="mt-6 max-w-full">
+        <PreviousReservation v-show="props.selectedEvent.previous_reservation" :previous-reservation="props.selectedEvent.previous_reservation"/>
+      </div>
+
       <div class="mt-6 max-w-full flex flex-col gap-x-4 gap-y-4">
         <div class="w-full">
           <InputLabel value="De:" for="start"/>
