@@ -28,6 +28,8 @@ class ReservationController extends Controller
 
     $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
 
+    // TODO: Check for past due reservations and apply `done` to them
+
     $drivers = User::query(function ($query) {
       return $query->select('id', 'name');
     })->get();
