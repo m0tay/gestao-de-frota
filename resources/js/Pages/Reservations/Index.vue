@@ -154,6 +154,7 @@ const calendarApp = createCalendar({
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-200': calendarEvent.status === 'rescheduled',
                           }">
             {{ calendarEvent.title }}
 
@@ -167,6 +168,7 @@ const calendarApp = createCalendar({
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-200': calendarEvent.status === 'rescheduled',
                           }">
             <div>{{ calendarEvent.title }}</div>
             <div class="font-normal text-gray-700">{{ moment(calendarEvent.start).format('HH[h]mm') }} até
@@ -181,6 +183,7 @@ const calendarApp = createCalendar({
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-200': calendarEvent.status === 'rescheduled',
                           }">
             {{ calendarEvent.title }}
           </div>
