@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ReservationController extends Controller
@@ -61,19 +62,19 @@ class ReservationController extends Controller
 
     $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-    dd($data);
+//    dd($data);
 
-//    Reservation::create([
-//      'title' => $data['title'],
-//      'description' => $data['description'] ?? 'no desc',
-//      'driver_id' => $data['driver'],
-//      'vehicle_id' => $data['vehicle'],
-//      'created_by' => $data['creator'],
-//      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
-//      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
-//    ]);
+    Reservation::create([
+      'title' => $data['title'],
+      'description' => $data['description'] ?? 'no desc',
+      'driver_id' => $data['driver'],
+      'vehicle_id' => $data['vehicle'],
+      'created_by' => $data['creator'],
+      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
+      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
+    ]);
 
-//    return back();
+    return back();
   }
 
 
@@ -104,18 +105,41 @@ class ReservationController extends Controller
    */
   public function update(UpdateReservationRequest $request, Reservation $reservation)
   {
-//    $this->authorize('update', [Reservation::class, $reservation]);
+    $this->authorize('update', [Reservation::class, $reservation]);
 
     $data = $request->validated();
 
+
+    // Prepare title
+    $driverName = User::find($data['driver']['id'])->name;
+    $vehiclePlate = Vehicle::find($data['vehicle']['id'])->plate;
+
+    $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
+
+    Log::info($data);
+
+    // Prepare data for the new reservation
+    $newReservationData = [
+      'title' => $data['title'],
+      'description' => fake()->sentence(),
+      'driver_id' => $data['driver']['id'], // Use the ID directly
+      'vehicle_id' => $data['vehicle']['id'], // Use the ID directly
+      'created_by' => $data['creator']['id'],
+      'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
+      'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
+      'previous_reservation' => $data['id'],
+
+    ];
+
+
+    // Create a new reservation with the prepared data
+    Reservation::create($newReservationData);
+
     $reservation->update(['status' => 'denied']);
 
-    // todo: create new reservation from here
-
-    dd($reservation);
-
-    return back();
+    return to_route(route('reservations.index'));
   }
+
 
 
   /**
