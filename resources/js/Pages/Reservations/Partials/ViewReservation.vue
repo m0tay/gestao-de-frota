@@ -1,4 +1,4 @@
-<script setup>
+<script setup xmlns="http://www.w3.org/1999/html">
 import Modal from "@/Components/Modal.vue";
 import {onBeforeUpdate, onMounted, onUpdated, ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -12,11 +12,15 @@ import DateTimeInput from "@/Components/DateTimeInput.vue";
 import moment from "moment";
 import {Textarea} from "@/Components/ui/textarea/index.js";
 import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
+import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
+import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
+import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
 
 
 const props = defineProps({
   show: Boolean,
   selectedEvent: Object,
+  previousReservations: Array,
   drivers: Array,
   vehicles: Array,
 })
@@ -66,58 +70,75 @@ onBeforeUpdate(() => {
       <header>
         <section class="flex flex-col lg:flex-row justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900">Sobre esta Requisição</h2>
-            <div class="flex items-start gap-x-2 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
-              </svg>
-              <small v-if="props.selectedEvent.status === 'rescheduled'" class="lg:my-auto">Esta requisição foi reagendada.</small>
-              <small v-if="props.selectedEvent.status === 'denied'" class="lg:my-auto">Esta requisição foi cancelada.</small>
-              <small v-if="props.selectedEvent.status === 'done'" class="lg:my-auto">Esta requisição está concluída.</small>
-            </div>
+            <h2 class="text-3xl text-center xl:text-4xl font-bold text-gray-900">Sobre esta Requisição</h2>
+<!--            <div class="flex items-start gap-x-2 text-muted-foreground">-->
+<!--              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                   stroke="currentColor" class="w-6 h-6">-->
+<!--                <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>-->
+<!--              </svg>-->
+<!--              <small v-if="props.selectedEvent.status === 'rescheduled'" class="lg:my-auto">Esta requisição foi-->
+<!--                reagendada.</small>-->
+<!--              <small v-if="props.selectedEvent.status === 'denied'" class="lg:my-auto">Esta requisição foi-->
+<!--                cancelada.</small>-->
+<!--              <small v-if="props.selectedEvent.status === 'done'" class="lg:my-auto">Esta requisição está-->
+<!--                concluída.</small>-->
+<!--            </div>-->
           </div>
-          <div class="group transition-all">
-            <h2 class="text-xl font-bold text-gray-300 group-hover:text-gray-900">Status</h2>
-            <div class="flex items-start gap-x-2 text-gray-300 group-hover:text-gray-900">
-              <small v-if="props.selectedEvent.status === 'accepted'">Aceite</small>
-              <small v-if="props.selectedEvent.status === 'denied'">Cancelado</small>
-              <small v-if="props.selectedEvent.status === 'rescheduled'">Reagendado</small>
-              <small v-if="props.selectedEvent.status === 'done'">Concluído</small>
-            </div>
-          </div>
+          <ReservationStatus :reservation="props.selectedEvent"/>
 
         </section>
       </header>
 
       <div class="mt-6 max-w-full">
-        <PreviousReservation v-show="props.selectedEvent.previous_reservation" :previous-reservation="props.selectedEvent.previous_reservation"/>
+        <PreviousReservation v-show="props.selectedEvent.previous_reservation"
+                             :previous-reservations="props.previousReservations"
+                             :previous-reservation="props.selectedEvent.previous_reservation"/>
+      </div>
+      <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
+        <div class="w-full">
+          <InputLabel value="De:" for="start"/>
+          <FakeDateTimeInput disabled id="start" :date="(moment(props.selectedEvent.start).toDate())"/>
+        </div>
+        <div class="w-full">
+          <InputLabel value="Até:" for="end"/>
+          <FakeDateTimeInput disabled id="end" :date="(moment(props.selectedEvent.end).toDate())"/>
+        </div>
+      </div>
+
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Condutor" for="driver"/>
+        <FakeSelectInput disabled id="driver" :placeholder="props.selectedEvent.driver.name" />
+
+      </div>
+
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Veículo" for="vehicle"/>
+        <FakeSelectInput disabled id="vehicle" :placeholder="props.selectedEvent.vehicle.plate.toUpperCase()" />
       </div>
 
 
       <div class="mt-6 max-w-full">
         <InputLabel value="Descrição" for="description"/>
-        <!--        <TextInput class="w-full" id="description" v-model="form.description"/>-->
-        <Textarea class="w-full" id="description" v-model="form.description" :placeholder="form.description"/>
-        <InputError :message="form.errors.description"/>
+        <textarea disabled
+                  class=" flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="description">{{props.selectedEvent.description}}
+        </textarea>
       </div>
-      <!--      <pre>{{ form.driver }}</pre>-->
-      <!--      <pre>{{ form.creator }}</pre>-->
-      <!--      <pre>{{ form.vehicle }}</pre>-->
+
       <div class="mt-6 flex justify-end">
-        <SecondaryButton @click="$emit('close')">Mudei de Ideia</SecondaryButton>
 
         <PrimaryButton
           class="ms-3"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
-          @click="handleSubmit"
+          @click="$emit('close')"
         >
-          Reagendar
+          Sair
         </PrimaryButton>
 
       </div>
+
     </section>
   </Modal>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import {format} from 'date-fns'
+// import {format} from 'date-fns'
 import {Calendar as CalendarIcon} from 'lucide-vue-next'
 
 import {cn} from '@/lib/utils'
@@ -8,11 +8,12 @@ import {Calendar} from '@/Components/ui/calendar'
 import {Popover, PopoverContent, PopoverTrigger,} from '@/Components/ui/popover'
 import moment from "moment";
 
-const date = defineProps({
-  type: Date,
-  required: true,
+const props = defineProps({
+  date: {
+    type: Date,
+    required: false,
+  }
 })
-// const date = ref()
 
 </script>
 
@@ -27,8 +28,8 @@ const date = defineProps({
     disabled:pointer-events-none disabled:opacity-50
     border-input hover:bg-accent hover:text-accent-foreground
     h-10 px-4 py-2 max-w-full min-w-full justify-start text-left font-normal bg-gray-50">
-    <CalendarIcon class="mr-2 h-4 w-4"/>
-      <span>22 Mar 9:30</span>
+      <CalendarIcon class="mr-2 h-4 w-4"/>
+      <span>{{ props.date ? moment(date).format('DD MMM HH:mm') : 'Sem data' }}</span>
     </div>
   </section>
 </template>
