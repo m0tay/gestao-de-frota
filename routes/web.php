@@ -3,9 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,9 +29,14 @@ Route::get('/', function () {
   ]);
 });
 
+
 Route::get('/dashboard', function () {
+  if (!Gate::allows('accessDashboard')) return Redirect::back();
+
   return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])
+  ->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
