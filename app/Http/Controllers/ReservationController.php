@@ -71,10 +71,10 @@ class ReservationController extends Controller
 
     Reservation::create([
       'title' => $data['title'],
-      'description' => $data['description'] ?? 'no desc',
-      'driver_id' => $data['driver'],
-      'vehicle_id' => $data['vehicle'],
-      'created_by' => $data['creator'],
+      'description' => $data['description'],
+      'driver_id' => $data['driver']['id'], // Use the ID directly
+      'vehicle_id' => $data['vehicle']['id'], // Use the ID directly
+      'created_by' => $data['creator']['id'],
       'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
       'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
     ]);

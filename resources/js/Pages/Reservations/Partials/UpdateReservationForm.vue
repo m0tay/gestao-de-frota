@@ -99,10 +99,9 @@ const reloadPage = () => {
       </header>
 
       <div class="mt-6 max-w-full">
-        <PreviousReservation v-show="props.selectedEvent.previous_reservation"
+        <PreviousReservation :previous-reservation="20"
                              :previous-reservations="props.previousReservations"
-                             :previous-reservation="props.selectedEvent.previous_reservation"
-                             :reason-for-status-change="props.selectedEvent.reason_for_status_change"/>
+                             :reason-for-status-change="props.selectedEvent.previous_reservation"/>
       </div>
       <div class="flex gap-x-2 text-muted-foreground">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
