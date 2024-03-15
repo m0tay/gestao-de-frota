@@ -20,29 +20,28 @@ class ReservationFactory extends Factory
    */
   public function definition()
   {
-    $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-03-01', '2024-03-31')->getTimestamp());
-    $start_date->minute = $this->faker->randomElement([0, 10, 20, 30, 40, 50]);
+    $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-02-01', '2024-04-31')->getTimestamp());
+    $start_date->minute = fake()->randomElement([0, 30]);
 
     $end_date = clone $start_date;
-    $end_date->minute = $this->faker->randomElement([0, 10, 20, 30, 40, 50]);
-    $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour']));
+    $end_date->minute = fake()->randomElement([0, 30]);
+    $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour', '+4 hour', '+1 day']));
     $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
     $driver = fake()->randomElement(User::all());
-    $title = strtoupper($vehicle->plate) . " " . $driver->name;
-    $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied', 'done']);
+    $title = strtoupper($vehicle->plate) . " - " . $driver->name;
+    $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
 
 
     return [
       'title' => $title,
       'start' => $start_date,
       'end' => $end_date,
-      'rrule' => '',
       'status' => $status,
       'created_by' => fake()->randomElement(User::all()),
       'driver_id' => $driver,
       'vehicle_id' => $vehicle,
       'description' => fake()->sentence(6),
-      'reason_for_status_change' => $status === 'denied' ? 'denied for any reason' : '',
+      'reason_for_status_change' => $status === 'denied' ? fake()->randomElement(['foi preciso', 'contacte-nos', 'sem cabimento', 'cancelado']) : '',
     ];
   }
 }

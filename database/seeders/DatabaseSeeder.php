@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
     ];
 
     $adminUser = User::factory()->create([
-      'name' => 'admin',
+      'name' => 'Mykola (Admin)',
       'email' => 'admin@admin.com',
       'company' => 'roboplan',
       'role_id' => $roles['admin']
     ]);
 
     $managerUser = User::factory()->create([
-      'name' => 'manager',
+      'name' => 'José (Gestor))',
       'email' => 'manager@manager.com',
       'password' => bcrypt('password'),
       'company' => 'roboplan',
@@ -43,15 +43,15 @@ class DatabaseSeeder extends Seeder
     ]);
 
     $userUser = User::factory()->create([
-      'name' => 'user',
+      'name' => 'User',
       'email' => 'user@user.com',
       'company' => 'robowork',
     ]);
 
-    User::factory(7)->create();
+    User::factory(20)->create();
 
-    Vehicle::factory(5)->create();
+    Vehicle::factory(10)->create();
 
-    Reservation::factory(25)->create();
+    Reservation::factory(50)->create();
   }
 }

@@ -14,13 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->timestamp('start');
             $table->timestamp('end');
-            $table->string('rrule')->nullable();
             $table->enum('status', ['accepted', 'denied', 'done', 'rescheduled']);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('driver_id')->constrained('users');
             $table->foreignId('vehicle_id')->constrained('vehicles');
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->text('reason_for_status_change')->nullable();
             $table->foreignId('previous_reservation')->nullable()->constrained('reservations');
             $table->timestamps();

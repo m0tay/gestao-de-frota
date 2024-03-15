@@ -20,7 +20,7 @@ const props = defineProps({
 
 <template>
   <section>
-    <div class="inline-flex items-center
+    <div class="inline-flex items-center cursor-not-allowed
     whitespace-nowrap rounded-md text-sm
     ring-offset-background transition-colors
     focus-visible:outline-none focus-visible:ring-2
