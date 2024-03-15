@@ -157,7 +157,6 @@ const calendarApp = createCalendar({
                          'cursor-pointer': calendarEvent.status === 'accepted',
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
-                          'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
                           'bg-amber-200': calendarEvent.status === 'rescheduled',
                           }">
@@ -171,7 +170,6 @@ const calendarApp = createCalendar({
                          'cursor-pointer': calendarEvent.status === 'accepted',
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
-                          'bg-green-200': calendarEvent.previous_reservation,
                           'bg-sky-400': calendarEvent.status === 'done',
                           'bg-amber-200': calendarEvent.status === 'rescheduled',
                           }">
