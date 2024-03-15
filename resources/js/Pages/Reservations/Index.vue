@@ -207,11 +207,11 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :show="showModalCreate"
   />
-  <ListReservations
-    @close="closeModal"
-    :show="showModalList"
-    :events-list
-  />
+<!--  <ListReservations-->
+<!--    @close="closeModal"-->
+<!--    :show="showModalList"-->
+<!--    :events-list-->
+<!--  />-->
   <ViewReservation
     @close="closeModal"
     :show="showViewReservation"

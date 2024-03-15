@@ -29,13 +29,16 @@ Route::get('/', function () {
   ]);
 });
 
-
 Route::get('/dashboard', function () {
-  if (!Gate::allows('accessDashboard')) return Redirect::back();
+  $user = Auth::user();
+  $response = Gate::inspect('accessDashboard', $user);
+
+  if($response->denied()) return Redirect::back(302);
 
   return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])
   ->name('dashboard');
+
 
 
 Route::middleware('auth')->group(function () {
