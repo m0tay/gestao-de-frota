@@ -22,6 +22,7 @@ class VehicleFactory extends Factory
       'model' => fake()->word() . ' ' . fake()->randomNumber(3), // Basic model name
       'group' => fake()->randomElement(['private', 'public']),
       'category' => fake()->randomElement(['light', 'heavy']),
+      'status' => 'active',
     ];
   }
 }

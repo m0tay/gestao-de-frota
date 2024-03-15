@@ -43,15 +43,15 @@ class DatabaseSeeder extends Seeder
     ]);
 
     $userUser = User::factory()->create([
-      'name' => 'user2',
-      'email' => 'user2@user.com',
+      'name' => 'user',
+      'email' => 'user@user.com',
       'company' => 'robowork',
     ]);
 
-    User::factory(10)->create();
+    User::factory(7)->create();
 
     Vehicle::factory(5)->create();
 
-    Reservation::factory(30)->create();
+    Reservation::factory(25)->create();
   }
 }

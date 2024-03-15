@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('model');
             $table->enum('group', ['private', 'public']);
             $table->enum('category', ['light', 'heavy']);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

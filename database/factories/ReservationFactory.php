@@ -6,9 +6,10 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
+ * @extends Factory<Reservation>
  */
 class ReservationFactory extends Factory
 {
@@ -19,25 +20,29 @@ class ReservationFactory extends Factory
    */
   public function definition()
   {
-    $start_date = fake()->dateTimeBetween('2024-03-01', '2024-03-31');
+    $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-03-01', '2024-03-31')->getTimestamp());
+    $start_date->minute = $this->faker->randomElement([0, 10, 20, 30, 40, 50]);
+
     $end_date = clone $start_date;
-    $end_date->modify('+1 hour');
-    $vehicle = fake()->randomElement(Vehicle::all());
+    $end_date->minute = $this->faker->randomElement([0, 10, 20, 30, 40, 50]);
+    $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour']));
+    $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
     $driver = fake()->randomElement(User::all());
     $title = strtoupper($vehicle->plate) . " " . $driver->name;
+    $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied', 'done']);
+
 
     return [
       'title' => $title,
       'start' => $start_date,
       'end' => $end_date,
-//      'rrule' => fake()->randomElement([null, 'RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR']), // Optional repeat rule
       'rrule' => '',
-      'status' => fake()->randomElement(['accepted', 'denied', 'done']),
-      'created_by' => fake()->randomElement(User::all()), // Generate a user and use the ID
-      'driver_id' => $driver, // Generate another user for the driver
-      'vehicle_id' => $vehicle, // Generate a vehicle
-      'description' => fake()->sentence(6), // Short description
-//      'previous_reservation' => fake()->boolean(20) ? Reservation::factory()->create()->id : null, // 20% chance of having a previous reservation
+      'status' => $status,
+      'created_by' => fake()->randomElement(User::all()),
+      'driver_id' => $driver,
+      'vehicle_id' => $vehicle,
+      'description' => fake()->sentence(6),
+      'reason_for_status_change' => $status === 'denied' ? 'denied for any reason' : '',
     ];
   }
 }
