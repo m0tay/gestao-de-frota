@@ -13,16 +13,17 @@ import {computed, ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useWindowSize} from '@vueuse/core'
-import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
 import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue";
+import {Button} from "@/Components/ui/button/index.js";
+import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
 
 const {width} = useWindowSize()
 
 
 const props = defineProps({
   reservations: Array,
+  previousReservations: Array,
   drivers: Array,
   vehicles: Array,
 })
@@ -43,6 +44,15 @@ const closeModal = () => {
 
 const handleAgendar = () => {
   showModalCreate.value = true
+}
+
+const handleListar = () => {
+  showModalList.value = true
+  eventsList.value = props.reservations
+}
+
+const reloadPage = () => {
+  window.location.reload();
 }
 
 const calendarApp = createCalendar({
@@ -140,11 +150,19 @@ const calendarApp = createCalendar({
 <template>
   <AuthenticatedLayout>
     <div>
-      <div v-show="width < 700" class="flex justify-center my-4">
-        <PrimaryButton
+      <div v-show="width < 700" class="flex justify-center my-4 gap-x-4">
+        <Button
           @click="handleAgendar"
         >Agendar
-        </PrimaryButton>
+        </Button>
+        <Button
+          @click="handleListar"
+        >Listar
+        </Button>
+        <Button
+          @click="reloadPage"
+        >Atualizar
+        </Button>
       </div>
 
       <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
@@ -198,6 +216,7 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :show="showModalEdit"
     :selected-event
+    :previous-reservations
     :drivers
     :vehicles
   />
@@ -205,14 +224,15 @@ const calendarApp = createCalendar({
     @close="closeModal"
     :show="showModalCreate"
   />
-<!--  <ListReservations-->
-<!--    @close="closeModal"-->
-<!--    :show="showModalList"-->
-<!--    :events-list-->
-<!--  />-->
+  <ListReservations
+    @close="closeModal"
+    :show="showModalList"
+    :events-list
+  />
   <ViewReservation
     @close="closeModal"
     :show="showViewReservation"
     :selected-event
+    :previous-reservations
   />
 </template>
