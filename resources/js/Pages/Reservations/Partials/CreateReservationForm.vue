@@ -1,25 +1,34 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import {onUpdated, ref} from "vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
-import TextInput from "@/Components/TextInput.vue";
+import {onBeforeUpdate, onUpdated, ref} from "vue";
+import {useForm, usePage} from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import {Button} from "@/Components/ui/button/index.js";
+import SelectInput from "@/Components/SelectInput.vue";
+import {Textarea} from "@/Components/ui/textarea/index.js";
+import DateTimeInput from "@/Components/DateTimeInput.vue";
+import moment from "moment/moment.js";
 
+const page = usePage()
 
 const props = defineProps({
   show: Boolean,
-  selectedEvent: Object,
+  drivers: Array,
+  vehicles: Array,
 })
 
-const form = useForm({})
+const form = useForm({
+  start: Date,
+  end: Date,
+  driver: Number,
+  vehicle: Number,
+  creator: Number,
+  description: String,
+})
 
 
 const emit = defineEmits(['close']);
-
-const createdReservation = ref({}); //  To capture changes locally
 
 const handleSubmit = () => {
 
@@ -32,10 +41,16 @@ const handleSubmit = () => {
   })
 }
 
+onBeforeUpdate(() => {
+  // form.creator = page.props.auth.user
+})
+
 onUpdated(() => {
   form.reset()
   form.clearErrors()
 })
+
+
 </script>
 
 <template>
@@ -44,47 +59,55 @@ onUpdated(() => {
       <header>
         <h2 class="text-xl font-bold text-gray-900">Agendar Requisição</h2>
       </header>
-      <pre>{{ selectedEvent }}</pre>
-      <!--      <div class="mt-6 max-w-full flex flex-col gap-x-4 gap-y-4">-->
-      <!--        <div class="w-full">-->
-      <!--          <InputLabel value="De:" for="start"/>-->
-      <!--          <TextInput class="w-full" id="start" v-model="form.start"/>-->
-      <!--        </div>-->
-      <!--        <div class="w-full">-->
-      <!--          <InputLabel value="Até:" for="end"/>-->
-      <!--          <TextInput class="w-full" id="end" v-model="form.end"/>-->
-      <!--        </div>-->
+      <!--      <div class="flex gap-x-2 text-muted-foreground">-->
+      <!--        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+      <!--             stroke="currentColor" class="w-6 h-6 flex-shrink-0">-->
+      <!--          <path stroke-linecap="round" stroke-linejoin="round"-->
+      <!--                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>-->
+      <!--        </svg>-->
+      <!--        <small class="lg:my-auto">Preencha os campos aba</small>-->
       <!--      </div>-->
 
-      <!--      <div class="mt-6 max-w-full">-->
-      <!--        <InputLabel value="Título" for="title"/>-->
-      <!--        <TextInput class="w-full" id="title" v-model="form.title"/>-->
-      <!--        <InputError :message="form.errors.title"/>-->
-      <!--      </div>-->
+      <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
+        <div class="w-full">
+          <InputLabel value="De:" for="start"/>
+          <DateTimeInput id="start" v-model="form.start"/>
+          <InputError :message="form.errors.start"/>
+        </div>
+        <div class="w-full">
+          <InputLabel value="Até:" for="end"/>
+          <DateTimeInput id="end" v-model="form.end"/>
+          <InputError :message="form.errors.end"/>
+        </div>
+      </div>
 
-      <!--      <div class="mt-6 max-w-full">-->
-      <!--        <InputLabel value="Condutor" for="driver"/>-->
-      <!--        <TextInput class="w-full" id="driver" v-model="form.driver"/>-->
-      <!--        <InputError :message="form.errors.driver"/>-->
-      <!--      </div>-->
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Condutor" for="driver"/>
+        <SelectInput id="driver" :list="drivers" v-model="form.driver.id" :placeholder="form.driver.name"/>
+        <InputError :message="form.errors.driver"/>
+      </div>
 
-      <!--      <div class="mt-6 max-w-full">-->
-      <!--        <InputLabel value="Veículo" for="vehicle"/>-->
-      <!--        <TextInput class="w-full" id="vehicle" v-model="form.vehicle"/>-->
-      <!--        <InputError :message="form.errors.vehicle"/>-->
-      <!--      </div>-->
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Veículo" for="vehicle"/>
+        <SelectInput id="driver" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
 
-      <div class="mt-6 flex justify-end">
-        <SecondaryButton @click="$emit('close')">Mudei de Ideia</SecondaryButton>
+        <InputError :message="form.errors.vehicle"/>
+      </div>
 
-        <PrimaryButton
-          class="ms-3"
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
+
+      <div class="mt-6 max-w-full">
+        <InputLabel value="Descrição" for="description"/>
+        <Textarea class="w-full" id="description" v-model="form.description" :placeholder="form.description"/>
+        <InputError :message="form.errors.description"/>
+      </div>
+      <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
+        <Button variant="secondary" @click="$emit('close')">Mudei de Ideia</Button>
+
+        <Button
           @click="handleSubmit"
         >
-          Agendar
-        </PrimaryButton>
+          Reagendar
+        </Button>
 
       </div>
     </section>

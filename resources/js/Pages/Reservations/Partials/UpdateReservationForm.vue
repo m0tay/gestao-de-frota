@@ -50,7 +50,7 @@ const handleSubmit = () => {
       console.log(form)
       form.reset()
       emit('close')
-      reloadPage()
+      // reloadPage()
     }
   })
 }

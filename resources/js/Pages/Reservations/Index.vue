@@ -223,6 +223,8 @@ const calendarApp = createCalendar({
   <CreateReservationForm
     @close="closeModal"
     :show="showModalCreate"
+    :drivers
+    :vehicles
   />
   <ListReservations
     @close="closeModal"
