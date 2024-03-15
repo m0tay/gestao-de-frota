@@ -23,6 +23,8 @@ class Reservation extends Model
     'driver_id',
     'created_by',
     'vehicle_id',
+    'description',
+    'reason_for_status_change',
     'status',
   ];
 
@@ -40,5 +42,10 @@ class Reservation extends Model
   public function driver(): BelongsTo
   {
     return $this->belongsTo(User::class, 'driver_id');
+  }
+
+  public function creator(): BelongsTo
+  {
+    return $this->belongsTo(User::class, 'created_by');
   }
 }

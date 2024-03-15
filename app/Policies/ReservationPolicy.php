@@ -28,7 +28,7 @@ class ReservationPolicy
    */
   public function view(User $user, Reservation $reservation): bool
   {
-    return false;
+    return true;
 
   }
 
@@ -47,8 +47,13 @@ class ReservationPolicy
   public function update(User $user, Reservation $reservation): bool
   {
 
-//    return in_array($user->role->name, $this->authorized);
-    return true;
+    return in_array($user->role->name, $this->authorized);
+  }
+
+  public function cancel(User $user, Reservation $reservation): bool
+  {
+
+    return in_array($user->role->name, $this->authorized);
   }
 
   /**

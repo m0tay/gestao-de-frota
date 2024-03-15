@@ -20,7 +20,8 @@ return new class extends Migration {
             $table->foreignId('driver_id')->constrained('users');
             $table->foreignId('vehicle_id')->constrained('vehicles');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->text('reason_for_status_change')->nullable();
             $table->foreignId('previous_reservation')->nullable()->constrained('reservations');
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CancelReservationRequest;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Http\Resources\ReservationResource;
@@ -28,6 +29,8 @@ class ReservationController extends Controller
 
     $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
 
+    $previousReservations = Reservation::where('previous_reservation', '!=', 'null')->with('creator', 'driver', 'vehicle')->get();
+
     // TODO: Check for past due reservations and apply `done` to them
 
     $drivers = User::query(function ($query) {
@@ -39,7 +42,7 @@ class ReservationController extends Controller
     })->get();
 
 
-    return Inertia::render('Reservations/Index', compact('reservations', 'drivers', 'vehicles'));
+    return Inertia::render('Reservations/Index', compact('reservations', 'previousReservations', 'drivers', 'vehicles'));
   }
 
   /**
@@ -85,7 +88,12 @@ class ReservationController extends Controller
    */
   public function show(Reservation $reservation)
   {
-    //
+
+    $this->authorize('view', Reservation::class);
+
+//    dd(Reservation::find($reservation));
+
+    return Reservation::find($reservation);
   }
 
   /**
@@ -118,7 +126,7 @@ class ReservationController extends Controller
 
     $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-    Log::info($data);
+//    dd($data);
 
     // Prepare data for the new reservation
     $newReservationData = [
@@ -130,7 +138,7 @@ class ReservationController extends Controller
       'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
       'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
       'previous_reservation' => $data['id'],
-
+      'reason_for_status_change' => $data['reason_for_status_change'],
     ];
 
 
@@ -143,12 +151,25 @@ class ReservationController extends Controller
   }
 
 
-
   /**
    * Remove the specified resource from storage.
    */
   public function destroy(Reservation $reservation)
   {
     //
+  }
+
+  public function cancel(CancelReservationRequest $request, Reservation $reservation)
+  {
+    $this->authorize('cancel', [Reservation::class, $reservation]);
+
+    $data = $request->validated();
+
+//    dd('canceled', $data);pa make:request
+    $reservation->update([
+      'status' => 'denied',
+      'reason_for_status_change' => $data['reason_for_status_change']]);
+
+    return back();
   }
 }

@@ -20,6 +20,7 @@ class UpdateReservationRequest extends FormRequest
       'creator' => 'required',
       'vehicle'=> 'required',
       'id' => 'required',
+      'reason_for_status_change' => 'nullable',
     ];
   }
 }
