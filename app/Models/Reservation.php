@@ -25,6 +25,7 @@ class Reservation extends Model
     'vehicle_id',
     'description',
     'reason_for_status_change',
+    'previous_reservation',
     'status',
   ];
 

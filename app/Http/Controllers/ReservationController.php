@@ -29,7 +29,7 @@ class ReservationController extends Controller
 
     $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
 
-    $previousReservations = Reservation::where('previous_reservation', '!=', 'null')->with('creator', 'driver', 'vehicle')->get();
+    $previousReservations = Reservation::where('previous_reservation', '>', 1)->with('creator', 'driver', 'vehicle')->get();
 
     // TODO: Check for past due reservations and apply `done` to them
 
@@ -131,19 +131,23 @@ class ReservationController extends Controller
     // Prepare data for the new reservation
     $newReservationData = [
       'title' => $data['title'],
-      'description' => fake()->sentence(),
+      'rrule' => '',
+      'description' => $data['description'],
       'driver_id' => $data['driver']['id'], // Use the ID directly
       'vehicle_id' => $data['vehicle']['id'], // Use the ID directly
       'created_by' => $data['creator']['id'],
       'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
       'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
-      'previous_reservation' => $data['id'],
       'reason_for_status_change' => $data['reason_for_status_change'],
+      'previous_reservation' => $data['id'],
     ];
 
+//    dd($newReservationData['id'], $reservation->id);
 
     // Create a new reservation with the prepared data
-    Reservation::insert($newReservationData);
+    $newReservation = Reservation::create($newReservationData);
+
+//    ]);
 
     $reservation->update(['status' => 'rescheduled']);
 
@@ -165,7 +169,6 @@ class ReservationController extends Controller
 
     $data = $request->validated();
 
-//    dd('canceled', $data);pa make:request
     $reservation->update([
       'status' => 'denied',
       'reason_for_status_change' => $data['reason_for_status_change']]);
