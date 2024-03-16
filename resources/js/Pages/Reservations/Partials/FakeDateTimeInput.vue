@@ -20,13 +20,13 @@ const props = defineProps({
 
 <template>
   <section>
-    <div class="inline-flex items-center cursor-not-allowed
+    <div class="inline-flex items-center cursor-not-allowed text-muted-foreground
     whitespace-nowrap rounded-md text-sm
     ring-offset-background transition-colors
     focus-visible:outline-none focus-visible:ring-2
     focus-visible:ring-ring focus-visible:ring-offset-2
     disabled:pointer-events-none disabled:opacity-50
-    border-input hover:bg-accent hover:text-accent-foreground
+    border-input
     h-10 px-4 py-2 max-w-full min-w-full justify-start text-left font-normal bg-gray-50">
       <CalendarIcon class="mr-2 h-4 w-4"/>
       <span>{{ props.date ? moment(date).format('DD MMM HH:mm') : 'Sem data' }}</span>
