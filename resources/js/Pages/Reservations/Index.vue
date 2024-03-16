@@ -149,7 +149,7 @@ const calendarApp = createCalendar({
 
 <template>
     <AuthenticatedLayout>
-        <div>
+        <div class="h-screen">
             <div v-show="width < 700" class="flex justify-center my-4 gap-x-4">
                 <Button
                     @click="handleAgendar"
@@ -166,7 +166,7 @@ const calendarApp = createCalendar({
             </div>
 
             <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
-            <ScheduleXCalendar  class="sm:h-screen "
+            <ScheduleXCalendar  class="h-full"
                                :calendar-app="calendarApp"
             >
                 <template #monthGridEvent="{ calendarEvent }">
@@ -207,7 +207,6 @@ const calendarApp = createCalendar({
                     </div>
                 </template>
             </ScheduleXCalendar>
-            x
         </div>
     </AuthenticatedLayout>
     <UpdateReservationForm

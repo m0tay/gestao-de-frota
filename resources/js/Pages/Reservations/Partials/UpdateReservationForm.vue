@@ -52,7 +52,7 @@ const handleSubmit = () => {
             console.log(form)
             form.reset()
             emit('close')
-            // reloadPage()
+            reloadPage()
         }
     })
 }
@@ -102,8 +102,7 @@ const reloadPage = () => {
                 </section>
             </header>
 
-            <div class="mt-6 max-w-full">
-<!--                <div>prev_reserv:{{ props.selectedEvent.previous_reservation }}</div>-->
+            <div class="mt-6 max-w-full" v-if="props.selectedEvent.previous_reservation">
                 <PreviousReservation :previous-reservations="props.previousReservations" :previous-reservation="props.selectedEvent.previous_reservation"/>
             </div>
             <div class="flex gap-x-2 text-muted-foreground">

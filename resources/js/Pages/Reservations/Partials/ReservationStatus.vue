@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <pre>id:{{props.reservation.id}}</pre>
+<!--    <pre>id:{{props.reservation.id}}</pre>-->
 
   <div class="group transition-all flex flex-col justify-center items-center">
     <h2 class="text-xl font-bold text-gray-300 group-hover:text-gray-900">Status</h2>
