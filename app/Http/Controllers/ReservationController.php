@@ -16,6 +16,11 @@ use Inertia\Inertia;
 
 class ReservationController extends Controller
 {
+    protected array $authorized = [
+        'admin',
+        'manager'
+    ];
+
     /**
      * Displays a list of reservations.
      *
@@ -33,11 +38,17 @@ class ReservationController extends Controller
 
         // TODO: Check for past due reservations and apply `done` to them
 
-        $drivers = User::query(function ($query) {
-            return $query->select('id', 'name');
-        })->get();
+        $drivers = null;
 
-        $vehicles = Vehicle::query(function ($query) {
+        if (!in_array(Auth::user()->role->name, $this->authorized)) {
+            $drivers = User::find(Auth::user());
+        } else {
+            $drivers = User::query(function ($query) {
+                return $query->select('id', 'name');
+            })->get();
+        }
+
+        $vehicles = Vehicle::where('group', 'public')->getQuery(function ($query) {
             return $query->select('id', 'plate');
         })->get();
 
