@@ -90,10 +90,13 @@ onBeforeUpdate(() => {
                 </section>
             </header>
 
-            <div class="mt-6 max-w-full">
-                <!--        <PreviousReservation v-show="props.selectedEvent.previous_reservation"-->
-                <!--                             :previous-reservations="props.previousReservations"-->
-                <!--                             :previous-reservation="props.selectedEvent.previous_reservation"/>-->
+            <div class="mt-6 max-w-full" v-if="props.selectedEvent.previous_reservation">
+                <!--                <pre>{{ props.selectedEvent.previous_reservation }}</pre>-->
+                <PreviousReservation
+
+                    :previous-reservations="props.previousReservations"
+                    :previous-reservation="props.selectedEvent.previous_reservation"
+                />
             </div>
             <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
                 <div class="w-full">
@@ -128,14 +131,14 @@ onBeforeUpdate(() => {
 
             <div class="mt-6 max-w-full">
                 <div v-show="props.selectedEvent.status === 'denied'">
-                    <InputLabel  value="Pretexto para cancelamento" for="reason_for_status_change"/>
+                    <InputLabel value="Pretexto para cancelamento" for="reason_for_status_change"/>
                     <textarea disabled
                               class="text-muted-foreground flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
                 </div>
                 <div v-show="props.selectedEvent.status === 'rescheduled'">
                     <InputLabel
-                                value="Pretexto para reagendamento" for="reason_for_status_change"/>
+                        value="Pretexto para reagendamento" for="reason_for_status_change"/>
                     <textarea disabled
                               class="text-muted-foreground flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
