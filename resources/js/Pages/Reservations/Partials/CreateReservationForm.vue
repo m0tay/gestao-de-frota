@@ -9,6 +9,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import {Textarea} from "@/Components/ui/textarea/index.js";
 import DateTimeInput from "@/Components/DateTimeInput.vue";
 import moment from "moment";
+import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
 
 const page = usePage()
 
@@ -68,16 +69,22 @@ onBeforeUpdate(() => {
     <Modal v-model:show="props.show" @close="$emit('close')">
         <section class="space-y-6 p-8 w-full" @contextmenu.prevent>
             <header>
-                <h2 class="text-xl font-bold text-gray-900">Agendar Requisição</h2>
+                <section class="flex flex-col lg:flex-row justify-between gap-y-6">
+                    <div class="group">
+                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Agendar
+                            Requisição</h2>
+                        <div
+                            class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="w-6 h-6 flex-shrink-0">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+                            </svg>
+                            <small class="lg:my-auto">Preencha os campos abaixo para agendar um veículo</small>
+                        </div>
+                    </div>
+                </section>
             </header>
-            <!--      <div class="flex gap-x-2 text-muted-foreground">-->
-            <!--        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-            <!--             stroke="currentColor" class="w-6 h-6 flex-shrink-0">-->
-            <!--          <path stroke-linecap="round" stroke-linejoin="round"-->
-            <!--                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>-->
-            <!--        </svg>-->
-            <!--        <small class="lg:my-auto">Preencha os campos aba</small>-->
-            <!--      </div>-->
 
             <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
                 <div class="w-full">
@@ -92,7 +99,7 @@ onBeforeUpdate(() => {
                 </div>
             </div>
 
-            <div class="mt-6 max-w-full">
+            <div v-show="false" class="mt-6 max-w-full">
                 <InputLabel value="Agendado por" for="driver"/>
                 <!-- todo: after remove it as it will be sent without the user needing to see -->
                 <SelectInput disabled id="driver" :list="drivers" v-model="form.driver.id"
