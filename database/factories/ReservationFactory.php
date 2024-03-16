@@ -30,9 +30,16 @@ class ReservationFactory extends Factory
         $driver = fake()->randomElement(User::all());
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
-        $users = User::whereHas('role', function ($query) {
-            $query->where('name', 'admin')->orWhere('name', 'manager');
-        })->get();
+
+        $creator = null;
+
+        if(mt_rand(0, 1)) {
+            $creator = User::whereHas('role', function ($query) {
+                $query->where('name', 'admin')->orWhere('name', 'manager');
+            })->get()->random();
+        } else {
+            $creator = clone $driver;
+        }
 
 
         return [
@@ -40,7 +47,7 @@ class ReservationFactory extends Factory
             'start' => $start_date,
             'end' => $end_date,
             'status' => $status,
-            'created_by' => $users->random(),
+            'created_by' => $creator,
             'driver_id' => $driver,
             'vehicle_id' => $vehicle,
             'description' => fake()->sentence(6),

@@ -3,7 +3,7 @@ import Modal from "@/Components/Modal.vue";
 import {computed, onBeforeUpdate, onMounted, onUpdated, ref, watch} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -16,7 +16,9 @@ import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.v
 import {Button} from "@/Components/ui/button/index.js";
 import ConfirmDialog from "@/Components/DeleteButtonDialog.vue";
 import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
+import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 
+const page = usePage()
 
 const props = defineProps({
     show: Boolean,
@@ -52,7 +54,7 @@ const handleSubmit = () => {
             console.log(form)
             form.reset()
             emit('close')
-            reloadPage()
+            // reloadPage()
         }
     })
 }
@@ -74,7 +76,8 @@ onBeforeUpdate(() => {
     form.clearErrors()
     form.start = moment(props.selectedEvent.start).toDate()
     form.end = moment(props.selectedEvent.end).toDate()
-    form.creator = props.selectedEvent.creator
+    // form.creator = props.selectedEvent.creator
+    form.creator = page.props.auth.user
     form.vehicle = props.selectedEvent.vehicle
     form.driver = props.selectedEvent.driver
     form.description = props.selectedEvent.description
@@ -95,7 +98,6 @@ const reloadPage = () => {
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div>
                         <h2 class="text-3xl text-center xl:text-4xl font-bold text-gray-900">Reagendar Requisição</h2>
-                        <small>Agendado por {{ props.selectedEvent.creator.name }}</small>
                     </div>
                     <ReservationStatus :reservation="props.selectedEvent"/>
 
@@ -126,6 +128,11 @@ const reloadPage = () => {
                     <DateTimeInput id="end" v-model="form.end"/>
                     <InputError :message="form.errors.end"/>
                 </div>
+            </div>
+
+            <div class="mt-6 max-w-full">
+                <InputLabel value="Agendado por" for="creator"/>
+                <FakeSelectInput disabled id="creator" :placeholder="props.selectedEvent.creator.name"/>
             </div>
 
             <div class="mt-6 max-w-full">
