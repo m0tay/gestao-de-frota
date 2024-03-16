@@ -25,7 +25,7 @@ const pr = props.previousReservations.find(reservation => reservation.id === pro
 </script>
 
 <template>
-  <Card v-if="pr">
+  <Card v-show="pr">
     <CardHeader>
       <CardTitle>Requisição anterior</CardTitle>
 <!--      <CardDescription></CardDescription>-->

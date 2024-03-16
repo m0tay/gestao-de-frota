@@ -91,9 +91,9 @@ onBeforeUpdate(() => {
       </header>
 
       <div class="mt-6 max-w-full">
-        <PreviousReservation v-show="props.selectedEvent.previous_reservation"
-                             :previous-reservations="props.previousReservations"
-                             :previous-reservation="props.selectedEvent.previous_reservation"/>
+<!--        <PreviousReservation v-show="props.selectedEvent.previous_reservation"-->
+<!--                             :previous-reservations="props.previousReservations"-->
+<!--                             :previous-reservation="props.selectedEvent.previous_reservation"/>-->
       </div>
       <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
         <div class="w-full">

@@ -98,11 +98,11 @@ const reloadPage = () => {
         </section>
       </header>
 
-      <div class="mt-6 max-w-full">
-        <PreviousReservation :previous-reservation="20"
-                             :previous-reservations="props.previousReservations"
-                             :reason-for-status-change="props.selectedEvent.previous_reservation"/>
-      </div>
+<!--      <div class="mt-6 max-w-full">-->
+<!--        <PreviousReservation :previous-reservation="20"-->
+<!--                             :previous-reservations="props.previousReservations"-->
+<!--                             :reason-for-status-change="props.selectedEvent.previous_reservation"/>-->
+<!--      </div>-->
       <div class="flex gap-x-2 text-muted-foreground">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
              stroke="currentColor" class="w-6 h-6 flex-shrink-0">

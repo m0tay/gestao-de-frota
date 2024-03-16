@@ -33,7 +33,7 @@ const authorized = ref([
               </div>
 
               <!-- Navigation Links -->
-              <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+              <div class="hidden space-x-08 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)" :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
