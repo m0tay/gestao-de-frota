@@ -38,8 +38,8 @@ console.log(pr)
 <template>
     <Card v-show="pr">
         <CardHeader>
-            <CardTitle>Requisição anterior {{ pr.id }}</CardTitle>
-            <!--      <CardDescription></CardDescription>-->
+            <CardTitle>Requisição anterior</CardTitle>
+                  <CardDescription>Agendado por {{pr.creator.name}}</CardDescription>
         </CardHeader>
         <CardContent>
 

@@ -28,7 +28,7 @@ class StoreReservationRequest extends FormRequest
     {
         return [
             'start' => 'saída',
-            'end' => 'regresso',
+            'end' => 'retorno',
             'driver' => 'condutor',
             'vehicle' => 'veículo',
             'description' => 'descrição',

@@ -71,6 +71,7 @@ onBeforeUpdate(() => {
                 <section class="flex flex-col lg:flex-row justify-between">
                     <div>
                         <h2 class="text-3xl text-center xl:text-4xl font-bold text-gray-900">Sobre esta Requisição</h2>
+                        <small>Agendado por {{props.selectedEvent.creator.name}}</small>
                         <!--            <div class="flex items-start gap-x-2 text-muted-foreground">-->
                         <!--              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
                         <!--                   stroke="currentColor" class="w-6 h-6">-->

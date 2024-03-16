@@ -95,7 +95,7 @@ const reloadPage = () => {
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div>
                         <h2 class="text-3xl text-center xl:text-4xl font-bold text-gray-900">Reagendar Requisição</h2>
-
+                        <small>Agendado por {{ props.selectedEvent.creator.name }}</small>
                     </div>
                     <ReservationStatus :reservation="props.selectedEvent"/>
 
@@ -103,7 +103,8 @@ const reloadPage = () => {
             </header>
 
             <div class="mt-6 max-w-full" v-if="props.selectedEvent.previous_reservation">
-                <PreviousReservation :previous-reservations="props.previousReservations" :previous-reservation="props.selectedEvent.previous_reservation"/>
+                <PreviousReservation :previous-reservations="props.previousReservations"
+                                     :previous-reservation="props.selectedEvent.previous_reservation"/>
             </div>
             <div class="flex gap-x-2 text-muted-foreground">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -145,7 +146,7 @@ const reloadPage = () => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Descrição" for="description"/>
-                <Textarea disabled class="w-full" id="description" v-model="form.description"
+                <Textarea class="w-full" id="description" v-model="form.description"
                           :placeholder="form.description"/>
                 <InputError :message="form.errors.description"/>
             </div>
@@ -154,7 +155,7 @@ const reloadPage = () => {
                 <InputLabel value="Pretexo do cancelamento ou reagendamento" for="reason_for_status_change"/>
                 <Textarea class="w-full" id="reason_for_status_change" v-model="form.reason_for_status_change"
                           :placeholder="form.reason_for_status_change"/>
-                <InputError :message="form.errors.description"/>
+                <InputError :message="form.errors.reason_for_status_change"/>
             </div>
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
                 <Button variant="secondary" @click="$emit('close')">Mudei de Ideia</Button>
