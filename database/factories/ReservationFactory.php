@@ -13,35 +13,38 @@ use Carbon\Carbon;
  */
 class ReservationFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition()
-  {
-    $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-02-01', '2024-04-31')->getTimestamp());
-    $start_date->minute = fake()->randomElement([0, 30]);
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-02-01', '2024-04-31')->getTimestamp());
+        $start_date->minute = fake()->randomElement([0, 30]);
 
-    $end_date = clone $start_date;
-    $end_date->minute = fake()->randomElement([0, 30]);
-    $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour', '+4 hour', '+1 day']));
-    $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
-    $driver = fake()->randomElement(User::all());
-    $title = strtoupper($vehicle->plate) . " - " . $driver->name;
-    $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
+        $end_date = clone $start_date;
+        $end_date->minute = fake()->randomElement([0, 30]);
+        $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour', '+4 hour', '+1 day']));
+        $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
+        $driver = fake()->randomElement(User::all());
+        $title = strtoupper($vehicle->plate) . " - " . $driver->name;
+        $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
+        $users = User::whereHas('role', function ($query) {
+            $query->where('name', 'admin')->orWhere('name', 'manager');
+        })->get();
 
 
-    return [
-      'title' => $title,
-      'start' => $start_date,
-      'end' => $end_date,
-      'status' => $status,
-      'created_by' => fake()->randomElement(User::all()),
-      'driver_id' => $driver,
-      'vehicle_id' => $vehicle,
-      'description' => fake()->sentence(6),
-      'reason_for_status_change' => $status === 'denied' ? fake()->randomElement(['foi preciso', 'contacte-nos', 'sem cabimento', 'cancelado']) : '',
-    ];
-  }
+        return [
+            'title' => $title,
+            'start' => $start_date,
+            'end' => $end_date,
+            'status' => $status,
+            'created_by' => $users->random(),
+            'driver_id' => $driver,
+            'vehicle_id' => $vehicle,
+            'description' => fake()->sentence(6),
+            'reason_for_status_change' => $status === 'denied' ? fake()->randomElement(['foi preciso', 'contacte-nos', 'sem cabimento', 'cancelado']) : '',
+        ];
+    }
 }
