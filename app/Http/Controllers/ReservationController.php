@@ -78,7 +78,7 @@ class ReservationController extends Controller
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-//    dd($data);
+        dd($data);
 
         Reservation::create([
             'title' => $data['title'],

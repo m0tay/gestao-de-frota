@@ -17,8 +17,15 @@ import {useWindowSize} from '@vueuse/core'
 import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue";
 import {Button} from "@/Components/ui/button/index.js";
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
+import {usePage} from "@inertiajs/vue3";
+
+const authorized = ref([
+    1,
+    2,
+])
 
 const {width} = useWindowSize()
+const page = usePage()
 
 
 const props = defineProps({
@@ -101,6 +108,12 @@ const calendarApp = createCalendar({
 
             selectedEvent.value = calendarEvent
 
+            if (!authorized.value.includes(page.props.auth.user.role_id)) {
+                showViewReservation.value = true
+                return
+            }
+
+
             if (calendarEvent.status === 'rescheduled') {
                 console.log('rescheduled')
                 showViewReservation.value = true
@@ -149,7 +162,7 @@ const calendarApp = createCalendar({
 
 <template>
     <AuthenticatedLayout>
-        <div class="h-screen">
+        <div>
             <div v-show="width < 700" class="flex justify-center my-4 gap-x-4">
                 <Button
                     @click="handleAgendar"
@@ -166,7 +179,7 @@ const calendarApp = createCalendar({
             </div>
 
             <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
-            <ScheduleXCalendar  class="h-full"
+            <ScheduleXCalendar class="h-screen"
                                :calendar-app="calendarApp"
             >
                 <template #monthGridEvent="{ calendarEvent }">
