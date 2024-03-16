@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
     ];
 
     $adminUser = User::factory()->create([
-      'name' => 'Mykola (Admin)',
+      'name' => 'Mykola',
       'email' => 'admin@admin.com',
       'company' => 'roboplan',
       'role_id' => $roles['admin']
     ]);
 
     $managerUser = User::factory()->create([
-      'name' => 'José (Gestor))',
+      'name' => 'José',
       'email' => 'manager@manager.com',
       'password' => bcrypt('password'),
       'company' => 'roboplan',
