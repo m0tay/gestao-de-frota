@@ -78,7 +78,7 @@ class ReservationController extends Controller
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-        dd($data);
+//        dd($data);
 
         Reservation::create([
             'title' => $data['title'],
@@ -88,6 +88,7 @@ class ReservationController extends Controller
             'created_by' => $data['creator']['id'],
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
+            'status' => 'accepted',
         ]);
 
         return back();

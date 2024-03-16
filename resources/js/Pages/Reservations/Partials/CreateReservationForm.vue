@@ -9,7 +9,11 @@ import SelectInput from "@/Components/SelectInput.vue";
 import {Textarea} from "@/Components/ui/textarea/index.js";
 import DateTimeInput from "@/Components/DateTimeInput.vue";
 import moment from "moment";
-import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
+
+const authorized = ref([
+    1,
+    2,
+])
 
 const page = usePage()
 
@@ -62,6 +66,7 @@ onBeforeUpdate(() => {
     form.creator = page.props.auth.user
     form.driver = page.props.auth.user
     form.description = ''
+    form.status = 'accepted'
 })
 </script>
 
@@ -109,14 +114,13 @@ onBeforeUpdate(() => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Condutor" for="driver"/>
-                <SelectInput id="driver" :list="drivers" v-model="form.driver.id" :placeholder="form.driver.name"/>
+                <SelectInput :disabled="!authorized.includes(page.props.auth.user.role_id)" id="driver" :list="drivers" v-model="form.driver.id" :placeholder="form.driver.name"/>
                 <InputError :message="form.errors.driver"/>
             </div>
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Veículo" for="vehicle"/>
                 <SelectInput id="driver" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
-
                 <InputError :message="form.errors.vehicle"/>
             </div>
 
@@ -132,7 +136,7 @@ onBeforeUpdate(() => {
                 <Button
                     @click="handleSubmit"
                 >
-                    Reagendar
+                    Agendar
                 </Button>
 
             </div>

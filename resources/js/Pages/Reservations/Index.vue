@@ -38,7 +38,7 @@ const props = defineProps({
 const showModalEdit = ref(false)
 const showModalCreate = ref(false)
 const showModalList = ref(false)
-const showViewReservation = ref(false)
+const showModalViewReservation = ref(false)
 const selectedEvent = ref(null)
 const eventsList = ref(false)
 
@@ -46,7 +46,7 @@ const closeModal = () => {
     showModalCreate.value = false
     showModalEdit.value = false
     showModalList.value = false
-    showViewReservation.value = false
+    showModalViewReservation.value = false
 }
 
 const handleAgendar = () => {
@@ -109,26 +109,26 @@ const calendarApp = createCalendar({
             selectedEvent.value = calendarEvent
 
             if (!authorized.value.includes(page.props.auth.user.role_id)) {
-                showViewReservation.value = true
+                showModalViewReservation.value = true
                 return
             }
 
 
             if (calendarEvent.status === 'rescheduled') {
                 console.log('rescheduled')
-                showViewReservation.value = true
+                showModalViewReservation.value = true
                 return
             }
 
             if (calendarEvent.status === 'denied') {
                 console.log('denied')
-                showViewReservation.value = true
+                showModalViewReservation.value = true
                 return
             }
 
             if (calendarEvent.status === 'done') {
                 console.log('done')
-                showViewReservation.value = true
+                showModalViewReservation.value = true
                 return
             }
 
@@ -243,7 +243,7 @@ const calendarApp = createCalendar({
     />
     <ViewReservation
         @close="closeModal"
-        :show="showViewReservation"
+        :show="showModalViewReservation"
         :selected-event
         :previous-reservations
     />
