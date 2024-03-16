@@ -13,14 +13,26 @@ class StoreReservationRequest extends FormRequest
      */
     public function rules(): array
     {
-      return [
-        'start' => 'required|after_or_equal:now',
-        'end' => 'required|after:start',
-        'driver' => 'required',
-        'creator' => 'required',
-        'vehicle'=> 'required',
-        'description' => 'required',
-        'status' => 'required',
-      ];
+        return [
+            'start' => 'required|after_or_equal:now',
+            'end' => 'required|after:start',
+            'driver' => 'required',
+            'creator' => 'required',
+            'vehicle' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'start' => 'saída',
+            'end' => 'regresso',
+            'driver' => 'condutor',
+            'vehicle' => 'veículo',
+            'description' => 'descrição',
+            'reason_for_status_change' => 'pretexto para alteração do status',
+        ];
     }
 }
