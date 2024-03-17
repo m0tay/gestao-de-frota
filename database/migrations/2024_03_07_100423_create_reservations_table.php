@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamp('start');
             $table->timestamp('end');
+            $table->timestamp('return')->nullable();
             $table->enum('status', ['accepted', 'denied', 'done', 'rescheduled']);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('driver_id')->constrained('users');
