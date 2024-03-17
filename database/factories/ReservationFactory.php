@@ -30,6 +30,7 @@ class ReservationFactory extends Factory
         $driver = fake()->randomElement(User::all());
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
+        $status2 = fake()->randomElement(['accepted', 'denied', 'rescheduled']);
 
         $creator = null;
 
@@ -46,7 +47,7 @@ class ReservationFactory extends Factory
             'title' => $title,
             'start' => $start_date,
             'end' => $end_date,
-            'status' => $status,
+            'status' => $status2,
             'created_by' => $creator,
             'driver_id' => $driver,
             'vehicle_id' => $vehicle,
