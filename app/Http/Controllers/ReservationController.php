@@ -73,12 +73,12 @@ class ReservationController extends Controller
 
         $data = $request->validated();
 
-        $driverName = User::find($data['driver'])->name;
-        $vehiclePlate = Vehicle::find($data['vehicle'])->plate;
+        $driverName = User::find($data['driver']['id'])->name;
+        $vehiclePlate = Vehicle::find($data['vehicle']['id'])->plate;
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-        dd($data);
+//        dd($data);
 
         Reservation::create([
             'title' => $data['title'],
