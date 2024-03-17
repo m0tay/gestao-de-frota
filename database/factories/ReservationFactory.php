@@ -32,6 +32,15 @@ class ReservationFactory extends Factory
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
         $status2 = fake()->randomElement(['accepted', 'denied', 'rescheduled']);
 
+        $return = null;
+
+        if(mt_rand(0, 1)) {
+            $return = fake()->dateTimeBetween($start_date, $end_date);
+        } else {
+            $end = clone $end_date;
+            $return = fake()->dateTimeBetween($start_date, $end->modify(fake()->randomElement(['+1 hour', '+2 hour', '+5 minute', '+15 minute', '+30 minute'])));
+        }
+
         $creator = null;
 
         if(mt_rand(0, 1)) {
@@ -47,6 +56,7 @@ class ReservationFactory extends Factory
             'title' => $title,
             'start' => $start_date,
             'end' => $end_date,
+            'return' => $return,
             'status' => $status2,
             'created_by' => $creator,
             'driver_id' => $driver,

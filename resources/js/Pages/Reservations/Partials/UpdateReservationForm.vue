@@ -1,7 +1,7 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
 import {onBeforeUpdate} from "vue";
-import {useForm, usePage, Link} from "@inertiajs/vue3";
+import {useForm, usePage, Link, router} from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -13,6 +13,7 @@ import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.v
 import {Button} from "@/Components/ui/button/index.js";
 import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
 import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
+import ReturningButtonDialog from "@/Pages/Reservations/Partials/ReturningButtonDialog.vue";
 
 const page = usePage()
 
@@ -29,8 +30,14 @@ const props = defineProps({
 })
 
 const form = useForm({
-    start: Date,
-    end: Date,
+    start: {
+        type: Date,
+        required: false,
+    },
+    end: {
+        type: Date,
+        required: false,
+    },
     driver: Number,
     vehicle: Number,
     creator: Number,
@@ -42,6 +49,11 @@ const form = useForm({
 const formCancel = useForm({
     reason_for_status_change: String,
 })
+
+const formReturning = useForm({
+    id: Number,
+})
+
 
 const emit = defineEmits(['close']);
 
@@ -68,6 +80,16 @@ const handleCancel = () => {
     })
 }
 
+const handleReturning = () => {
+    formReturning.post(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+        onSuccess: () => {
+            form.reset()
+            emit('close')
+            reloadPage()
+        }
+    })
+}
+
 onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
@@ -80,6 +102,7 @@ onBeforeUpdate(() => {
     form.id = props.selectedEvent.id
     form.reason_for_status_change = ''
     formCancel.reason_for_status_change = ''
+    formReturning.id = props.selectedEvent.id
 })
 
 const reloadPage = () => {
@@ -93,7 +116,8 @@ const reloadPage = () => {
             <header>
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div class="group">
-                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Gestão de Agendamento</h2>
+                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Gestão de
+                            Agendamento</h2>
                         <div
                             class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -104,7 +128,10 @@ const reloadPage = () => {
                                     stroke-linejoin="round"/>
                             </svg>
                             <small class="lg:my-auto">
-                                Para mais informações carregue <Link class="hover:underline hover:text-sky-400" :href="route('reservations.index')">aqui.</Link>
+                                Para mais informações carregue
+                                <Link class="hover:underline hover:text-sky-400" :href="route('reservations.index')">
+                                    aqui.
+                                </Link>
                             </small>
                         </div>
                     </div>
@@ -123,6 +150,7 @@ const reloadPage = () => {
                     <DateTimeInput id="start" v-model="form.start"/>
                     <InputError :message="form.errors.start"/>
                 </div>
+
                 <div class="w-full">
                     <InputLabel for="end" value="Até:"/>
                     <DateTimeInput id="end" v-model="form.end"/>
@@ -148,7 +176,6 @@ const reloadPage = () => {
                 <InputError :message="form.errors.vehicle"/>
             </div>
 
-
             <div class="mt-6 max-w-full">
                 <InputLabel for="description" value="Descrição"/>
                 <Textarea id="description" v-model="form.description" :placeholder="form.description"
@@ -163,6 +190,7 @@ const reloadPage = () => {
                           class="w-full"/>
                 <InputError :message="form.errors.reason_for_status_change"/>
             </div>
+
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
                 <Button variant="secondary" @click="$emit('close')">Mudei de Ideia</Button>
 
@@ -172,10 +200,12 @@ const reloadPage = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     @click="handleSubmit"
+                    class="bg-amber-500 hover:bg-amber-400"
                 >
                     Reagendar
                 </Button>
 
+                <ReturningButtonDialog @returning="handleReturning" />
             </div>
         </section>
     </Modal>

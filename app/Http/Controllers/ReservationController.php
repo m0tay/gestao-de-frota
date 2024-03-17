@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CancelReservationRequest;
+use App\Http\Requests\ReturningReservationRequest;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -39,7 +41,7 @@ class ReservationController extends Controller
             if (Reservation::where('end', '<', now())
                 ->whereNotIn('status', ['rescheduled', 'denied'])
                 ->update(['status' => 'done'])
-        ) {
+            ) {
                 $reservation->update(['status' => 'done']);
             }
         }
@@ -147,6 +149,21 @@ class ReservationController extends Controller
         $reservation->update([
             'status' => 'denied',
             'reason_for_status_change' => $data['reason_for_status_change']]);
+
+        return back();
+    }
+
+    public function returning(ReturningReservationRequest $request, Reservation $reservation)
+    {
+        $this->authorize('returning', [Reservation::class, $reservation]);
+
+        $data = $request->validated();
+
+        $reservation->update([
+            'status' => 'done',
+        ]);
+
+//        dd($data);
 
         return back();
     }

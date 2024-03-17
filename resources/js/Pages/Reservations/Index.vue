@@ -175,10 +175,10 @@ const calendarApp = createCalendar({
             >
                 <template #monthGridEvent="{ calendarEvent }">
                     <div :class="{
-                          'bg-green-400': calendarEvent.status === 'accepted',
-                          'bg-red-400': calendarEvent.status === 'denied',
-                          'bg-sky-400': calendarEvent.status === 'done',
-                          'bg-amber-200': calendarEvent.status === 'rescheduled',
+                          'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
                           }"
                          class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded">
                         {{ calendarEvent.title }}
@@ -187,10 +187,10 @@ const calendarApp = createCalendar({
                 </template>
                 <template #monthAgendaEvent="{ calendarEvent }">
                     <div :class="{
-                          'bg-green-400': calendarEvent.status === 'accepted',
-                          'bg-red-400': calendarEvent.status === 'denied',
-                          'bg-sky-400': calendarEvent.status === 'done',
-                          'bg-amber-200': calendarEvent.status === 'rescheduled',
+                          'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
                           }"
                          class="event m-2 cursor-pointer p-2 font-semibold">
                         <div>{{ calendarEvent.title }}</div>
@@ -201,10 +201,10 @@ const calendarApp = createCalendar({
                 </template>
                 <template #timeGridEvent="{ calendarEvent }">
                     <div :class="{
-                          'bg-green-400': calendarEvent.status === 'accepted',
-                          'bg-red-400': calendarEvent.status === 'denied',
-                          'bg-sky-400': calendarEvent.status === 'done',
-                          'bg-amber-200': calendarEvent.status === 'rescheduled',
+                          'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
+                          'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
+                          'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
+                          'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
                           }"
                          class="event m-2 cursor-pointer p-2 font-semibold">
                         {{ calendarEvent.title }}

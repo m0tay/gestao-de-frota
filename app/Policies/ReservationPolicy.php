@@ -50,6 +50,12 @@ class ReservationPolicy
     return in_array($user->role->name, $this->authorized);
   }
 
+    public function returning(User $user, Reservation $reservation): bool
+    {
+
+        return in_array($user->role->name, $this->authorized) || $reservation->driver->id === $user->id;
+    }
+
   public function cancel(User $user, Reservation $reservation): bool
   {
 
