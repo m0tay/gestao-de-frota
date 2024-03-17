@@ -34,10 +34,19 @@ class ReservationController extends Controller
 
         $previousReservations = Reservation::where('status', 'rescheduled')->with('creator', 'driver', 'vehicle')->get();
 
-        // TODO: Check for past due reservations and apply `done` to them
+        // Check for past due reservations and apply `done` to them if not already denied
+        foreach ($reservations as $reservation) {
+            if (Reservation::where('end', '<', now())
+                ->whereNotIn('status', ['rescheduled', 'denied'])
+                ->update(['status' => 'done'])
+        ) {
+                $reservation->update(['status' => 'done']);
+            }
+        }
 
         $drivers = null;
 
+        // Only sending one driver for the unauthorized user, and multiple for authorized ones
         if (!in_array(Auth::user()->role->name, $this->authorized)) {
             $drivers = User::find(Auth::user());
         } else {
