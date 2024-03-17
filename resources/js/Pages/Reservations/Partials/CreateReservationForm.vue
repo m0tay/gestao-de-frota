@@ -121,7 +121,7 @@ onBeforeUpdate(() => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Veículo" for="vehicle"/>
-                <SelectInput id="driver" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
+                <SelectInput id="vehicle" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
                 <InputError :message="form.errors.vehicle"/>
             </div>
 
