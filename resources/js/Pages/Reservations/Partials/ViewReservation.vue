@@ -50,27 +50,14 @@ const formReturning = useForm({
     id: Number,
 })
 
+const emit = defineEmits(['close']);
+
 const handleReturning = () => {
     formReturning.post(route('reservations.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             form.reset()
             emit('close')
             reloadPage()
-        }
-    })
-}
-
-
-const emit = defineEmits(['close']);
-
-
-const handleSubmit = () => {
-
-    form.put(route('reservations.update', {reservation: props.selectedEvent.id}), {
-        onSuccess: () => {
-            console.log(form)
-            form.reset()
-            emit('close'); // Close the modal
         }
     })
 }
@@ -117,9 +104,7 @@ const reloadPage = () => {
             </header>
 
             <div class="mt-6 max-w-full" v-if="props.selectedEvent.previous_reservation">
-                <!--                <pre>{{ props.selectedEvent.previous_reservation }}</pre>-->
                 <PreviousReservation
-
                     :previous-reservations="props.previousReservations"
                     :previous-reservation="props.selectedEvent.previous_reservation"
                 />
@@ -165,13 +150,16 @@ const reloadPage = () => {
             </div>
 
             <div class="mt-6 max-w-full">
-                <div v-show="props.selectedEvent.status === 'denied' && authorized.includes(page.props.auth.user.role_id)">
+                <div
+                    v-show="props.selectedEvent.status === 'denied' && authorized.includes(page.props.auth.user.role_id)">
                     <InputLabel value="Pretexto para cancelamento" for="reason_for_status_change"/>
                     <textarea disabled
                               class="text-muted-foreground flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
                 </div>
-                <div v-show="props.selectedEvent.status === 'rescheduled' && authorized.includes(page.props.auth.user.role_id)">
+
+                <div
+                    v-show="props.selectedEvent.status === 'rescheduled' && authorized.includes(page.props.auth.user.role_id)">
                     <InputLabel
                         value="Pretexto para reagendamento" for="reason_for_status_change"/>
                     <textarea disabled
@@ -187,7 +175,9 @@ const reloadPage = () => {
                     Mudei de Ideia
                 </Button>
 
-                <Button v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id" @click="handleReturning">
+                <Button
+                    v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
+                    @click="handleReturning">
                     Entregar
                 </Button>
             </div>
