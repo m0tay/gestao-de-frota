@@ -19,6 +19,7 @@ const page = usePage()
 
 const props = defineProps({
     show: Boolean,
+    clickedDate: Date,
     drivers: Array,
     vehicles: Array,
 })
@@ -27,7 +28,10 @@ const form = useForm({
     start: Date,
     end: Date,
     driver: Number,
-    vehicle: Number,
+    vehicle: {
+        type: Number,
+        id: null
+    },
     creator: Number,
     description: String,
 })

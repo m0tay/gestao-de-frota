@@ -41,6 +41,7 @@ const showModalList = ref(false)
 const showModalViewReservation = ref(false)
 const selectedEvent = ref(null)
 const eventsList = ref(false)
+const clickedDate = ref(null)
 
 const closeModal = () => {
     showModalCreate.value = false
@@ -82,6 +83,7 @@ const calendarApp = createCalendar({
 
             // Compare the clicked date with the current date using isBefore
             if (clickedDate.isSameOrAfter(moment(), 'day')) {
+                clickedDate.value = clickedDate
                 showModalCreate.value = true;
             }
         },
@@ -224,13 +226,13 @@ const calendarApp = createCalendar({
         :previous-reservations
         :drivers
         :vehicles
-        v-if="showModalCreate.value"
     />
     <CreateReservationForm
         @close="closeModal"
         :show="showModalCreate"
         :drivers
         :vehicles
+        :clicked-date
     />
     <ListReservations
         @close="closeModal"
@@ -242,7 +244,5 @@ const calendarApp = createCalendar({
         :show="showModalViewReservation"
         :selected-event
         :previous-reservations
-        v-if="showModalCreate.value"
-
     />
 </template>
