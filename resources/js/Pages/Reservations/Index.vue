@@ -75,20 +75,15 @@ const calendarApp = createCalendar({
          * Is called when clicking a date in the month grid
          * */
         onClickDate(date) {
-            console.log('onClickDate', date) // e.g. 2024-01-01
-            showModalCreate.value = true
+            console.log('onClickDate', date); // e.g. 2024-01-01
 
-            //
-            // const filteredEvents = props.reservations.filter(event => {
-            //   const eventDate = moment(event.start).format('YYYY-MM-DD');
-            //   return eventDate === date;
-            // });
-            //
-            // if (!filteredEvents.length) return
-            //
-            // eventsList.value = filteredEvents;
-            //
-            // showModalList.value = true;
+            // Convert the clicked date to a Moment.js object
+            const clickedDate = moment(date);
+
+            // Compare the clicked date with the current date using isBefore
+            if (clickedDate.isSameOrAfter(moment(), 'day')) {
+                showModalCreate.value = true;
+            }
         },
 
         // /**
@@ -229,6 +224,7 @@ const calendarApp = createCalendar({
         :previous-reservations
         :drivers
         :vehicles
+        v-if="showModalCreate.value"
     />
     <CreateReservationForm
         @close="closeModal"
@@ -246,5 +242,7 @@ const calendarApp = createCalendar({
         :show="showModalViewReservation"
         :selected-event
         :previous-reservations
+        v-if="showModalCreate.value"
+
     />
 </template>

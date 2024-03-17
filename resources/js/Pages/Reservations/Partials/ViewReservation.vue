@@ -19,7 +19,10 @@ import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.v
 
 const props = defineProps({
     show: Boolean,
-    selectedEvent: Object,
+    selectedEvent: {
+        type: Object,
+        required: false,
+    },
     previousReservations: Array,
     drivers: Array,
     vehicles: Array,
@@ -70,7 +73,8 @@ onBeforeUpdate(() => {
             <header>
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div class="group">
-                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Sobre esta Requisição</h2>
+                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Sobre esta
+                            Requisição</h2>
                         <div
                             class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -22,7 +22,10 @@ const page = usePage()
 
 const props = defineProps({
     show: Boolean,
-    selectedEvent: Object,
+    selectedEvent: {
+        type: Object,
+        required: false,
+    },
     previousReservations: Array,
     drivers: Array,
     vehicles: Array,
