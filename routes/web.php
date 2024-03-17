@@ -60,5 +60,6 @@ Route::controller(ReservationController::class)->group(function () {
   Route::get('/reservations/{reservation}/edit', 'edit')->name('reservations.edit');
   Route::put('/reservations/{reservation}', 'update')->name('reservations.update');
   Route::post('/reservations/{reservation}', 'cancel')->name('reservations.cancel');
+  Route::post('/reservations/{reservation}', 'returning')->name('reservations.returning');
   Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
 })->middleware('auth');

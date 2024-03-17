@@ -3,7 +3,7 @@ import Modal from "@/Components/Modal.vue";
 import {onBeforeUpdate, onMounted, onUpdated, ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -15,7 +15,15 @@ import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservati
 import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
 import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
+import {Button} from "@/Components/ui/button/index.js";
+import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
 
+const authorized = ref([
+    1,
+    2
+])
+
+const page = usePage()
 
 const props = defineProps({
     show: Boolean,
@@ -37,6 +45,20 @@ const form = useForm({
     description: String,
     id: Number,
 })
+
+const formReturning = useForm({
+    id: Number,
+})
+
+const handleReturning = () => {
+    formReturning.post(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+        onSuccess: () => {
+            form.reset()
+            emit('close')
+            reloadPage()
+        }
+    })
+}
 
 
 const emit = defineEmits(['close']);
@@ -63,8 +85,13 @@ onBeforeUpdate(() => {
     form.driver = props.selectedEvent.driver
     form.description = props.selectedEvent.description
     form.id = props.selectedEvent.id
+    formReturning.id = props.selectedEvent.id
+
 })
 
+const reloadPage = () => {
+    window.location.reload();
+}
 </script>
 
 <template>
@@ -138,13 +165,13 @@ onBeforeUpdate(() => {
             </div>
 
             <div class="mt-6 max-w-full">
-                <div v-show="props.selectedEvent.status === 'denied'">
+                <div v-show="props.selectedEvent.status === 'denied' && authorized.includes(page.props.auth.user.role_id)">
                     <InputLabel value="Pretexto para cancelamento" for="reason_for_status_change"/>
                     <textarea disabled
                               class="text-muted-foreground flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
                 </div>
-                <div v-show="props.selectedEvent.status === 'rescheduled'">
+                <div v-show="props.selectedEvent.status === 'rescheduled' && authorized.includes(page.props.auth.user.role_id)">
                     <InputLabel
                         value="Pretexto para reagendamento" for="reason_for_status_change"/>
                     <textarea disabled
@@ -154,17 +181,15 @@ onBeforeUpdate(() => {
                 </div>
             </div>
 
-            <div class="mt-6 flex justify-end">
+            <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
 
-                <PrimaryButton
-                    class="ms-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="$emit('close')"
-                >
-                    Sair
-                </PrimaryButton>
+                <Button variant="secondary" @click="$emit('close')">
+                    Mudei de Ideia
+                </Button>
 
+                <Button v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id" @click="handleReturning">
+                    Entregar
+                </Button>
             </div>
 
         </section>
