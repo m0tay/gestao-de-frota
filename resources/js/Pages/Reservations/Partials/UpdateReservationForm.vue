@@ -1,7 +1,7 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
 import {onBeforeUpdate} from "vue";
-import {useForm, usePage} from "@inertiajs/vue3";
+import {useForm, usePage, Link} from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -93,8 +93,7 @@ const reloadPage = () => {
             <header>
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div class="group">
-                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Reagendar
-                            Requisição</h2>
+                        <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Gestão de Agendamento</h2>
                         <div
                             class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -104,7 +103,9 @@ const reloadPage = () => {
                                     stroke-linecap="round"
                                     stroke-linejoin="round"/>
                             </svg>
-                            <small class="lg:my-auto">Altere as datas, condutor ou veículo para reagendar</small>
+                            <small class="lg:my-auto">
+                                Para mais informações carregue <Link class="hover:underline hover:text-sky-400" :href="route('reservations.index')">aqui.</Link>
+                            </small>
                         </div>
                     </div>
                     <ReservationStatus :reservation="props.selectedEvent"/>
