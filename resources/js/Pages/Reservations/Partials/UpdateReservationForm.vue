@@ -57,7 +57,7 @@ const handleSubmit = () => {
             console.log(form)
             form.reset()
             emit('close')
-            // reloadPage()
+            // TODO: add new reservation and update previous one
         }
     })
 }
@@ -69,7 +69,7 @@ const handleCancel = () => {
         onSuccess: () => {
             form.reset()
             emit('close')
-            reloadPage()
+            // TODO: update canceled event, not reload page
         }
     })
 }
@@ -149,7 +149,7 @@ const reloadPage = () => {
             <div class="mt-6 max-w-full">
                 <InputLabel value="Veículo" for="vehicle"/>
                 <!--        <TextInput class="w-full bg-gray-50" id="vehicle" v-model="form.vehicle.id"/>-->
-                <SelectInput id="driver" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
+                <SelectInput id="vehicle" :list="vehicles" v-model="form.vehicle.id" :placeholder="form.vehicle.plate"/>
 
                 <InputError :message="form.errors.vehicle"/>
             </div>
