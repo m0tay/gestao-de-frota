@@ -20,7 +20,6 @@ class StoreReservationRequest extends FormRequest
             'creator' => 'required',
             'vehicle' => 'required',
             'description' => 'required',
-            'status' => 'required',
         ];
     }
 
