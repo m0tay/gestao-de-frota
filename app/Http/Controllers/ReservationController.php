@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CancelReservationRequest;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
-use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ReservationController extends Controller
@@ -57,14 +55,6 @@ class ReservationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreReservationRequest $request)
@@ -94,6 +84,13 @@ class ReservationController extends Controller
         return back();
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Show a specific reservation
@@ -120,6 +117,29 @@ class ReservationController extends Controller
 //    return Inertia::render('Reservations/Edit', [
 //      'reservation' => $reservationResource->toArray(request())
 //    ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Reservation $reservation)
+    {
+        //
+    }
+
+    public function cancel(CancelReservationRequest $request, Reservation $reservation)
+    {
+        $this->authorize('cancel', [Reservation::class, $reservation]);
+
+        $data = $request->validated();
+
+//    dd($data);
+
+        $reservation->update([
+            'status' => 'denied',
+            'reason_for_status_change' => $data['reason_for_status_change']]);
+
+        return back();
     }
 
     /**
@@ -163,30 +183,6 @@ class ReservationController extends Controller
         $reservation->update(['status' => 'rescheduled',
             'reason_for_status_change' => $data['reason_for_status_change'],
         ]);
-
-        return back();
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
-    }
-
-    public function cancel(CancelReservationRequest $request, Reservation $reservation)
-    {
-        $this->authorize('cancel', [Reservation::class, $reservation]);
-
-        $data = $request->validated();
-
-//    dd($data);
-
-        $reservation->update([
-            'status' => 'denied',
-            'reason_for_status_change' => $data['reason_for_status_change']]);
 
         return back();
     }
