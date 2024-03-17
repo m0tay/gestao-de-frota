@@ -1,15 +1,9 @@
 <script setup>
 import {ScheduleXCalendar} from '@schedule-x/vue'
-import {
-    createCalendar,
-    viewDay,
-    viewWeek,
-    viewMonthGrid,
-    viewMonthAgenda,
-} from '@schedule-x/calendar'
+import {createCalendar, viewMonthAgenda, viewMonthGrid,} from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
 import moment from "moment";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
@@ -176,29 +170,29 @@ const calendarApp = createCalendar({
             </div>
 
             <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
-            <ScheduleXCalendar class="h-screen"
-                               :calendar-app="calendarApp"
+            <ScheduleXCalendar :calendar-app="calendarApp"
+                               class="h-screen"
             >
                 <template #monthGridEvent="{ calendarEvent }">
-                    <div class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded"
-                         :class="{
+                    <div :class="{
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-sky-400': calendarEvent.status === 'done',
                           'bg-amber-200': calendarEvent.status === 'rescheduled',
-                          }">
+                          }"
+                         class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded">
                         {{ calendarEvent.title }}
 
                     </div>
                 </template>
                 <template #monthAgendaEvent="{ calendarEvent }">
-                    <div class="event m-2 cursor-pointer p-2 font-semibold"
-                         :class="{
+                    <div :class="{
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-sky-400': calendarEvent.status === 'done',
                           'bg-amber-200': calendarEvent.status === 'rescheduled',
-                          }">
+                          }"
+                         class="event m-2 cursor-pointer p-2 font-semibold">
                         <div>{{ calendarEvent.title }}</div>
                         <div class="font-normal text-gray-700">{{ moment(calendarEvent.start).format('HH[h]mm') }} até
                             {{ moment(calendarEvent.end).format('HH[h]mm') }}
@@ -206,13 +200,13 @@ const calendarApp = createCalendar({
                     </div>
                 </template>
                 <template #timeGridEvent="{ calendarEvent }">
-                    <div class="event m-2 cursor-pointer p-2 font-semibold"
-                         :class="{
+                    <div :class="{
                           'bg-green-400': calendarEvent.status === 'accepted',
                           'bg-red-400': calendarEvent.status === 'denied',
                           'bg-sky-400': calendarEvent.status === 'done',
                           'bg-amber-200': calendarEvent.status === 'rescheduled',
-                          }">
+                          }"
+                         class="event m-2 cursor-pointer p-2 font-semibold">
                         {{ calendarEvent.title }}
                     </div>
                 </template>
@@ -220,29 +214,30 @@ const calendarApp = createCalendar({
         </div>
     </AuthenticatedLayout>
     <UpdateReservationForm
-        @close="closeModal"
-        :show="showModalEdit"
-        :selected-event
-        :previous-reservations
+        :calendar-app
         :drivers
+        :previous-reservations
+        :selected-event
+        :show="showModalEdit"
         :vehicles
+        @close="closeModal"
     />
     <CreateReservationForm
-        @close="closeModal"
-        :show="showModalCreate"
-        :drivers
-        :vehicles
         :clicked-date
+        :drivers
+        :show="showModalCreate"
+        :vehicles
+        @close="closeModal"
     />
     <ListReservations
-        @close="closeModal"
-        :show="showModalList"
         :events-list
+        :show="showModalList"
+        @close="closeModal"
     />
     <ViewReservation
-        @close="closeModal"
-        :show="showModalViewReservation"
-        :selected-event
         :previous-reservations
+        :selected-event
+        :show="showModalViewReservation"
+        @close="closeModal"
     />
 </template>
