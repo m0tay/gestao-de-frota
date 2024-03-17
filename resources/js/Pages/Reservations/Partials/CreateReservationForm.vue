@@ -1,14 +1,15 @@
 <script setup>
-import Modal from "@/Components/Modal.vue";
-import {onBeforeUpdate, onUpdated, ref} from "vue";
-import {useForm, usePage} from "@inertiajs/vue3";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import {Button} from "@/Components/ui/button/index.js";
-import SelectInput from "@/Components/SelectInput.vue";
-import {Textarea} from "@/Components/ui/textarea/index.js";
-import DateTimeInput from "@/Components/DateTimeInput.vue";
-import moment from "moment";
+import Modal from "@/Components/Modal.vue"
+import {computed, onBeforeUpdate, onUpdated, ref} from "vue"
+import {useForm, usePage} from "@inertiajs/vue3"
+import InputError from "@/Components/InputError.vue"
+import InputLabel from "@/Components/InputLabel.vue"
+import {Button} from "@/Components/ui/button/index.js"
+import SelectInput from "@/Components/SelectInput.vue"
+import {Textarea} from "@/Components/ui/textarea/index.js"
+import DateTimeInput from "@/Components/DateTimeInput.vue"
+import moment from "moment"
+import {useWindowSize} from "@vueuse/core"
 
 const authorized = ref([
     1,
@@ -24,6 +25,9 @@ const props = defineProps({
     vehicles: Array,
 })
 
+const {width} = useWindowSize()
+
+
 const form = useForm({
     start: Date,
     end: Date,
@@ -37,7 +41,7 @@ const form = useForm({
 })
 
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 
 const handleSubmit = () => {
 
@@ -45,28 +49,23 @@ const handleSubmit = () => {
         onSuccess: () => {
             console.log(form)
             form.reset()
-            emit('close'); // Close the modal
+            emit('close')
         }
     })
 }
 
 onBeforeUpdate(() => {
-    const now = moment()
-    // if (now.minutes() < 30) {
-    //     form.end = now.minutes(30).seconds(0).toDate();
-    // } else {
-    //     form.end = now.add(1, 'hours').startOf('hour').toDate();
-    // }
-
-    const minutes = now.minutes();
-    const roundedMinutes = minutes + (10 - (minutes % 10)) % 10;
-
-
-    form.start = now.minutes(roundedMinutes).seconds(0).toDate();
     form.reset()
     form.clearErrors()
-    form.start = moment(now).toDate()
-    form.end = now.add(1, 'hours').toDate();
+
+    const now = moment()
+    const dateToUse = width.value < 700 ? now : moment(props.clickedDate).hour(now.hour()).minute(now.minute())
+    const minutes = dateToUse.minutes()
+    const roundedMinutes = minutes + (10 - (minutes % 10)) % 10
+
+    form.start = dateToUse.minutes(roundedMinutes).seconds(0).toDate()
+    form.end = dateToUse.add(1, 'hours').toDate()
+
     form.creator = page.props.auth.user
     form.driver = page.props.auth.user
     form.description = ''
@@ -106,14 +105,6 @@ onBeforeUpdate(() => {
                     <DateTimeInput id="end" v-model="form.end"/>
                     <InputError :message="form.errors.end"/>
                 </div>
-            </div>
-
-            <div v-show="false" class="mt-6 max-w-full">
-                <InputLabel value="Agendado por" for="driver"/>
-                <!-- todo: after remove it as it will be sent without the user needing to see -->
-                <SelectInput disabled id="driver" :list="drivers" v-model="form.driver.id"
-                             :placeholder="form.driver.name"/>
-                <InputError :message="form.errors.driver"/>
             </div>
 
             <div class="mt-6 max-w-full">

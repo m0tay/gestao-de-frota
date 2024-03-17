@@ -79,11 +79,11 @@ const calendarApp = createCalendar({
             console.log('onClickDate', date); // e.g. 2024-01-01
 
             // Convert the clicked date to a Moment.js object
-            const clickedDate = moment(date);
+            const onClickedDate = moment(date);
 
             // Compare the clicked date with the current date using isBefore
-            if (clickedDate.isSameOrAfter(moment(), 'day')) {
-                clickedDate.value = clickedDate
+            if (onClickedDate.isSameOrAfter(moment(), 'day')) {
+                clickedDate.value = onClickedDate
                 showModalCreate.value = true;
             }
         },
