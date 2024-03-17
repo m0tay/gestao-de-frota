@@ -114,7 +114,8 @@ onBeforeUpdate(() => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Condutor" for="driver"/>
-                <SelectInput :disabled="!authorized.includes(page.props.auth.user.role_id)" id="driver" :list="drivers" v-model="form.driver.id" :placeholder="form.driver.name"/>
+                <SelectInput :disabled="!authorized.includes(page.props.auth.user.role_id)" id="driver" :list="drivers"
+                             v-model="form.driver.id" :placeholder="form.driver.name"/>
                 <InputError :message="form.errors.driver"/>
             </div>
 
