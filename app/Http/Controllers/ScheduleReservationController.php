@@ -7,7 +7,6 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class ScheduleReservationController extends BaseAgendaController
@@ -25,8 +24,6 @@ class ScheduleReservationController extends BaseAgendaController
         $vehiclePlate = Vehicle::find($data['vehicle']['id'])->plate;
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
-
-//        dd($data);
 
         Reservation::create([
             'title' => $data['title'],

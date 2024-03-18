@@ -13,9 +13,9 @@ class AgendaController extends BaseAgendaController
 {
     public function __invoke(Request $request)
     {
-        $this->authorize('viewAny', Reservation::class); // Enforce authorization policy
+        $this->authorize('viewAny', Reservation::class);
 
-        $reservations = Reservation::with('driver', 'vehicle', 'creator')->get(); // Fetch reservations with eager loading
+        $reservations = Reservation::with('driver', 'vehicle', 'creator')->get();
 
         $previousReservations = Reservation::where('status', 'rescheduled')->with('creator', 'driver', 'vehicle')->get();
 
@@ -32,8 +32,7 @@ class AgendaController extends BaseAgendaController
         $drivers = null;
 
         // Only sending one driver for the unauthorized user, and multiple for authorized ones
-        // todo add people here
-        $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles'])  || in_array(Auth::user()->email, $this->authorized['emails']);
+        $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles']) || in_array(Auth::user()->email, $this->authorized['emails']);
         if (!$canSelectDriver) {
             $drivers = User::find(Auth::user());
         } else {
