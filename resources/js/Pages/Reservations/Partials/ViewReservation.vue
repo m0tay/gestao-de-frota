@@ -65,15 +65,16 @@ const handleReturning = () => {
 onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
-    form.start = moment(props.selectedEvent.start).toDate()
-    form.end = moment(props.selectedEvent.end).toDate()
-    form.creator = props.selectedEvent.creator
-    form.vehicle = props.selectedEvent.vehicle
-    form.driver = props.selectedEvent.driver
-    form.description = props.selectedEvent.description
-    form.id = props.selectedEvent.id
-    formReturning.id = props.selectedEvent.id
-
+    if(props.selectedEvent) {
+        form.start = moment(props.selectedEvent.start).toDate()
+        form.end = moment(props.selectedEvent.end).toDate()
+        form.creator = props.selectedEvent.creator
+        form.vehicle = props.selectedEvent.vehicle
+        form.driver = props.selectedEvent.driver
+        form.description = props.selectedEvent.description
+        form.id = props.selectedEvent.id
+        formReturning.id = props.selectedEvent.id
+    }
 })
 
 const reloadPage = () => {

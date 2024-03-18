@@ -214,7 +214,6 @@ const calendarApp = createCalendar({
         </div>
     </AuthenticatedLayout>
     <UpdateReservationForm
-        :calendar-app
         :drivers
         :previous-reservations
         :selected-event

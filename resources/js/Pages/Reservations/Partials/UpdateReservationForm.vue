@@ -21,12 +21,11 @@ const props = defineProps({
     show: Boolean,
     selectedEvent: {
         type: Object,
-        required: false,
+        required: false
     },
     previousReservations: Array,
     drivers: Array,
     vehicles: Array,
-    calendarApp: Object,
 })
 
 const form = useForm({
@@ -60,7 +59,6 @@ const emit = defineEmits(['close']);
 const handleSubmit = () => {
     form.put(route('reservations.update', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
-            console.log(form)
             form.reset()
             emit('close')
             reloadPage()
@@ -70,15 +68,16 @@ const handleSubmit = () => {
 
 const handleCancel = () => {
     // fixme: Uncaught Error: Ziggy error: route 'reservations.cancel' is not in the route list.
-    formCancel.reason_for_status_change = form.reason_for_status_change
-
-    formCancel.post(route('reservations.cancel', {reservation: props.selectedEvent.id}), {
-        onSuccess: () => {
-            form.reset()
-            emit('close')
-            reloadPage()
-        }
-    })
+    // formCancel.reason_for_status_change = form.reason_for_status_change
+    //
+    // formCancel.post(route('reservations.cancel', {reservation: props.selectedEvent.id}), {
+    //     onSuccess: () => {
+    //         form.reset()
+    //         emit('close')
+    //         reloadPage()
+    //     }
+    // })
+    console.log('cancel deactivated for fixme')
 }
 
 const handleReturning = () => {
@@ -94,16 +93,20 @@ const handleReturning = () => {
 onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
-    form.start = moment(props.selectedEvent.start).toDate()
-    form.end = moment(props.selectedEvent.end).toDate()
-    form.creator = page.props.auth.user
-    form.vehicle = props.selectedEvent.vehicle
-    form.driver = props.selectedEvent.driver
-    form.description = props.selectedEvent.description
-    form.id = props.selectedEvent.id
-    form.reason_for_status_change = ''
-    formCancel.reason_for_status_change = ''
-    formReturning.id = props.selectedEvent.id
+    form.reset()
+    form.clearErrors()
+    if (props.selectedEvent) {
+        form.start = props.selectedEvent.start
+        form.end = props.selectedEvent.end
+        form.creator = page.props.auth.user
+        form.vehicle = props.selectedEvent.vehicle
+        form.driver = props.selectedEvent.driver
+        form.description = props.selectedEvent.description
+        form.id = props.selectedEvent.id
+        form.reason_for_status_change = ''
+        formCancel.reason_for_status_change = ''
+        formReturning.id = props.selectedEvent.id
+    }
 })
 
 const reloadPage = () => {
@@ -206,7 +209,7 @@ const reloadPage = () => {
                     Reagendar
                 </Button>
 
-                <ReturningButtonDialog @returning="handleReturning" />
+                <ReturningButtonDialog @returning="handleReturning"/>
             </div>
         </section>
     </Modal>
