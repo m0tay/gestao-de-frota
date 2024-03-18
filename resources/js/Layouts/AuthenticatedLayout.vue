@@ -44,13 +44,16 @@ const authorized = ref([
                                 <NavLink :href="route('agenda')" :active="route().current('refuelling')">
                                     Abastecimentos
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('vehicles')">
+                                <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
+                                         :href="route('agenda')" :active="route().current('vehicles')">
                                     Veículos
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('drivers')">
+                                <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
+                                         :href="route('agenda')" :active="route().current('drivers')">
                                     Condutores
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('reminders')">
+                                <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
+                                         :href="route('agenda')" :active="route().current('reminders')">
                                     Lembretes
                                 </NavLink>
                             </div>
