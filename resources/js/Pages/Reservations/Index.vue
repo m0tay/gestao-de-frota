@@ -12,6 +12,7 @@ import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
 import {Button} from "@/Components/ui/button/index.js"
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue"
 import {usePage} from "@inertiajs/vue3"
+import ReservationDialog from "@/Pages/Reservations/Partials/ReservationDialog.vue";
 
 const authorized = ref([
     1,
@@ -223,7 +224,6 @@ const calendarApp = createCalendar({
             </ScheduleXCalendar>
         </div>
     </AuthenticatedLayout>
-    <
     <UpdateReservationForm
         :drivers
         :previous-reservations

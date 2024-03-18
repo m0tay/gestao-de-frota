@@ -1,8 +1,7 @@
 <script setup>
 
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {Button} from "@/Components/ui/button/index.js";
 import Modal from "@/Components/Modal.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 
 const props = defineProps({
@@ -20,17 +19,19 @@ const emit = defineEmits(['close']);
         <section class="space-y-6 p-8 w-full" @contextmenu.prevent>
             <header>
                 <h2 class="text-xl font-bold text-gray-900">Agendamentos de {{moment(clickedDate, 'pt').format('DD [de] MMMM [de] YYYY')}}</h2>
+                <section>
+                    <Button>Agendar</Button>
+                </section>
             </header>
             <div v-for="reservation in eventsList" :key="reservation.id">{{ reservation.title }}</div>
 
             <div class="mt-6 flex justify-end">
 
-                <PrimaryButton
-                    class="ms-3"
+                <Button
                     @click="$emit('close')"
                 >
                     Sair
-                </PrimaryButton>
+                </Button>
 
             </div>
         </section>
