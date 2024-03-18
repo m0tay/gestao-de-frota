@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('plate');
             $table->string('brand');
             $table->string('model');
+            $table->enum('company', ['roboplan', 'robowork']);
             $table->unsignedMediumInteger('kms')->nullable();
             $table->enum('group', ['private', 'public']);
             $table->enum('category', ['light', 'heavy']);
