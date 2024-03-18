@@ -44,7 +44,7 @@ class ReservationPolicy
   /**
    * Determine whether the user can update the model.
    */
-  public function update(User $user, Reservation $reservation): bool
+  public function reschedule(User $user, Reservation $reservation): bool
   {
 
     return in_array($user->role->name, $this->authorized);
