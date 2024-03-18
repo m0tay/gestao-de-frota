@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ReservationController extends Controller
@@ -84,15 +85,15 @@ class ReservationController extends Controller
         Reservation::create([
             'title' => $data['title'],
             'description' => $data['description'],
-            'driver_id' => $data['driver']['id'], // Use the ID directly
-            'vehicle_id' => $data['vehicle']['id'], // Use the ID directly
+            'driver_id' => $data['driver']['id'],
+            'vehicle_id' => $data['vehicle']['id'],
             'created_by' => $data['creator']['id'],
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
             'status' => 'accepted',
         ]);
 
-        return back();
+        return Redirect::back();
     }
 
     /**
@@ -121,13 +122,7 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-//    $reservation->load('driver', 'vehicle', 'creator'); // Load related models
-//
-//    $reservationResource = new ReservationResource($reservation); // Create a Laravel resource
-//
-//    return Inertia::render('Reservations/Edit', [
-//      'reservation' => $reservationResource->toArray(request())
-//    ]);
+        //
     }
 
     /**
@@ -150,7 +145,7 @@ class ReservationController extends Controller
             'status' => 'denied',
             'reason_for_status_change' => $data['reason_for_status_change']]);
 
-        return back();
+        return Redirect::back();
     }
 
     public function returning(ReturningReservationRequest $request, Reservation $reservation)
@@ -165,7 +160,7 @@ class ReservationController extends Controller
 
 //        dd($data);
 
-        return back();
+        return Redirect::back();
     }
 
     /**
@@ -210,6 +205,6 @@ class ReservationController extends Controller
             'reason_for_status_change' => $data['reason_for_status_change'],
         ]);
 
-        return back();
+        return Redirect::back();
     }
 }

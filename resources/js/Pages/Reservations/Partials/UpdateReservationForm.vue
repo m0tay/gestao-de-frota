@@ -68,22 +68,21 @@ const handleSubmit = () => {
 
 const handleCancel = () => {
     // fixme: Uncaught Error: Ziggy error: route 'reservations.cancel' is not in the route list.
-    // formCancel.reason_for_status_change = form.reason_for_status_change
-    //
-    // formCancel.post(route('reservations.cancel', {reservation: props.selectedEvent.id}), {
-    //     onSuccess: () => {
-    //         form.reset()
-    //         emit('close')
-    //         reloadPage()
-    //     }
-    // })
-    console.log('cancel deactivated for fixme')
+    formCancel.reason_for_status_change = form.reason_for_status_change
+
+    formCancel.put(route('cancel', {reservation: props.selectedEvent.id}), {
+        onSuccess: () => {
+            formCancel.reset()
+            emit('close')
+            reloadPage()
+        }
+    })
 }
 
 const handleReturning = () => {
-    formReturning.post(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+    formReturning.put(route('reservations.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
-            form.reset()
+            formReturning.reset()
             emit('close')
             reloadPage()
         }

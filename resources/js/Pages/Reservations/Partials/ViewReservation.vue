@@ -53,7 +53,7 @@ const formReturning = useForm({
 const emit = defineEmits(['close']);
 
 const handleReturning = () => {
-    formReturning.post(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+    formReturning.put(route('reservations.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             form.reset()
             emit('close')
