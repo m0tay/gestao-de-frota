@@ -50,6 +50,7 @@ const handleSubmit = () => {
             console.log(form)
             form.reset()
             emit('close')
+            reloadPage()
         }
     })
 }
@@ -71,6 +72,10 @@ onBeforeUpdate(() => {
     form.description = ''
     form.status = 'accepted'
 })
+
+const reloadPage = () => {
+    window.location.reload();
+}
 </script>
 
 <template>
