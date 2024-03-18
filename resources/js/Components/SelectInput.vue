@@ -39,7 +39,7 @@ const updateSelectedItem = (newValue) => {
             <SelectGroup v-for="item in list" :key="item.id">
                 <SelectItem :value="item.id">
                     <span v-if="item.plate" class="flex gap-x-2 items-center">
-                        <img :src="'https://picsum.photos/'+item.id+'/256'" class="w-8 h-8 rounded-full" alt="">
+                        <img :src="'https://picsum.photos/'+item.id+'/100'" class="w-8 h-8 rounded-full" alt="">
                         {{ item.plate.toUpperCase() }}
                         <Badge :class="{'bg-purple-500 text-white': item.company === 'robowork',
                                         'bg-sky-500 text-white': item.company === 'roboplan',}
