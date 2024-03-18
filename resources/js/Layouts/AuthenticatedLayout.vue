@@ -37,7 +37,7 @@ const authorized = ref([
                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)" :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
-                <NavLink :href="route('reservations.index')" :active="route().current('reservations.index')">
+                <NavLink :href="route('agenda')" :active="route().current('agenda')">
                   Reservations
                 </NavLink>
               </div>
@@ -123,7 +123,7 @@ const authorized = ref([
             <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)" :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('reservations.index')" :active="route().current('reservations.index')">
+            <ResponsiveNavLink :href="route('agenda')" :active="route().current('agenda')">
               Reservations
             </ResponsiveNavLink>
           </div>

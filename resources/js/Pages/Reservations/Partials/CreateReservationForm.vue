@@ -44,8 +44,9 @@ const form = useForm({
 const emit = defineEmits(['close'])
 
 const handleSubmit = () => {
+    form.driver = props.drivers.find(driver => driver.id === form.driver.id)
 
-    form.post(route('reservations.store'), {
+    form.post(route('reservation.schedule'), {
         onSuccess: () => {
             console.log(form)
             form.reset()
@@ -114,7 +115,7 @@ const reloadPage = () => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Condutor" for="driver"/>
-                <SelectInput :disabled="!authorized.includes(page.props.auth.user.role_id)" id="driver" :list="drivers"
+                <SelectInput :disabled="false" id="driver" :list="drivers"
                              v-model="form.driver.id" :placeholder="form.driver.name"/>
                 <InputError :message="form.errors.driver"/>
             </div>

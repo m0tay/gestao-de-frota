@@ -56,8 +56,11 @@ const formReturning = useForm({
 
 const emit = defineEmits(['close']);
 
-const handleSubmit = () => {
-    form.put(route('reservations.update', {reservation: props.selectedEvent.id}), {
+const handleReschedule = () => {
+
+    form.creator = page.props.auth.user
+
+    form.put(route('reservation.reschedule', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             form.reset()
             emit('close')
@@ -69,7 +72,7 @@ const handleSubmit = () => {
 const handleCancel = () => {
     formCancel.reason_for_status_change = form.reason_for_status_change
 
-    formCancel.put(route('reservations.cancel', {reservation: props.selectedEvent.id}), {
+    formCancel.put(route('reservation.cancel', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             formCancel.reset()
             emit('close')
@@ -79,7 +82,7 @@ const handleCancel = () => {
 }
 
 const handleReturning = () => {
-    formReturning.put(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+    formReturning.put(route('reservation.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             formReturning.reset()
             emit('close')
@@ -96,7 +99,6 @@ onBeforeUpdate(() => {
     if (props.selectedEvent) {
         form.start = props.selectedEvent.start
         form.end = props.selectedEvent.end
-        form.creator = page.props.auth.user
         form.vehicle = props.selectedEvent.vehicle
         form.driver = props.selectedEvent.driver
         form.description = props.selectedEvent.description
@@ -131,7 +133,7 @@ const reloadPage = () => {
                             </svg>
                             <small class="lg:my-auto">
                                 Para mais informações carregue
-                                <Link class="hover:underline hover:text-sky-400" :href="route('reservations.index')">
+                                <Link class="hover:underline hover:text-sky-400" :href="route('agenda')">
                                     aqui.
                                 </Link>
                             </small>
@@ -201,7 +203,7 @@ const reloadPage = () => {
                 <Button
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                    @click="handleSubmit"
+                    @click="handleReschedule"
                     class="bg-amber-500 hover:bg-amber-400"
                 >
                     Reagendar
