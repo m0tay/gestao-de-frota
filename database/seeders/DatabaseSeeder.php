@@ -52,6 +52,6 @@ class DatabaseSeeder extends Seeder
 
     Vehicle::factory(20)->create();
 
-    Reservation::factory(200)->create();
+    Reservation::factory(250)->create();
   }
 }
