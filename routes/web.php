@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\CancelReservationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RescheduleReservationController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReturningReservationController;
+use App\Http\Controllers\ScheduleReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Gate;
@@ -52,14 +57,16 @@ Route::controller(UserController::class)->group(function () {
   Route::get('/users/{user}', 'show')->name('users.show');
 });
 
-Route::controller(ReservationController::class)->group(function () {
-  Route::get('/reservations', 'index')->name('reservations.index');
-  Route::get('/reservations/create', 'create')->name('reservations.create');
-  Route::post('/reservations', 'store')->name('reservations.store');
-  Route::get('/reservations/{reservation}', 'show')->name('reservations.show');
-  Route::get('/reservations/{reservation}/edit', 'edit')->name('reservations.edit');
-  Route::put('/reservations/{reservation}', 'update')->name('reservations.update');
-  Route::put('/reservations/{reservation}', 'returning')->name('reservations.returning');
-  Route::put('/reservations/{reservation}', 'cancel')->name('reservations.cancel');
-  Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
-})->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/agenda', AgendaController::class)
+        ->name('agenda');
+    Route::post('/agenda', ScheduleReservationController::class)
+        ->name('reservation.schedule');
+    Route::put('/agenda/{reservation}/reschedule', RescheduleReservationController::class)
+        ->name('reservation.reschedule');
+    Route::put('/agenda/{reservation}/cancel', CancelReservationController::class)
+        ->name('reservation.cancel');
+    Route::put('/agenda/{reservation}/returning', ReturningReservationController::class)
+        ->name('reservation.returning');
+});
