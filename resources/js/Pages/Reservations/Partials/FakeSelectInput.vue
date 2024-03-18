@@ -16,7 +16,7 @@ defineProps({
 <template>
   <Select>
     <SelectTrigger class="bg-gray-50">
-      <SelectValue   :placeholder/>
+      <SelectValue :placeholder/>
     </SelectTrigger>
   </Select>
 </template>
