@@ -115,7 +115,7 @@ const reloadPage = () => {
 
             <div class="mt-6 max-w-full">
                 <InputLabel value="Condutor" for="driver"/>
-                <SelectInput :disabled="false" id="driver" :list="drivers"
+                <SelectInput  :disabled="!page.props.canSelectDriver"  id="driver" :list="drivers"
                              v-model="form.driver.id" :placeholder="form.driver.name"/>
                 <InputError :message="form.errors.driver"/>
             </div>
