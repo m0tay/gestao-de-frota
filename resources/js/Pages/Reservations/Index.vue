@@ -2,16 +2,16 @@
 import {ScheduleXCalendar} from '@schedule-x/vue'
 import {createCalendar, viewMonthAgenda, viewMonthGrid,} from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
-import moment from "moment";
-import {ref} from "vue";
-import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue";
+import moment from "moment"
+import {ref} from "vue"
+import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue"
 import {useWindowSize} from '@vueuse/core'
-import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue";
-import {Button} from "@/Components/ui/button/index.js";
-import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue";
-import {usePage} from "@inertiajs/vue3";
+import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
+import {Button} from "@/Components/ui/button/index.js"
+import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue"
+import {usePage} from "@inertiajs/vue3"
 
 const authorized = ref([
     1,
@@ -54,7 +54,7 @@ const handleListar = () => {
 }
 
 const reloadPage = () => {
-    window.location.reload();
+    window.location.reload()
 }
 
 const calendarApp = createCalendar({
@@ -70,15 +70,25 @@ const calendarApp = createCalendar({
          * Is called when clicking a date in the month grid
          * */
         onClickDate(date) {
-            console.log('onClickDate', date); // e.g. 2024-01-01
+            console.log('onClickDate', date) // e.g. 2024-01-01
 
             // Convert the clicked date to a Moment.js object
-            const onClickedDate = moment(date);
+            const onClickedDate = moment(date)
 
-            // Compare the clicked date with the current date using isBefore
+            const reservationsOnClickedDate = props.reservations.filter(r => moment(r.start).isSame(onClickedDate, 'day'))
+
+            console.log(reservationsOnClickedDate)
+
+            if (reservationsOnClickedDate.length >= 3) {
+                eventsList.value = reservationsOnClickedDate
+                clickedDate.value = onClickedDate
+                showModalList.value = true
+                return
+            }
+
             if (onClickedDate.isSameOrAfter(moment(), 'day')) {
                 clickedDate.value = onClickedDate
-                showModalCreate.value = true;
+                showModalCreate.value = true
             }
         },
 
@@ -213,6 +223,7 @@ const calendarApp = createCalendar({
             </ScheduleXCalendar>
         </div>
     </AuthenticatedLayout>
+    <
     <UpdateReservationForm
         :drivers
         :previous-reservations
@@ -230,6 +241,7 @@ const calendarApp = createCalendar({
     />
     <ListReservations
         :events-list
+        :clicked-date
         :show="showModalList"
         @close="closeModal"
     />
