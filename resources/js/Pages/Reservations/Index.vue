@@ -38,6 +38,13 @@ const selectedEvent = ref(null)
 const eventsList = ref(false)
 const clickedDate = ref(null)
 
+const isDateValid = (date) => {
+    const providedDate = moment(date);
+
+    return providedDate.isSameOrAfter(moment(), 'day');
+};
+
+
 const closeModal = () => {
     showModalCreate.value = false
     showModalEdit.value = false
@@ -46,8 +53,11 @@ const closeModal = () => {
 }
 
 const handleAgendar = () => {
-    showModalCreate.value = true
-}
+    if (!isDateValid(clickedDate.value)) return;
+
+    showModalCreate.value = true;
+};
+
 
 const handleListar = () => {
     showModalList.value = true
@@ -73,24 +83,24 @@ const calendarApp = createCalendar({
         onClickDate(date) {
             console.log('onClickDate', date) // e.g. 2024-01-01
 
-            // Convert the clicked date to a Moment.js object
-            const onClickedDate = moment(date)
+            const onClickedDate = moment(date);
 
-            const reservationsOnClickedDate = props.reservations.filter(r => moment(r.start).isSame(onClickedDate, 'day'))
+            const reservationsOnClickedDate = props.reservations.filter(r => moment(r.start).isSame(onClickedDate, 'day'));
 
-            console.log(reservationsOnClickedDate)
+
+            console.log(reservationsOnClickedDate);
 
             if (reservationsOnClickedDate.length >= 3) {
-                eventsList.value = reservationsOnClickedDate
-                clickedDate.value = onClickedDate
-                showModalList.value = true
-                return
+                eventsList.value = reservationsOnClickedDate;
+                clickedDate.value = onClickedDate;
+                showModalList.value = true;
+                return;
             }
 
-            if (onClickedDate.isSameOrAfter(moment(), 'day')) {
-                clickedDate.value = onClickedDate
-                showModalCreate.value = true
-            }
+            if (!isDateValid(date)) return;
+
+            clickedDate.value = onClickedDate;
+            showModalCreate.value = true;
         },
 
         // /**
@@ -170,14 +180,6 @@ const calendarApp = createCalendar({
                     @click="handleAgendar"
                 >Agendar
                 </Button>
-                <Button
-                    @click="handleListar"
-                >Listar
-                </Button>
-                <Button
-                    @click="reloadPage"
-                >Atualizar
-                </Button>
             </div>
 
             <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
@@ -244,6 +246,7 @@ const calendarApp = createCalendar({
         :clicked-date
         :show="showModalList"
         @close="closeModal"
+        @open="handleAgendar"
     />
     <ViewReservation
         :previous-reservations
