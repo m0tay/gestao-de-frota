@@ -7,8 +7,10 @@ import {useWindowSize} from "@vueuse/core"
 import {Card, CardContent, CardHeader, CardTitle,} from '@/Components/ui/card'
 import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue"
 import InputLabel from "@/Components/InputLabel.vue"
-import {computed, ref} from "vue"
+import {onUpdated, ref} from "vue"
 import {usePage} from "@inertiajs/vue3"
+import {ToggleGroup, ToggleGroupItem} from '@/Components/ui/toggle-group'
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from '@/Components/ui/tooltip'
 
 const {width} = useWindowSize()
 const page = usePage()
@@ -25,20 +27,6 @@ const props = defineProps({
     clickedDate: Date,
 })
 
-const sortedEventsList = computed(() => {
-    return props.eventsList.sort((a, b) => {
-        // Compare start times
-        if (a.start < b.start) return -1
-        if (a.start > b.start) return 1
-
-        // If start times are equal, compare end times
-        if (a.end < b.end) return -1
-        if (a.end > b.end) return 1
-
-        // If both start and end times are equal, consider them equal
-        return 0
-    })
-})
 
 const emit = defineEmits(['close', 'schedule', 'view:selectedEventId'])
 
@@ -64,7 +52,48 @@ const view = (reservation) => {
     }, 100)
 }
 
+const sortedEventsList = ref([]);
 
+const toggleFilter = (type) => {
+    switch (type) {
+        case 'recent':
+            sortedEventsList.value = [...props.eventsList].sort((a, b) => {
+                if (a.start < b.start) return -1;
+                if (a.start > b.start) return 1;
+                if (a.end < b.end) return -1;
+                if (a.end > b.end) return 1;
+                return 0;
+            }).reverse();
+            break;
+        case 'oldest':
+            sortedEventsList.value = [...props.eventsList].sort((a, b) => {
+                if (a.start < b.start) return -1;
+                if (a.start > b.start) return 1;
+                if (a.end < b.end) return -1;
+                if (a.end > b.end) return 1;
+                return 0;
+            });
+            break;
+        case 'status':
+            const statusRank = {
+                'accepted': 1,
+                'rescheduled': 2,
+                'done': 3,
+                'denied': 4
+            };
+            sortedEventsList.value = [...props.eventsList].sort((a, b) => {
+                return statusRank[a.status] - statusRank[b.status];
+            });
+            break;
+        default:
+            break;
+    }
+};
+
+
+onUpdated(() => {
+    sortedEventsList.value = [...props.eventsList]
+})
 </script>
 
 <template>
@@ -75,6 +104,41 @@ const view = (reservation) => {
                     {{ moment(clickedDate, 'pt').format('DD [de] MM [de] YYYY') }}</h2>
                 <Button v-show="isDateValid(clickedDate)" @click="schedule">Agendar</Button>
             </header>
+            <div class="flex items-center space-x-2">
+                <p>filtrar por:</p>
+                <ToggleGroup id="toogle-group" type="single">
+                    <ToggleGroupItem aria-label="Toggle recent" value="recent" @click="() => toggleFilter('recent')">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>mais recente</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Fim do dia &rarr; Início do dia</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </ToggleGroupItem>
+                    <ToggleGroupItem aria-label="Toggle old" value="oldest" @click="() => toggleFilter('oldest')">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>mais antigo</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Início do dia &rarr; Fim do dia</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </ToggleGroupItem>
+                    <ToggleGroupItem aria-label="Toggle status" value="status" @click="() => toggleFilter('status')">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>status</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Aceite &rarr; Reagendado &rarr; Entregue &rarr; Cancelado</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </div>
             <div v-for="reservation in sortedEventsList" :key="reservation.id">
                 <Card @click="() => view(reservation)">
                     <CardHeader>

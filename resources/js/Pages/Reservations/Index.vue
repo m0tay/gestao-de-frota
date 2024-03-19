@@ -62,8 +62,7 @@ const handleSchedule = () => {
 };
 
 const handleView = (selectedEventId) => {
-    const eventToOpen = props.reservations.find(event => event.id === selectedEventId);
-    selectedEvent.value = eventToOpen;
+    selectedEvent.value = props.reservations.find(event => event.id === selectedEventId);
     showModalViewReservation.value = true;
 };
 
