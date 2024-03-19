@@ -12,8 +12,8 @@ import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
 import {Button} from "@/Components/ui/button/index.js"
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue"
 import {usePage} from "@inertiajs/vue3"
-import ReservationDialog from "@/Pages/Reservations/Partials/ReservationDialog.vue";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/Components/ui/card/index.js";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from '@/Components/ui/tooltip'
+import {Card, CardContent, CardHeader, CardTitle} from "@/Components/ui/card/index.js";
 import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 
@@ -55,14 +55,20 @@ const closeModal = () => {
     showModalViewReservation.value = false
 }
 
-const handleAgendar = () => {
+const handleSchedule = () => {
     if (!isDateValid(clickedDate.value)) return;
 
     showModalCreate.value = true;
 };
 
+const handleView = (selectedEventId) => {
+    const eventToOpen = props.reservations.find(event => event.id === selectedEventId);
+    selectedEvent.value = eventToOpen;
+    showModalViewReservation.value = true;
+};
 
-const handleListar = () => {
+
+const handleEnlist = () => {
     showModalList.value = true
     eventsList.value = props.reservations
 }
@@ -180,7 +186,7 @@ const calendarApp = createCalendar({
         <div>
             <div v-show="width < 700" class="flex justify-center my-4 gap-x-4">
                 <Button
-                    @click="handleAgendar"
+                    @click="handleSchedule"
                 >Agendar
                 </Button>
             </div>
@@ -197,13 +203,49 @@ const calendarApp = createCalendar({
                           'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
                           }"
                          class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded">
-                        {{ calendarEvent.title }}
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>{{ calendarEvent.title }}</TooltipTrigger>
+                                <TooltipContent class="w-[400px]">
+                                    <Card :class="{
+                          'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
+                          'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
+                          'bg-gradient-to-r from-sky-600 to-sky-500': calendarEvent.status === 'done',
+                          'bg-gradient-to-r from-amber-600 to-amber-500': calendarEvent.status === 'rescheduled',
+                          }">
+                                        <CardHeader>
+                                            <CardTitle class="text-pretty text-accent">{{
+                                                    calendarEvent.title.toUpperCase()
+                                                }}
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div class="flex flex-col gap-y-4">
+                                                <section class="flex gap-y-4 gap-x-2 justify-evenly  w-full">
+                                                    <div class="w-full">
+                                                        <InputLabel class="text-white" for="start" value="De:"/>
+                                                        <FakeDateTimeInput
+                                                            id="start"
+                                                            :date="(moment(calendarEvent.start).toDate())" class="w-full"/>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <InputLabel class="text-white" for="end" value="Até:"/>
+                                                        <FakeDateTimeInput id="end"
+                                                                           :date="(moment(calendarEvent.end).toDate())" class="w-full"/>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
 
                     </div>
                 </template>
                 <template #monthAgendaEvent="{ calendarEvent }">
                     <div
-                         class="event m-2 cursor-pointer p-2 font-semibold">
+                        class="event m-2 cursor-pointer p-2 font-semibold">
                         <Card :class="{
                           'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
                           'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
@@ -220,14 +262,14 @@ const calendarApp = createCalendar({
                                 <div class="flex flex-col gap-y-4">
                                     <section class="flex gap-y-4 gap-x-2  w-full">
                                         <div class="w-full">
-                                            <InputLabel class="text-accent" value="De:" for="start"/>
-                                            <FakeDateTimeInput :date="(moment(calendarEvent.start).toDate())"
-                                                               class="w-full" id="start"/>
+                                            <InputLabel class="text-accent" for="start" value="De:"/>
+                                            <FakeDateTimeInput id="start"
+                                                               :date="(moment(calendarEvent.start).toDate())" class="w-full"/>
                                         </div>
                                         <div class="w-full">
-                                            <InputLabel class="text-accent" value="Até:" for="end"/>
-                                            <FakeDateTimeInput :date="(moment(calendarEvent.end).toDate())"
-                                                               class="w-full" id="end"/>
+                                            <InputLabel class="text-accent" for="end" value="Até:"/>
+                                            <FakeDateTimeInput id="end"
+                                                               :date="(moment(calendarEvent.end).toDate())" class="w-full"/>
                                         </div>
                                     </section>
                                 </div>
@@ -265,11 +307,12 @@ const calendarApp = createCalendar({
         @close="closeModal"
     />
     <ListReservations
-        :events-list
         :clicked-date
+        :events-list
         :show="showModalList"
         @close="closeModal"
-        @open="handleAgendar"
+        @schedule="handleSchedule"
+        @view="handleView"
     />
     <ViewReservation
         :previous-reservations
