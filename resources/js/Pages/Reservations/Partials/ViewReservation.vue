@@ -50,6 +50,9 @@ const formReturning = useForm({
     id: Number,
     returning: Date,
     start: Date,
+    return_kms: Number,
+    return_condition: String,
+    return_condition_description: String,
 })
 
 const emit = defineEmits(['close']);
@@ -149,7 +152,6 @@ const reloadPage = () => {
                 <FakeSelectInput disabled id="vehicle" :placeholder="props.selectedEvent.vehicle.plate.toUpperCase()"/>
             </div>
 
-
             <div class="mt-6 max-w-full">
                 <InputLabel value="Descrição" for="description"/>
                 <textarea disabled
@@ -176,6 +178,17 @@ const reloadPage = () => {
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
 
                 </div>
+            </div>
+
+            <div
+                v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
+                class="mt-6 max-w-full">
+                <InputLabel for="return_kms" value="Kilometros à entrega"/>
+                <TextInput
+                    id="return_kms"
+                    type="number"
+                    v-model="formReturning.return_kms"
+                />
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
