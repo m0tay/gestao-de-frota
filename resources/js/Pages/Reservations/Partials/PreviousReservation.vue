@@ -26,13 +26,11 @@ const props = defineProps({
     },
 })
 
-console.log('reservas', props.previousReservations)
-console.log('reserva prévia', props.previousReservation)
+// console.log('reservas', props.previousReservations)
+// console.log('reserva prévia', props.previousReservation)
 // get current previous reservation of model being viewed
 
 const pr = props.previousReservations.find(reservation => reservation.id === props.previousReservation);
-
-console.log(pr)
 </script>
 
 <template>
