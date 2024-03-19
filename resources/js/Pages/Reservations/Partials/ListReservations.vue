@@ -92,8 +92,9 @@ const toggleFilter = (type) => {
 
 
 onUpdated(() => {
-    sortedEventsList.value = [...props.eventsList]
-})
+    sortedEventsList.value = Array.isArray(props.eventsList) ? [...props.eventsList] : [];
+});
+
 </script>
 
 <template>
@@ -139,7 +140,7 @@ onUpdated(() => {
                     </ToggleGroupItem>
                 </ToggleGroup>
             </div>
-            <div v-for="reservation in sortedEventsList" :key="reservation.id">
+            <div v-if="props.eventsList" v-for="reservation in sortedEventsList" :key="reservation.id">
                 <Card @click="() => view(reservation)">
                     <CardHeader>
                         <section class="flex gap-x-2 justify-between">
