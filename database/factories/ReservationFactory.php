@@ -22,16 +22,18 @@ class ReservationFactory extends Factory
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-02-01', '2024-04-31')->getTimestamp());
         $start_date->minute = fake()->randomElement([0, 30]);
-
         $end_date = clone $start_date;
         $end_date->minute = fake()->randomElement([0, 30]);
         $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour', '+4 hour', '+1 day']));
         $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
+        $startKms = $vehicle->kms;
         $driver = fake()->randomElement(User::all());
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
         $status2 = fake()->randomElement(['accepted', 'denied', 'rescheduled']);
         $condition = fake()->randomElement(['ok', 'nok']);
+        $vehicle->update(['kms' => $vehicle->kms + fake()->numberBetween(5, 250)]);
+        $returnKms = $vehicle->kms;
 
         $return = null;
 
@@ -56,9 +58,10 @@ class ReservationFactory extends Factory
         return [
             'title' => $title,
             'start' => $start_date,
+            'start_kms' => $startKms,
             'end' => $end_date,
             'return' => $return,
-            'return_kms' => ($vehicle->kms + fake()->numberBetween(5, 250)),
+            'return_kms' => $returnKms,
             'return_condition' => $condition,
             'return_condition_description' => $condition === "ok" ? '' : fake()->randomElement(['parti o retrovisor', 'risquei a lataria', 'bati a traseira', 'símbolo estranho acendeu-se no odómetro']),
             'status' => $status2,
