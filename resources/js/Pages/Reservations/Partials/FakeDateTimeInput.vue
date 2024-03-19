@@ -27,9 +27,9 @@ const props = defineProps({
     focus-visible:ring-ring focus-visible:ring-offset-2
     disabled:pointer-events-none disabled:opacity-50
     border-input
-    h-10 px-4 py-2 max-w-full min-w-full justify-start text-left font-normal bg-gray-50">
+    h-10 px-2  py-2 max-w-full min-w-full justify-start text-left font-normal bg-gray-50">
       <CalendarIcon class="mr-2 h-4 w-4"/>
-      <span>{{ props.date ? moment(date).format('DD MMM HH:mm') : 'Sem data' }}</span>
+      <span>{{ props.date ? (moment(date).format('DD MMM HH:mm')) : 'Sem data' }}</span>
     </div>
   </section>
 </template>
