@@ -1,14 +1,14 @@
 <script setup>
 
-import {Button} from "@/Components/ui/button/index.js";
-import Modal from "@/Components/Modal.vue";
-import moment from "moment";
-import {useWindowSize} from "@vueuse/core";
+import {Button} from "@/Components/ui/button/index.js"
+import Modal from "@/Components/Modal.vue"
+import moment from "moment"
+import {useWindowSize} from "@vueuse/core"
 import {Card, CardContent, CardHeader, CardTitle,} from '@/Components/ui/card'
-import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import {ref} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue"
+import InputLabel from "@/Components/InputLabel.vue"
+import {computed, ref} from "vue"
+import {usePage} from "@inertiajs/vue3"
 
 const {width} = useWindowSize()
 const page = usePage()
@@ -25,28 +25,43 @@ const props = defineProps({
     clickedDate: Date,
 })
 
-const emit = defineEmits(['close', 'schedule', 'view:selectedEventId']);
+const sortedEventsList = computed(() => {
+    return props.eventsList.sort((a, b) => {
+        // Compare start times
+        if (a.start < b.start) return -1
+        if (a.start > b.start) return 1
+
+        // If start times are equal, compare end times
+        if (a.end < b.end) return -1
+        if (a.end > b.end) return 1
+
+        // If both start and end times are equal, consider them equal
+        return 0
+    })
+})
+
+const emit = defineEmits(['close', 'schedule', 'view:selectedEventId'])
 
 const isDateValid = (date) => {
-    const providedDate = moment(date);
+    const providedDate = moment(date)
 
-    return providedDate.isSameOrAfter(moment(), 'day');
-};
+    return providedDate.isSameOrAfter(moment(), 'day')
+}
 
 
 const schedule = () => {
-    emit('close');
+    emit('close')
 
     setTimeout(() => {
-        emit('schedule');
-    }, 100);
+        emit('schedule')
+    }, 100)
 }
 
 const view = (reservation) => {
-    emit('close');
+    emit('close')
     setTimeout(() => {
-        emit('view', reservation.id);
-    }, 100);
+        emit('view', reservation.id)
+    }, 100)
 }
 
 
@@ -60,7 +75,7 @@ const view = (reservation) => {
                     {{ moment(clickedDate, 'pt').format('DD [de] MM [de] YYYY') }}</h2>
                 <Button v-show="isDateValid(clickedDate)" @click="schedule">Agendar</Button>
             </header>
-            <div v-for="reservation in eventsList" :key="reservation.id">
+            <div v-for="reservation in sortedEventsList" :key="reservation.id">
                 <Card @click="() => view(reservation)">
                     <CardHeader>
                         <section class="flex gap-x-2 justify-between">
@@ -137,7 +152,8 @@ const view = (reservation) => {
                                     </div>
                                 </div>
                             </section>
-                            <div v-show="authorized.includes(page.props.auth.user.role_id)" class="flex flex-col gap-y-4 w-full">
+                            <div v-show="authorized.includes(page.props.auth.user.role_id)"
+                                 class="flex flex-col gap-y-4 w-full">
                                 <div
                                     class="flex items-stretch gap-x-2 bg-gray-50 text-muted-foreground px-3 py-2 rounded">
                                     <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor"
