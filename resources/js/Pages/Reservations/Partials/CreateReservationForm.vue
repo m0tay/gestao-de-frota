@@ -46,6 +46,7 @@ const emit = defineEmits(['close'])
 
 const handleSubmit = () => {
     form.driver = props.drivers.find(driver => driver.id === form.driver.id)
+    form.creator = page.props.auth.user
 
     form.post(route('reservation.schedule'), {
         onSuccess: () => {

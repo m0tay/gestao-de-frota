@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreReservationRequest;
+use App\Http\Requests\ScheduleReservationRequest;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -14,7 +14,7 @@ class ScheduleReservationController extends BaseAgendaController
     /**
      * Handle the incoming request.
      */
-    public function __invoke(StoreReservationRequest $request)
+    public function __invoke(ScheduleReservationRequest $request)
     {
         $this->authorize('create', Reservation::class);
 
