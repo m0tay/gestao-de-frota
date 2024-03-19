@@ -24,6 +24,7 @@ class VehicleFactory extends Factory
             'category' => fake()->randomElement(['light', 'heavy']),
             'company' => fake()->randomElement(['roboplan', 'robowork']),
             'status' => 'active',
+            'kms' => fake()->numberBetween(50_000, 200_000)
         ];
     }
 }

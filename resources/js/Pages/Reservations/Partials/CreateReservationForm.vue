@@ -38,6 +38,7 @@ const form = useForm({
     },
     creator: Number,
     description: String,
+    kms: Number,
 })
 
 

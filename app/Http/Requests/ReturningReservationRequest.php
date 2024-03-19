@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReturningReservationRequest extends FormRequest
 {
@@ -16,6 +17,19 @@ class ReturningReservationRequest extends FormRequest
     {
         return [
             'id' => 'required',
+            'start' => 'required|date',
+            'returning' => [
+                'required',
+                'date',
+                'after:start',
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'returning.after' => 'Não é possível entregar antes do início da requisição.',
         ];
     }
 }

@@ -31,10 +31,11 @@ class ReservationFactory extends Factory
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
         $status2 = fake()->randomElement(['accepted', 'denied', 'rescheduled']);
+        $condition = fake()->randomElement(['ok', 'nok']);
 
         $return = null;
 
-        if(mt_rand(0, 1)) {
+        if (mt_rand(0, 1)) {
             $return = fake()->dateTimeBetween($start_date, $end_date);
         } else {
             $end = clone $end_date;
@@ -43,7 +44,7 @@ class ReservationFactory extends Factory
 
         $creator = null;
 
-        if(mt_rand(0, 1)) {
+        if (mt_rand(0, 1)) {
             $creator = User::whereHas('role', function ($query) {
                 $query->where('name', 'admin')->orWhere('name', 'manager');
             })->get()->random();
@@ -57,6 +58,9 @@ class ReservationFactory extends Factory
             'start' => $start_date,
             'end' => $end_date,
             'return' => $return,
+            'return_kms' => ($vehicle->kms + fake()->numberBetween(5, 250)),
+            'return_condition' => $condition,
+            'return_condition_description' => $condition === "ok" ? '' : fake()->randomElement(['parti o retrovisor', 'risquei a lataria', 'bati a traseira', 'símbolo estranho acendeu-se no odómetro']),
             'status' => $status2,
             'created_by' => $creator,
             'driver_id' => $driver,

@@ -48,24 +48,31 @@ const form = useForm({
 
 const formReturning = useForm({
     id: Number,
+    returning: Date,
+    start: Date,
 })
 
 const emit = defineEmits(['close']);
 
 const handleReturning = () => {
-    formReturning.put(route('reservations.returning', {reservation: props.selectedEvent.id}), {
+    formReturning.returning = moment().toDate()
+    formReturning.start = moment(props.selectedEvent.start).toDate()
+
+    formReturning.put(route('reservation.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
             form.reset()
             emit('close')
             reloadPage()
-        }
+        },
     })
 }
 
 onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
-    if(props.selectedEvent) {
+    formReturning.reset()
+    formReturning.clearErrors()
+    if (props.selectedEvent) {
         form.start = moment(props.selectedEvent.start).toDate()
         form.end = moment(props.selectedEvent.end).toDate()
         form.creator = props.selectedEvent.creator
@@ -76,6 +83,7 @@ onBeforeUpdate(() => {
         formReturning.id = props.selectedEvent.id
     }
 })
+
 
 const reloadPage = () => {
     window.location.reload();
@@ -171,7 +179,7 @@ const reloadPage = () => {
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
-
+                <InputError class="flex items-end" :message="formReturning.errors.returning"/>
                 <Button variant="secondary" @click="$emit('close')">
                     Mudei de Ideia
                 </Button>
