@@ -12,41 +12,45 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Reservation extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
 
-  // Reservation Model
-  protected $fillable = [
-    'title',
-    'start',
-    'end',
-    'driver_id',
-    'created_by',
-    'vehicle_id',
-    'description',
-    'reason_for_status_change',
-    'previous_reservation',
-    'status',
-  ];
+    // Reservation Model
+    protected $fillable = [
+        'title',
+        'start',
+        'end',
+        'driver_id',
+        'created_by',
+        'vehicle_id',
+        'description',
+        'reason_for_status_change',
+        'previous_reservation',
+        'status',
+        'start_kms',
+        'return_kms',
+        'return_condition',
+        'return_condition_description',
+    ];
 
-  /**
-   * @return BelongsTo
-   */
-  public function vehicle(): BelongsTo
-  {
-    return $this->belongsTo(Vehicle::class, 'vehicle_id');
-  }
+    /**
+     * @return BelongsTo
+     */
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
 
-  /**
-   * @return BelongsTo
-   */
-  public function driver(): BelongsTo
-  {
-    return $this->belongsTo(User::class, 'driver_id');
-  }
+    /**
+     * @return BelongsTo
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
 
-  public function creator(): BelongsTo
-  {
-    return $this->belongsTo(User::class, 'created_by');
-  }
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

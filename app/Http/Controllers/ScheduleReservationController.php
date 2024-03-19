@@ -25,7 +25,9 @@ class ScheduleReservationController extends BaseAgendaController
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
-        Reservation::create([
+        $vehicleKms = Vehicle::find($data['vehicle']['id'])->kms;
+
+        $reservation = Reservation::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'driver_id' => $data['driver']['id'],
@@ -34,6 +36,8 @@ class ScheduleReservationController extends BaseAgendaController
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
             'status' => 'accepted',
+            'start_kms' => $vehicleKms,
+
         ]);
 
         return Redirect::back();

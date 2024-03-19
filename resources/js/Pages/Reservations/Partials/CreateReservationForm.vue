@@ -38,7 +38,6 @@ const form = useForm({
     },
     creator: Number,
     description: String,
-    kms: Number,
 })
 
 
@@ -47,6 +46,7 @@ const emit = defineEmits(['close'])
 const handleSubmit = () => {
     form.driver = props.drivers.find(driver => driver.id === form.driver.id)
     form.creator = page.props.auth.user
+
 
     form.post(route('reservation.schedule'), {
         onSuccess: () => {
@@ -77,8 +77,9 @@ onBeforeUpdate(() => {
 })
 
 const reloadPage = () => {
-    window.location.reload();
+    window.location.reload()
 }
+
 </script>
 
 <template>
