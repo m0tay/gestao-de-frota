@@ -38,10 +38,10 @@ const authorized = ref([
                                          :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('')">
+                                <NavLink :href="route('agenda')" :active="route().current('agenda')">
                                     Agenda
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('refuelling')">
+                                <NavLink :href="route('refuelling.index')" :active="route().current('refuelling.index')">
                                     Abastecimentos
                                 </NavLink>
                                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"

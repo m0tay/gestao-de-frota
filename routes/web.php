@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\CancelReservationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RefuellingController;
 use App\Http\Controllers\RescheduleReservationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReturningReservationController;
@@ -70,3 +71,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/agenda/{reservation}/returning', ReturningReservationController::class)
         ->name('reservation.returning');
 });
+
+
+Route::middleware('auth')->resource('refuelling', RefuellingController::class);
