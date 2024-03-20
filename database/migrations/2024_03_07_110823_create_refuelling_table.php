@@ -19,8 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('mileage');
             $table->date('refuel_date');
             $table->string('description')->nullable();
-//            $table->string('fuel_type');
-//            $table->string('payment_type');
+            $table->string('fuel_type');
             $table->timestamps();
         });
     }
