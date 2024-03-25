@@ -1,5 +1,5 @@
 // DataTableDropDown.vue
-<script setup lang="ts">
+<script setup>
 import {MoreHorizontal} from 'lucide-vue-next'
 import {
     DropdownMenu,
@@ -11,13 +11,13 @@ import {
 } from '@/Components/ui/dropdown-menu'
 import {Button} from '@/Components/ui/button'
 
-defineProps<{
+const props = defineProps({
     payment: {
-        id: string
+        id: String,
     }
-}>()
+})
 
-function copy(id: string) {
+function copy(id) {
     navigator.clipboard.writeText(id)
 }
 </script>

@@ -1,12 +1,15 @@
 <script setup lang="ts" generic="TData, TValue">
+import { Input } from '@/Components/ui/input'
 import type {
-    ColumnDef,
+    ColumnDef, ColumnFiltersState,
 } from '@tanstack/vue-table'
 import {
     FlexRender,
     getCoreRowModel,
     getPaginationRowModel,
     getSortedRowModel,
+    getFilteredRowModel,
+    VisibilityState,
     useVueTable,
     SortingState
 } from "@tanstack/vue-table"
@@ -22,6 +25,12 @@ import {
 } from "@/Components/ui/table"
 import {Button} from "@/Components/ui/button"
 import {valueUpdater} from '@/lib/utils'
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/Components/ui/dropdown-menu'
 
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[]
@@ -37,21 +46,41 @@ const table = useVueTable({
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnFiltersChange: updaterOrValue => valueUpdater(updaterOrValue, columnFilters),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
+    onColumnVisibilityChange: updaterOrValue => valueUpdater(updaterOrValue, columnVisibility),
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
         get sorting() {
             return sorting.value
+
         },
+        get columnFilters() {
+            return columnFilters.value
+        },
+        get columnVisibility() {
+            return columnVisibility.value
+        },
+
     },
 })
 
 
 const sorting = ref<SortingState>([])
+const columnFilters = ref<ColumnFiltersState>([])
+const columnVisibility = ref<VisibilityState>({})
+
+
 </script>
 
 <template>
-    <div class="border rounded-md">
+    <div class="flex items-center py-4">
+        <Input class="max-w-sm" placeholder="Filter emails..."
+               :model-value="table.getColumn('email')?.getFilterValue() as string"
+               @update:model-value=" table.getColumn('email')?.setFilterValue($event)" />
+    </div>
+    <div class="border rounded-md bg-white">
         <Table>
             <TableHeader>
                 <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -84,9 +113,17 @@ const sorting = ref<SortingState>([])
                 variant="outline"
                 size="sm"
                 :disabled="!table.getCanPreviousPage()"
+                @click="table.firstPage()"
+            >
+                &lt;&lt; Primeira
+            </Button>
+            <Button
+                variant="outline"
+                size="sm"
+                :disabled="!table.getCanPreviousPage()"
                 @click="table.previousPage()"
             >
-                Previous
+                &lt; Prévia
             </Button>
             <Button
                 variant="outline"
@@ -94,9 +131,18 @@ const sorting = ref<SortingState>([])
                 :disabled="!table.getCanNextPage()"
                 @click="table.nextPage()"
             >
-                Next
+                Próxima &gt;
             </Button>
-            <Button size="sm" disabled variant="outline">Páginas: {{table.getPageCount()}}</Button>
+            <Button
+                variant="outline"
+                size="sm"
+                :disabled="!table.getCanNextPage()"
+                @click="table.lastPage()"
+            >
+                Última &gt;&gt;
+            </Button>
+            <Button size="sm" disabled variant="outline">Páginas: {{  table.getPageCount() }}</Button>
+            <Button size="sm" disabled variant="outline">Resultados: {{table.getRowCount()}}</Button>
         </div>
     </div>
 </template>

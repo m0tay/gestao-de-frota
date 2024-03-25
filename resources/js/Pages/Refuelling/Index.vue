@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { columns } from "@/Pages/Refuelling/columns"
 import DataTable from "@/Components/ui/data-table.vue"
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {faker} from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
 function generateRandomData() {
     const data = [];
@@ -48,7 +48,7 @@ onMounted(async () => {
 <template>
     <AuthenticatedLayout>
         <div class="container py-10 mx-auto">
-            <DataTable class="bg-white" :columns="columns" :data="data"/>
+            <DataTable :columns="columns" :data="data" />
         </div>
     </AuthenticatedLayout>
 </template>
