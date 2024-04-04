@@ -26,9 +26,12 @@ class RescheduleReservationController extends BaseAgendaController
 
         $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
 
+        $vehicleKms = Vehicle::find($data['vehicle']['id'])->kms;
+
         Reservation::create([
             'title' => $data['title'],
             'rrule' => '',
+            'start_kms' => $vehicleKms,
             'description' => $data['description'],
             'driver_id' => $data['driver']['id'],
             'vehicle_id' => $data['vehicle']['id'],
