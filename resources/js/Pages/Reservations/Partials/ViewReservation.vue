@@ -50,6 +50,7 @@ const formReturning = useForm({
     id: Number,
     returning: Date,
     start: Date,
+    start_kms: Number,
     return_kms: Number,
     return_condition: String,
     return_condition_description: String,
@@ -85,6 +86,7 @@ onBeforeUpdate(() => {
         form.id = props.selectedEvent.id
         formReturning.id = props.selectedEvent.id
         formReturning.start = form.start
+        formReturning.start_kms = props.selectedEvent.vehicle.kms
     }
 })
 
@@ -197,6 +199,8 @@ const reloadPage = () => {
                     type="number"
                     v-model="formReturning.return_kms"
                 />
+                <InputError class="flex items-end" :message="formReturning.errors.return_kms"/>
+
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">

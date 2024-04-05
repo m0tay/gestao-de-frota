@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
     $adminUser = User::factory()->create([
       'name' => 'Mykola',
       'email' => 'admin@admin.com',
+      'password' => bcrypt('password'),
       'company' => 'roboplan',
       'role_id' => $roles['admin']
     ]);
@@ -48,10 +49,10 @@ class DatabaseSeeder extends Seeder
       'company' => 'robowork',
     ]);
 
-    User::factory(50)->create();
+    User::factory(20)->create();
 
     Vehicle::factory(20)->create();
 
-    Reservation::factory(50)->create();
+    Reservation::factory(100)->create();
   }
 }
