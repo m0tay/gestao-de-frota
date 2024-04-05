@@ -17,8 +17,11 @@ class ReturningReservationController extends Controller
 
         $data = $request->validated();
 
+        dd($data);
+
         $reservation->update([
             'status' => 'done',
+            'kms' => $data['return_kms'],
         ]);
 
         return Redirect::back();
