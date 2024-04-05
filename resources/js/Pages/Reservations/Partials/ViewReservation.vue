@@ -84,12 +84,13 @@ onBeforeUpdate(() => {
         form.description = props.selectedEvent.description
         form.id = props.selectedEvent.id
         formReturning.id = props.selectedEvent.id
+        formReturning.start = form.start
     }
 })
 
 
 const reloadPage = () => {
-    window.location.reload();
+    // window.location.reload();
 }
 </script>
 
@@ -178,6 +179,13 @@ const reloadPage = () => {
                               id="reason_for_status_change">{{props.selectedEvent.reason_for_status_change}}</textarea>
 
                 </div>
+            </div>
+
+            <div
+                v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
+                class="mt-6 max-w-full">
+                <InputLabel for="kms" value="Kilometros anteriormente"/>
+                <div id="kms">{{ props.selectedEvent.vehicle.kms }}Km</div>
             </div>
 
             <div

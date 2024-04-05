@@ -1,18 +1,19 @@
 <script setup>
-import Modal from "@/Components/Modal.vue";
-import {onBeforeUpdate} from "vue";
-import {Link, useForm, usePage} from "@inertiajs/vue3";
+import DateTimeInput from "@/Components/DateTimeInput.vue";
+import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import Modal from "@/Components/Modal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
-import DateTimeInput from "@/Components/DateTimeInput.vue";
-import {Textarea} from "@/Components/ui/textarea/index.js";
+import { Button } from "@/Components/ui/button/index.js";
+import { Textarea } from "@/Components/ui/textarea/index.js";
+import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
-import {Button} from "@/Components/ui/button/index.js";
-import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
-import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 import ReturningButtonDialog from "@/Pages/Reservations/Partials/ReturningButtonDialog.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import moment from "moment";
+import { onBeforeUpdate } from "vue";
 
 const page = usePage()
 
@@ -50,6 +51,11 @@ const formCancel = useForm({
 
 const formReturning = useForm({
     id: Number,
+    returning: Date,
+    start: Date,
+    return_kms: Number,
+    return_condition: String,
+    return_condition_description: String,
 })
 
 
@@ -59,7 +65,7 @@ const handleReschedule = () => {
 
     form.creator = page.props.auth.user
 
-    form.put(route('reservation.reschedule', {reservation: props.selectedEvent.id}), {
+    form.put(route('reservation.reschedule', { reservation: props.selectedEvent.id }), {
         onSuccess: () => {
             form.reset()
             emit('close')
@@ -71,7 +77,7 @@ const handleReschedule = () => {
 const handleCancel = () => {
     formCancel.reason_for_status_change = form.reason_for_status_change
 
-    formCancel.put(route('reservation.cancel', {reservation: props.selectedEvent.id}), {
+    formCancel.put(route('reservation.cancel', { reservation: props.selectedEvent.id }), {
         onSuccess: () => {
             formCancel.reset()
             emit('close')
@@ -81,12 +87,15 @@ const handleCancel = () => {
 }
 
 const handleReturning = () => {
+    formReturning.returning = moment().toDate()
+    formReturning.start = moment(props.selectedEvent.start).toDate()
+
     formReturning.put(route('reservation.returning', {reservation: props.selectedEvent.id}), {
         onSuccess: () => {
-            formReturning.reset()
+            form.reset()
             emit('close')
             reloadPage()
-        }
+        },
     })
 }
 
@@ -96,8 +105,8 @@ onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
     if (props.selectedEvent) {
-        form.start = props.selectedEvent.start
-        form.end = props.selectedEvent.end
+        form.start = moment(props.selectedEvent.start).toDate()
+        form.end = moment(props.selectedEvent.end).toDate()
         form.vehicle = props.selectedEvent.vehicle
         form.driver = props.selectedEvent.driver
         form.description = props.selectedEvent.description
@@ -105,11 +114,12 @@ onBeforeUpdate(() => {
         form.reason_for_status_change = ''
         formCancel.reason_for_status_change = ''
         formReturning.id = props.selectedEvent.id
+        formReturning.start = form.start
     }
 })
 
 const reloadPage = () => {
-    window.location.reload();
+    // window.location.reload();
 }
 </script>
 
@@ -124,91 +134,101 @@ const reloadPage = () => {
                         <div
                             class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.5"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"/>
+                                    stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <small class="lg:my-auto">
                                 Para mais informações carregue
                                 <Link class="hover:underline hover:text-sky-400" :href="route('agenda')">
-                                    aqui.
+                                aqui.
                                 </Link>
                             </small>
                         </div>
                     </div>
-                    <ReservationStatus :reservation="props.selectedEvent"/>
+                    <ReservationStatus :reservation="props.selectedEvent" />
                 </section>
             </header>
 
             <div v-if="props.selectedEvent.previous_reservation" class="mt-6 max-w-full">
                 <PreviousReservation :previous-reservation="props.selectedEvent.previous_reservation"
-                                     :previous-reservations="props.previousReservations"/>
+                    :previous-reservations="props.previousReservations" />
             </div>
 
             <div class="mt-6 max-w-full flex flex-col sm:flex-row gap-x-4 gap-y-4">
                 <div class="w-full">
-                    <InputLabel for="start" value="De:"/>
-                    <DateTimeInput id="start" v-model="form.start"/>
-                    <InputError :message="form.errors.start"/>
+                    <InputLabel for="start" value="De:" />
+                    <DateTimeInput id="start" v-model="form.start" />
+                    <InputError :message="form.errors.start" />
                 </div>
 
                 <div class="w-full">
-                    <InputLabel for="end" value="Até:"/>
-                    <DateTimeInput id="end" v-model="form.end"/>
-                    <InputError :message="form.errors.end"/>
+                    <InputLabel for="end" value="Até:" />
+                    <DateTimeInput id="end" v-model="form.end" />
+                    <InputError :message="form.errors.end" />
                 </div>
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="creator" value="Agendado por"/>
-                <FakeSelectInput id="creator" :placeholder="props.selectedEvent.creator.name" disabled/>
+                <InputLabel for="creator" value="Agendado por" />
+                <FakeSelectInput id="creator" :placeholder="props.selectedEvent.creator.name" disabled />
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="driver" value="Condutor"/>
-                <SelectInput id="driver" v-model="form.driver.id" :list="drivers" :placeholder="form.driver.name"/>
-                <InputError :message="form.errors.driver"/>
+                <InputLabel for="driver" value="Condutor" />
+                <SelectInput id="driver" v-model="form.driver.id" :list="drivers" :placeholder="form.driver.name" />
+                <InputError :message="form.errors.driver" />
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="vehicle" value="Veículo"/>
-                <SelectInput id="vehicle" v-model="form.vehicle.id" :list="vehicles" :placeholder="form.vehicle.plate"/>
+                <InputLabel for="vehicle" value="Veículo" />
+                <SelectInput id="vehicle" v-model="form.vehicle.id" :list="vehicles"
+                    :placeholder="form.vehicle.plate" />
 
-                <InputError :message="form.errors.vehicle"/>
+                <InputError :message="form.errors.vehicle" />
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="description" value="Descrição"/>
-                <Textarea id="description" v-model="form.description" :placeholder="form.description"
-                          class="w-full"/>
-                <InputError :message="form.errors.description"/>
+                <InputLabel for="description" value="Descrição" />
+                <Textarea id="description" v-model="form.description" :placeholder="form.description" class="w-full" />
+                <InputError :message="form.errors.description" />
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="reason_for_status_change" value="Pretexo do cancelamento ou reagendamento"/>
+                <InputLabel for="reason_for_status_change" value="Pretexo do cancelamento ou reagendamento" />
                 <Textarea id="reason_for_status_change" v-model="form.reason_for_status_change"
-                          :placeholder="form.reason_for_status_change"
-                          class="w-full"/>
-                <InputError :message="form.errors.reason_for_status_change"/>
+                    :placeholder="form.reason_for_status_change" class="w-full" />
+                <InputError :message="form.errors.reason_for_status_change" />
+            </div>
+
+            <div
+                class="mt-6 max-w-full">
+                <InputLabel for="kms" value="Kilometros anteriormente"/>
+                <div id="kms">{{ props.selectedEvent.vehicle.kms }}Km</div>
+            </div>
+
+            <div
+                class="mt-6 max-w-full">
+                <InputLabel for="return_kms" value="Kilometros à entrega"/>
+                <TextInput
+                    id="return_kms"
+                    type="number"
+                    v-model="formReturning.return_kms"
+                />
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
                 <Button variant="secondary" @click="$emit('close')">Mudei de Ideia</Button>
 
-                <DeleteButtonDialog @cancel="handleCancel"/>
+                <DeleteButtonDialog @cancel="handleCancel" />
 
-                <Button
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="handleReschedule"
-                    class="bg-amber-500 hover:bg-amber-400"
-                >
+                <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="handleReschedule"
+                    class="bg-amber-500 hover:bg-amber-400">
                     Reagendar
                 </Button>
 
-                <ReturningButtonDialog @returning="handleReturning"/>
+                <ReturningButtonDialog @returning="handleReturning" />
             </div>
         </section>
     </Modal>
