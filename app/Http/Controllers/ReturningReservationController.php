@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReturningReservationRequest;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Vehicle;
 
 class ReturningReservationController extends Controller
 {
@@ -17,13 +18,19 @@ class ReturningReservationController extends Controller
 
         $data = $request->validated();
 
-        dd($data);
-
         $reservation->update([
             'status' => 'done',
-            'kms' => $data['return_kms'],
         ]);
+
+        $vehicle = Vehicle::find($reservation->vehicle_id);
+
+        $vehicle->update([
+            'kms' => (int) $data['return_kms'],
+        ]);
+
+        # todo: make change status inactive when returned not-ok
 
         return Redirect::back();
     }
 }
+

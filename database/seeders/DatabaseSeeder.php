@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
       'company' => 'robowork',
     ]);
 
-    User::factory(20)->create();
+    // User::factory(20)->create();
 
     Vehicle::factory(20)->create();
 

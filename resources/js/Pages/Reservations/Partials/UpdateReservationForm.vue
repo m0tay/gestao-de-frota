@@ -91,7 +91,7 @@ const handleReturning = () => {
     formReturning.returning = moment().toDate()
     formReturning.start = moment(props.selectedEvent.start).toDate()
 
-    formReturning.put(route('reservation.returning', {reservation: props.selectedEvent.id}), {
+    formReturning.put(route('reservation.returning', { reservation: props.selectedEvent.id }), {
         onSuccess: () => {
             form.reset()
             emit('close')
@@ -204,21 +204,15 @@ const reloadPage = () => {
                 <InputError :message="form.errors.reason_for_status_change" />
             </div>
 
-            <div
-                class="mt-6 max-w-full">
-                <InputLabel for="kms" value="Kilometros anteriormente"/>
+            <div class="mt-6 max-w-full">
+                <InputLabel for="kms" value="Kilometros anteriormente" />
                 <div id="kms">{{ props.selectedEvent.vehicle.kms }}Km</div>
             </div>
 
-            <div
-                class="mt-6 max-w-full">
-                <InputLabel for="return_kms" value="Kilometros à entrega"/>
-                <TextInput
-                    id="return_kms"
-                    type="number"
-                    v-model="formReturning.return_kms"
-                />
-                <InputError class="flex items-end" :message="formReturning.errors.return_kms"/>
+            <div class="mt-6 max-w-full">
+                <InputLabel for="return_kms" value="Kilometros à entrega" />
+                <Textarea id="return_kms" v-model="formReturning.return_kms" class="w-[50%] h-fit" />
+                <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
