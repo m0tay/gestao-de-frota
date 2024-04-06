@@ -16,12 +16,17 @@ import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.v
 import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
 import { Button } from "@/Components/ui/button/index.js";
+import { ArrowBigRightDash, ArrowBigDownDash } from 'lucide-vue-next';
 import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
+import { useWindowSize } from "@vueuse/core";
+import {Checkbox} from "@/Components/ui/checkbox"
 
 const authorized = ref([
     1,
     2
 ])
+
+const { width } = useWindowSize()
 
 const page = usePage()
 
@@ -58,6 +63,10 @@ const formReturning = useForm({
 
 const emit = defineEmits(['close']);
 
+/**
+ * Updates the returning and start dates, sends a PUT request to the reservation returning route,
+ * and handles success by resetting the form, emitting a close event, and reloading the page.
+ */
 const handleReturning = () => {
     formReturning.returning = moment().toDate()
     formReturning.start = moment(props.selectedEvent.start).toDate()
@@ -69,6 +78,14 @@ const handleReturning = () => {
             reloadPage()
         },
     })
+}
+
+const setReturningCondition = () => {
+    if(formReturning.return_condition === 'ok') {
+        formReturning.return_condition = 'nok'
+    } else {
+        formReturning.return_condition = 'ok'
+    }
 }
 
 onBeforeUpdate(() => {
@@ -181,16 +198,30 @@ const reloadPage = () => {
             </div>
 
             <div v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
-                class="mt-6 max-w-full flex gap-x-4">
+                class="mt-6 max-w-full flex flex-col sm:flex-row gap-4">
                 <div>
                     <InputLabel for="kms" value="Kilometros anteriormente" />
-                    <div id="kms">{{ props.selectedEvent.vehicle.kms }}Km</div>
+                    <div id="kms" class="border-1">{{ props.selectedEvent.vehicle.kms }}Km</div>
+                </div>
+                <div class="flex items-center">
+                    <ArrowBigRightDash v-if="width > 700" />
+                    <ArrowBigDownDash v-else />
                 </div>
                 <div>
                     <InputLabel for="return_kms" value="Kilometros à entrega" />
                     <TextInput id="return_kms" type="number" v-model="formReturning.return_kms" />
                     <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
                 </div>
+            </div>
+
+            <div class="mt-6 max-w-full">
+                {{ formReturning.return_condition }}
+                <Checkbox @update:checked="setReturningCondition()" />
+                <InputLabel value="Descrição" for="description" />
+                <textarea :disabled="true"
+                    class=" flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    id="description">{{ formReturning.return_condition_description}}
+        </textarea>
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
