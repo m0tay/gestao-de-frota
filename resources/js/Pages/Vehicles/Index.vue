@@ -1,48 +1,50 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { columns } from "@/Pages/Refuelling/columns"
+import { columns } from "@/Pages/Vehicles/columns"
 import DataTable from "@/Components/ui/data-table.vue"
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { faker } from "@faker-js/faker";
 
-function generateRandomData() {
-    const data = [];
-    const statuses = ['failed', 'success', 'pending', 'processing'];
-
-    for (let i = 0; i < 100; i++) {
-        const randomStatus = faker.helpers.arrayElement(statuses);
-        const randomEmail = faker.internet.email();
-        const randomAmount = faker.datatype.number({ min: 1, max: 1000 });
-        const randomId = faker.datatype.uuid();
-
-        data.push({
-            id: randomId,
-            amount: randomAmount,
-            status: randomStatus,
-            email: randomEmail,
-        });
-    }
-
-    return data;
+interface Vehicle {
+    licensePlate: string
+    brand: string
+    model: string
+    vin: string
+    lastInspection: Date
 }
 
-interface Payment {
-    id: string
-    amount: number
-    status: 'pending' | 'processing' | 'success' | 'failed'
-    email: string
-}
+const data = ref<Vehicle[]>([])
 
-const data = ref<Payment[]>([])
-
-async function getData(): Promise<Payment[]> {
+async function getData(): Promise<Vehicle[]> {
     // Fetch data from your API here.
-    return [...generateRandomData()]
+    return [...generateFakeVehicleData()]
 }
 
 onMounted(async () => {
     data.value = await getData();
 });
+
+function generateFakeVehicleData() {
+    const data = [];
+
+    for (let i = 0; i < 50; i++) {
+        const randomLicensePlate = `${faker.helpers.replaceSymbols("??")}-${faker.helpers.replaceSymbols("##")}-${faker.helpers.replaceSymbols("??")}`;
+        const randomBrand = faker.vehicle.manufacturer();
+        const randomModel = faker.vehicle.model();
+        const randomVin = faker.vehicle.vin();
+        const randomDate = faker.date.past();
+
+        data.push({
+            licensePlate: randomLicensePlate,
+            brand: randomBrand,
+            model: randomModel,
+            vin: randomVin,
+            lastInspection: randomDate,
+        });
+    }
+
+    return data;
+}
 </script>
 
 <template>
@@ -52,3 +54,4 @@ onMounted(async () => {
         </div>
     </AuthenticatedLayout>
 </template>
+
