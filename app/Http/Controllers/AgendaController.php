@@ -20,14 +20,14 @@ class AgendaController extends BaseAgendaController
         $previousReservations = Reservation::where('status', 'rescheduled')->with('creator', 'driver', 'vehicle')->get();
 
         // Check for past due reservations and apply `done` to them if not already denied
-        // foreach ($reservations as $reservation) {
-        //     if (Reservation::where('end', '<', now())
-        //         ->whereNotIn('status', ['rescheduled', 'denied'])
-        //         ->update(['status' => 'done'])
-        //     ) {
-        //         $reservation->update(['status' => 'done']);
-        //     }
-        // }
+        foreach ($reservations as $reservation) {
+            if (Reservation::where('end', '<', now())
+                ->whereNotIn('status', ['rescheduled', 'denied'])
+                ->update(['status' => 'done'])
+            ) {
+                $reservation->update(['status' => 'done']);
+            }
+        }
 
         $drivers = null;
 

@@ -88,9 +88,9 @@ const authorized = ref([
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> Perfil</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Sair
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -143,11 +143,11 @@ const authorized = ref([
                         <ResponsiveNavLink :href="route('agenda')" :active="route().current('agenda')">
                             Agenda
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('agenda')" :active="route().current('refuelling')">
+                        <ResponsiveNavLink :href="route('refuelling.index')" :active="route().current('refuelling.*')">
                             Abastecimentos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)"
-                                           :href="route('agenda')" :active="route().current('vehicles')">
+                                           :href="route('vehicles.index')" :active="route().current('vehicles.*')">
                             Veículos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)"
@@ -170,9 +170,9 @@ const authorized = ref([
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Perfil</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Sair
                             </ResponsiveNavLink>
                         </div>
                     </div>
