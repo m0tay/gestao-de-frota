@@ -99,6 +99,7 @@ const vCalendarSlots = computed(() => {
             :rules
             locale="pt-PT"
             hide-time-header
+            :timezone="'Europe/Lisbon'"
             first-day-of-week="1.0"
             :min-date="today"
             :max-date="aMonthAhead"
