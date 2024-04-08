@@ -25,6 +25,7 @@
         "@schedule-x/vue": "^1.18.0",
         "@tanstack/vue-table": "^8.14.0",
         "@vueuse/core": "^10.9.0",
+        "chart.js": "^4.4.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
         "date-fns": "^2.30.0",
@@ -33,6 +34,7 @@
         "radix-vue": "^1.5.2",
         "tailwind-merge": "^2.2.1",
         "tailwindcss-animate": "^1.0.7",
-        "v-calendar": "^3.1.2"
+        "v-calendar": "^3.1.2",
+        "vue-chartjs": "^5.3.0"
     }
 }
