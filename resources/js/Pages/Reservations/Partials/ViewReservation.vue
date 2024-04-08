@@ -1,25 +1,19 @@
 <script setup xmlns="http://www.w3.org/1999/html">
-import Modal from "@/Components/Modal.vue";
-import { onBeforeUpdate, onMounted, onUpdated, ref } from "vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
-import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import SelectInput from "@/Components/SelectInput.vue";
-import DateTimeInput from "@/Components/DateTimeInput.vue";
-import moment from "moment";
+import Modal from "@/Components/Modal.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Button } from "@/Components/ui/button/index.js";
 import { Textarea } from "@/Components/ui/textarea/index.js";
-import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
 import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
 import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
+import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
-import { Button } from "@/Components/ui/button/index.js";
-import { ArrowBigRightDash, ArrowBigDownDash } from 'lucide-vue-next';
-import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
-import { Checkbox } from "@/Components/ui/checkbox"
+import { ArrowBigDownDash, ArrowBigRightDash } from 'lucide-vue-next';
+import moment from "moment";
+import { onBeforeUpdate, ref } from "vue";
 
 const authorized = ref([
     1,
@@ -57,7 +51,7 @@ const formReturning = useForm({
     start: Date,
     start_kms: Number,
     return_kms: Number,
-    return_condition: String,
+    return_condition: Boolean,
     return_condition_description: String,
 })
 
@@ -81,11 +75,7 @@ const handleReturning = () => {
 }
 
 const setReturningCondition = () => {
-    if (formReturning.return_condition === 'ok') {
-        formReturning.return_condition = 'nok'
-    } else {
-        formReturning.return_condition = 'ok'
-    }
+    !formReturning.return_conditions
 }
 
 onBeforeUpdate(() => {
@@ -104,6 +94,8 @@ onBeforeUpdate(() => {
         formReturning.id = props.selectedEvent.id
         formReturning.start = form.start
         formReturning.start_kms = props.selectedEvent.vehicle.kms
+        formReturning.return_condition = false
+        formReturning.return_condition_description = ''
     }
 })
 
@@ -200,7 +192,7 @@ const reloadPage = () => {
             <div v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
                 class="mt-6 max-w-full flex flex-col sm:flex-row gap-4">
                 <div>
-                    <InputLabel for="kms" value="Kilometros anteriormente" />
+                    <InputLabel for="kms" value="Quilómetros anteriormente" />
                     <div id="kms" class="border-1">{{ props.selectedEvent.vehicle.kms }}Km</div>
                 </div>
                 <div class="flex items-center">
@@ -208,20 +200,23 @@ const reloadPage = () => {
                     <ArrowBigDownDash v-else />
                 </div>
                 <div>
-                    <InputLabel for="return_kms" value="Kilometros à entrega" />
+                    <InputLabel for="return_kms" value="Quilómetros à entrega" />
                     <TextInput id="return_kms" type="number" v-model="formReturning.return_kms" />
                     <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
                 </div>
             </div>
 
-            <div class="mt-6 max-w-full">
-                {{ formReturning.return_condition }}
-                <Checkbox @update:checked="setReturningCondition()" />
+            <div class="mt-6 max-w-full"
+                v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id">
+                <div class="flex gap-2 mb-4">
+                    <InputLabel for="return_condition" value="Houve alguma avaria?" />
+                    <input class="size-4" type="checkbox" id="returning" v-model="formReturning.return_condition" />
+                </div>
                 <InputLabel value="Descrição" for="description" />
-                <textarea :disabled="true"
-                    class=" flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    id="description">{{ formReturning.return_condition_description }}
-        </textarea>
+                <Textarea :disabled="!formReturning.return_condition" class="w-full" id="description"
+                    v-model="formReturning.return_condition_description"
+                    :placeholder="formReturning.return_condition_description" />
+
             </div>
 
             <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">

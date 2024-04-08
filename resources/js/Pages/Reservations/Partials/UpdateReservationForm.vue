@@ -205,12 +205,12 @@ const reloadPage = () => {
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="kms" value="Kilometros anteriormente" />
+                <InputLabel for="kms" value="Quilómetros anteriormente" />
                 <div id="kms">{{ props.selectedEvent.vehicle.kms }}Km</div>
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="return_kms" value="Kilometros à entrega" />
+                <InputLabel for="return_kms" value="Quilómetros à entrega" />
                 <Textarea id="return_kms" v-model="formReturning.return_kms" class="w-[50%] h-fit" />
                 <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
             </div>

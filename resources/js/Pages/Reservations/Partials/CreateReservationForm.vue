@@ -1,15 +1,15 @@
 <script setup>
-import Modal from "@/Components/Modal.vue";
-import { computed, onBeforeUpdate, onUpdated, ref } from "vue";
-import { useForm, usePage } from "@inertiajs/vue3";
+import DateTimeInput from "@/Components/DateTimeInput.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import { Button } from "@/Components/ui/button/index.js";
+import Modal from "@/Components/Modal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import { Button } from "@/Components/ui/button/index.js";
 import { Textarea } from "@/Components/ui/textarea/index.js";
-import DateTimeInput from "@/Components/DateTimeInput.vue";
-import moment from "moment";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
+import moment from "moment";
+import { onBeforeUpdate, ref } from "vue";
 
 const authorized = ref([1, 2]);
 
