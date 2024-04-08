@@ -19,7 +19,7 @@ import { Button } from "@/Components/ui/button/index.js";
 import { ArrowBigRightDash, ArrowBigDownDash } from 'lucide-vue-next';
 import DeleteButtonDialog from "@/Components/DeleteButtonDialog.vue";
 import { useWindowSize } from "@vueuse/core";
-import {Checkbox} from "@/Components/ui/checkbox"
+import { Checkbox } from "@/Components/ui/checkbox"
 
 const authorized = ref([
     1,
@@ -81,7 +81,7 @@ const handleReturning = () => {
 }
 
 const setReturningCondition = () => {
-    if(formReturning.return_condition === 'ok') {
+    if (formReturning.return_condition === 'ok') {
         formReturning.return_condition = 'nok'
     } else {
         formReturning.return_condition = 'ok'
@@ -220,7 +220,7 @@ const reloadPage = () => {
                 <InputLabel value="Descrição" for="description" />
                 <textarea :disabled="true"
                     class=" flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    id="description">{{ formReturning.return_condition_description}}
+                    id="description">{{ formReturning.return_condition_description }}
         </textarea>
             </div>
 

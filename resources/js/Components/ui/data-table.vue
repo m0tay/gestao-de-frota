@@ -123,7 +123,7 @@ const columnVisibility = ref<VisibilityState>({})
                 :disabled="!table.getCanPreviousPage()"
                 @click="table.previousPage()"
             >
-                &lt; Prévia
+                &lt; Anterior
             </Button>
             <Button
                 variant="outline"
