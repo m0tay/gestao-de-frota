@@ -15,6 +15,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import { onBeforeUpdate } from "vue";
+import { reloadPage } from "@/lib/reloadPage";
 
 const page = usePage()
 
@@ -127,9 +128,6 @@ onBeforeUpdate(() => {
     }
 })
 
-const reloadPage = () => {
-    // window.location.reload();
-}
 </script>
 
 <template>
@@ -222,7 +220,8 @@ const reloadPage = () => {
                 </div>
                 <div>
                     <InputLabel for="return_kms" value="Quilómetros à entrega" />
-                    <TextInput class="border-1 w-full" id="return_kms" type="number" v-model="formReturning.return_kms" />
+                    <TextInput class="border-1 w-full" id="return_kms" type="number"
+                        v-model="formReturning.return_kms" />
                     <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
                 </div>
             </div>

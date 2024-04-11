@@ -14,6 +14,7 @@ import { useWindowSize } from "@vueuse/core";
 import { ArrowBigDownDash, ArrowBigRightDash } from 'lucide-vue-next';
 import moment from "moment";
 import { onBeforeUpdate, ref } from "vue";
+import { reloadPage } from "@/lib/reloadPage";
 
 const authorized = ref([
     1,
@@ -98,11 +99,6 @@ onBeforeUpdate(() => {
         formReturning.return_condition_description = ''
     }
 })
-
-
-const reloadPage = () => {
-    // window.location.reload();
-}
 </script>
 
 <template>

@@ -30,6 +30,7 @@ const aMonthAhead = computed(() => moment().add('1', 'month').toDate());
 const rules = ref({
     minutes: [0, 10, 20, 30, 40, 50],
 })
+const timezone = ref("Europe/London");
 
 function handleNav(direction) {
     if (!calendarRef.value) return;
@@ -99,7 +100,7 @@ const vCalendarSlots = computed(() => {
             :rules
             locale="pt-PT"
             hide-time-header
-            :timezone="'Europe/Lisbon'"
+            :timezone
             first-day-of-week="1.0"
             :min-date="today"
             :max-date="aMonthAhead"
