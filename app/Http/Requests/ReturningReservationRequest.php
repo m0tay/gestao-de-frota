@@ -30,6 +30,8 @@ class ReturningReservationRequest extends FormRequest
                 'numeric',
                 'gt:start_kms',
             ],
+            'return_condition' => 'required',
+            'return_condition_description' => 'required',
         ];
     }
 

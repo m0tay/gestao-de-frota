@@ -1,8 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
-import { columns } from "@/Pages/Refuelling/columns"
-import DataTable from "@/Components/ui/data-table.vue"
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { columns } from '@/Pages/Refuelling/columns'
+import DataTable from '@/Components/ui/data-table.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { faker } from "@faker-js/faker";
 
 function generateRandomData() {
@@ -26,16 +26,9 @@ function generateRandomData() {
     return data;
 }
 
-interface Payment {
-    id: string
-    amount: number
-    status: 'pending' | 'processing' | 'success' | 'failed'
-    email: string
-}
+const data = ref([])
 
-const data = ref<Payment[]>([])
-
-async function getData(): Promise<Payment[]> {
+async function getData() {
     // Fetch data from your API here.
     return [...generateRandomData()]
 }
@@ -45,11 +38,11 @@ onMounted(async () => {
 });
 </script>
 
+
 <template>
     <AuthenticatedLayout>
         <div class="container py-10 mx-auto">
-            <DataTable :columns="columns" :data="data" />
+            <DataTable :columns :data />
         </div>
     </AuthenticatedLayout>
 </template>
-    

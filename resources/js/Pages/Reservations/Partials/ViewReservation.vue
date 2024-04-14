@@ -9,12 +9,12 @@ import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.v
 import FakeSelectInput from "@/Pages/Reservations/Partials/FakeSelectInput.vue";
 import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservation.vue";
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
+import { reloadPage } from "@/lib/reloadPage";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
 import { ArrowBigDownDash, ArrowBigRightDash } from 'lucide-vue-next';
 import moment from "moment";
 import { onBeforeUpdate, ref } from "vue";
-import { reloadPage } from "@/lib/reloadPage";
 
 const authorized = ref([
     1,
@@ -183,6 +183,13 @@ onBeforeUpdate(() => {
                         id="reason_for_status_change">{{ props.selectedEvent.reason_for_status_change }}</textarea>
 
                 </div>
+            </div>
+
+            <div class="mt-6 max-w-full"
+                v-show="props.selectedEvent.status === 'done' && authorized.includes(page.props.auth.user.role_id)">
+                <InputLabel value="Quilómetros entregues" for="returned_kms" />
+                <div class="text-muted-foreground flex w-fit rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    id="returned_kms">{{ props.selectedEvent.vehicle.kms }} Km</div>
             </div>
 
             <div v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"

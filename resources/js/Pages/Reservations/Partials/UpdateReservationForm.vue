@@ -12,7 +12,7 @@ import PreviousReservation from "@/Pages/Reservations/Partials/PreviousReservati
 import ReservationStatus from "@/Pages/Reservations/Partials/ReservationStatus.vue";
 import ReturningButtonDialog from "@/Pages/Reservations/Partials/ReturningButtonDialog.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
-import moment from "moment";
+import { addHours, addMinutes, format, parseISO, subHours, subMinutes } from "date-fns";
 import TextInput from "@/Components/TextInput.vue";
 import { onBeforeUpdate } from "vue";
 import { reloadPage } from "@/lib/reloadPage";
@@ -68,6 +68,10 @@ const handleReschedule = () => {
 
     form.creator = page.props.auth.user
 
+    // provisory solution to set the end time to 1 hour after the start time because of portugal dst
+    form.start = addHours(form.start, 1)
+    form.end = addHours(form.end, 1)
+
     form.put(route('reservation.reschedule', { reservation: props.selectedEvent.id }), {
         onSuccess: () => {
             form.reset()
@@ -90,8 +94,8 @@ const handleCancel = () => {
 }
 
 const handleReturning = () => {
-    formReturning.returning = moment().toDate()
-    formReturning.start = moment(props.selectedEvent.start).toDate()
+    formReturning.returning = new Date()
+    formReturning.start = parseISO(props.selectedEvent.start)
 
     formReturning.put(route('reservation.returning', { reservation: props.selectedEvent.id }), {
         onSuccess: () => {
@@ -112,8 +116,8 @@ onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
     if (props.selectedEvent) {
-        form.start = moment(props.selectedEvent.start).toDate()
-        form.end = moment(props.selectedEvent.end).toDate()
+        form.start = parseISO(props.selectedEvent.start)
+        form.end = parseISO(props.selectedEvent.end)
         form.vehicle = props.selectedEvent.vehicle
         form.driver = props.selectedEvent.driver
         form.description = props.selectedEvent.description

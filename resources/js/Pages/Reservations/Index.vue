@@ -1,21 +1,21 @@
 <script setup>
-import { ScheduleXCalendar } from '@schedule-x/vue'
-import { createCalendar, viewMonthAgenda, viewMonthGrid, } from '@schedule-x/calendar'
-import '@schedule-x/theme-default/dist/index.css'
-import moment from "moment"
-import { ref } from "vue"
-import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue"
+import InputLabel from "@/Components/InputLabel.vue"
+import { Button } from "@/Components/ui/button/index.js"
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card/index.js"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/Components/ui/tooltip'
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue"
-import { useWindowSize } from '@vueuse/core'
-import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
-import { Button } from "@/Components/ui/button/index.js"
+import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue"
 import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue"
+import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue"
+import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
 import { usePage } from "@inertiajs/vue3"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/Components/ui/tooltip'
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card/index.js";
-import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
+import { createCalendar, viewMonthAgenda, viewMonthGrid, } from '@schedule-x/calendar'
+import '@schedule-x/theme-default/dist/index.css'
+import { ScheduleXCalendar } from '@schedule-x/vue'
+import { useWindowSize } from '@vueuse/core'
+import moment from "moment"
+import { ref } from "vue"
 
 const authorized = ref([
     1,
@@ -192,25 +192,25 @@ const calendarApp = createCalendar({
             <ScheduleXCalendar :calendar-app="calendarApp" class="h-screen">
                 <template #monthGridEvent="{ calendarEvent }">
                     <div :class="{
-                'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
-                'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
-                'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
-                'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
-            }" class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded">
+                        'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
+                        'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
+                        'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
+                        'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
+                    }" class="event px-2 mx-2 cursor-pointer font-semibold text-nowrap rounded">
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>{{ calendarEvent.title }}</TooltipTrigger>
                                 <TooltipContent class="w-[400px]">
                                     <Card :class="{
-                'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
-                'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
-                'bg-gradient-to-r from-sky-600 to-sky-500': calendarEvent.status === 'done',
-                'bg-gradient-to-r from-amber-600 to-amber-500': calendarEvent.status === 'rescheduled',
-            }">
+                                        'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
+                                        'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
+                                        'bg-gradient-to-r from-sky-600 to-sky-500': calendarEvent.status === 'done',
+                                        'bg-gradient-to-r from-amber-600 to-amber-500': calendarEvent.status === 'rescheduled',
+                                    }">
                                         <CardHeader>
                                             <CardTitle class="text-pretty text-accent">{{
-                calendarEvent.title.toUpperCase()
-            }}
+                                                calendarEvent.title.toUpperCase()
+                                                }}
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent>
@@ -241,15 +241,15 @@ const calendarApp = createCalendar({
                 <template #monthAgendaEvent="{ calendarEvent }">
                     <div class="event m-2 cursor-pointer p-2 font-semibold">
                         <Card :class="{
-                'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
-                'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
-                'bg-gradient-to-r from-sky-600 to-sky-500': calendarEvent.status === 'done',
-                'bg-gradient-to-r from-amber-600 to-amber-500': calendarEvent.status === 'rescheduled',
-            }">
+                            'bg-gradient-to-r from-green-600 to-green-500': calendarEvent.status === 'accepted',
+                            'bg-gradient-to-r from-red-600 to-red-500': calendarEvent.status === 'denied',
+                            'bg-gradient-to-r from-sky-600 to-sky-500': calendarEvent.status === 'done',
+                            'bg-gradient-to-r from-amber-600 to-amber-500': calendarEvent.status === 'rescheduled',
+                        }">
                             <CardHeader>
                                 <CardTitle class="text-pretty text-accent">{{
-                calendarEvent.title.toUpperCase()
-            }}
+                                    calendarEvent.title.toUpperCase()
+                                    }}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -273,11 +273,11 @@ const calendarApp = createCalendar({
                 </template>
                 <template #timeGridEvent="{ calendarEvent }">
                     <div :class="{
-                'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
-                'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
-                'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
-                'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
-            }" class="event m-2 cursor-pointer p-2 font-semibold">
+                        'bg-green-500 hover:bg-green-400': calendarEvent.status === 'accepted',
+                        'bg-red-500 hover:bg-red-400': calendarEvent.status === 'denied',
+                        'bg-sky-500 hover:bg-sky-400': calendarEvent.status === 'done',
+                        'bg-amber-500 hover:bg-amber-400': calendarEvent.status === 'rescheduled',
+                    }" class="event m-2 cursor-pointer p-2 font-semibold">
                         {{ calendarEvent.title }}
                     </div>
                 </template>

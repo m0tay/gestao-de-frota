@@ -25,7 +25,9 @@ class ReturningReservationController extends Controller
         $vehicle = Vehicle::find($reservation->vehicle_id);
 
         $vehicle->update([
-            'kms' => (int) $data['return_kms'],
+            'kms' => bcadd($data['return_kms'], 0),
+            'return_condition' => $data['return_condition'] ? 'ok' : 'nok',
+            'return_condition_description' => $data['return_condition_description'],
         ]);
 
         # todo: make change status inactive when returned not-ok
@@ -33,4 +35,3 @@ class ReturningReservationController extends Controller
         return Redirect::back();
     }
 }
-

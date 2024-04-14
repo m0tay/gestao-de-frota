@@ -19,7 +19,12 @@ class ScheduleReservationRequest extends FormRequest
             'end' => ['required', 'date', 'after:start', new NoOverlappingReservations($this->user()->id, $this->vehicle)],
             'driver' => 'required',
             'creator' => 'required',
-            'vehicle' => 'required',
+            'vehicle' => ['required', function ($attribute, $value, $fail) {
+                if (is_null($value['id'])) {
+                    $fail('Escolha um veículo.');
+                }
+            }],
+
             'description' => 'required',
         ];
     }
