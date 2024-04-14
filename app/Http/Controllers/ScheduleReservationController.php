@@ -8,38 +8,40 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
 
 class ScheduleReservationController extends BaseAgendaController
 {
     /**
-     * Handle the incoming request.
+     * Executes the function with the given request data to create a new reservation.
+     *
+     * @param ScheduleReservationRequest $request The request data needed to create the reservation
+     * @return Redirect Redirects back to the previous page after creating the reservation
      */
-    public function __invoke(ScheduleReservationRequest $request)
+    public function __invoke(ScheduleReservationRequest $request): RedirectResponse
     {
         $this->authorize('create', Reservation::class);
 
         $data = $request->validated();
 
-        $driverName = User::find($data['driver']['id'])->name;
-        $vehiclePlate = Vehicle::find($data['vehicle']['id'])->plate;
+        $driver = User::find($data['driver_id']);
+        $vehicle = Vehicle::find($data['vehicle_id']);
 
-        $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
-
-        $vehicleKms = Vehicle::find($data['vehicle']['id'])->kms;
-
-        $reservation = Reservation::create([
-            'title' => $data['title'],
+        $reservationData = [
+            'title' => strtoupper($vehicle->plate) . " - " . $driver->name,
             'description' => $data['description'],
-            'driver_id' => $data['driver']['id'],
-            'vehicle_id' => $data['vehicle']['id'],
-            'created_by' => $data['creator']['id'],
+            'driver_id' => $data['driver_id'],
+            'vehicle_id' => $data['vehicle_id'],
+            'created_by' => $data['creator_id'],
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
             'status' => 'accepted',
-            'start_kms' => $vehicleKms,
+            'start_kms' => $vehicle->kms,
+        ];
 
-        ]);
+        Reservation::create($reservationData);
 
         return Redirect::back();
     }
+
 }

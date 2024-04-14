@@ -29,7 +29,7 @@ class RefuellingPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**

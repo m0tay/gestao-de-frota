@@ -74,5 +74,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth')->resource('refuelling', RefuellingController::class);
+Route::middleware('auth')->match(
+    ['get', 'post'],
+    'refuelling/list',
+    [RefuellingController::class, 'list']
+)->name('refuelling.list');
+Route::middleware('auth')->resource('refuelling', RefuellingController::class)
+    ->except('list');
 Route::middleware('auth')->resource('vehicles', VehicleController::class);

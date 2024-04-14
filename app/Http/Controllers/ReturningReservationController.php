@@ -22,9 +22,7 @@ class ReturningReservationController extends Controller
             'status' => 'done',
         ]);
 
-        $vehicle = Vehicle::find($reservation->vehicle_id);
-
-        $vehicle->update([
+        $vehicle = Vehicle::find($reservation->vehicle_id)->update([
             'kms' => bcadd($data['return_kms'], 0),
             'return_condition' => $data['return_condition'] ? 'ok' : 'nok',
             'return_condition_description' => $data['return_condition_description'],

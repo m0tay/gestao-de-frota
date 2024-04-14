@@ -14,9 +14,13 @@ class RefuellingController extends Controller
      */
     public function index()
     {
+        return Inertia::render('Refuelling/Index');
+    }
+
+    public function list() {
         $this->authorize('viewAny', Refuelling::class);
 
-        return Inertia::render('Refuelling/Index');
+        return Inertia::render('Refuelling/Partials/List');
     }
 
     /**
@@ -24,7 +28,9 @@ class RefuellingController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Refuelling::class);
+
+        return Inertia::render('Refuelling/Partials/Create');
     }
 
     /**
