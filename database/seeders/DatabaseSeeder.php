@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Models\Refuellings;
 use function Pest\Laravel\get;
 
 class DatabaseSeeder extends Seeder
@@ -54,5 +55,7 @@ class DatabaseSeeder extends Seeder
     Vehicle::factory(20)->create();
 
     Reservation::factory(150)->create();
+
+    Refuellings::factory(150)->create();
   }
 }

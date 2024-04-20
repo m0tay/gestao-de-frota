@@ -41,7 +41,7 @@ const authorized = ref([
                                 <NavLink :href="route('agenda')" :active="route().current('agenda')">
                                     Agenda
                                 </NavLink>
-                                <NavLink :href="route('refuelling.index')" :active="route().current('refuelling.*')">
+                                <NavLink :href="route('refuellings.index')" :active="route().current('refuellings.*')">
                                     Abastecimentos
                                 </NavLink>
                                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
@@ -143,7 +143,7 @@ const authorized = ref([
                         <ResponsiveNavLink :href="route('agenda')" :active="route().current('agenda')">
                             Agenda
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('refuelling.index')" :active="route().current('refuelling.*')">
+                        <ResponsiveNavLink :href="route('refuellings.index')" :active="route().current('refuellings.*')">
                             Abastecimentos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)"

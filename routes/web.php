@@ -3,7 +3,7 @@
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\CancelReservationController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RefuellingController;
+use App\Http\Controllers\RefuellingsController;
 use App\Http\Controllers\RescheduleReservationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReturningReservationController;
@@ -76,9 +76,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->match(
     ['get', 'post'],
-    'refuelling/list',
-    [RefuellingController::class, 'list']
-)->name('refuelling.list');
-Route::middleware('auth')->resource('refuelling', RefuellingController::class)
+    'refuellings/list',
+    [RefuellingsController::class, 'list']
+)->name('refuellings.list');
+Route::middleware('auth')->resource('refuellings', RefuellingsController::class)
     ->except('list');
 Route::middleware('auth')->resource('vehicles', VehicleController::class);

@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('refuelling', function (Blueprint $table) {
+        Schema::create('refuellings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->decimal('amount', 6, 2);
-            $table->decimal('price', 6, 2);
+            $table->unsignedDecimal('amount', 6, 2);
+            $table->unsignedDecimal('price', 6, 2);
             $table->unsignedBigInteger('mileage');
             $table->date('refuel_date');
             $table->string('description')->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('refuelling');
+        Schema::dropIfExists('refuellings');
     }
 };

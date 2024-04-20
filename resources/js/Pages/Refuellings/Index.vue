@@ -14,10 +14,10 @@ import { Head, Link } from '@inertiajs/vue3';
                     <div class="p-6 text-gray-900">Index
                         <ul>
                             <li>
-                                <Link :href="route('refuelling.create')">Adicionar</Link>
+                                <Link :href="route('refuellings.create')">Adicionar</Link>
                             </li>
                             <li>
-                                <Link :href="route('refuelling.list')">Ver todos</Link>
+                                <Link :href="route('refuellings.list')">Ver todos</Link>
                             </li>
                         </ul>
                     </div>
