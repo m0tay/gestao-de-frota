@@ -24,7 +24,9 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Vehicle::class);
+
+        return Inertia::render('Vehicles/Create');
     }
 
     /**
