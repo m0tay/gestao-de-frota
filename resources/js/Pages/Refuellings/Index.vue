@@ -39,3 +39,4 @@ const data = ref(page.props.refuellings.map(refueling => ({
         </div>
     </AuthenticatedLayout>
 </template>
+w

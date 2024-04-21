@@ -1,6 +1,7 @@
 <script setup>
 import DateTimeInput from '@/Components/DateTimeInput.vue';
 import InputError from '@/Components/InputError.vue';
+import Textarea from '@/Components/ui/textarea/Textarea.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
@@ -9,6 +10,12 @@ import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { onBeforeUpdate } from 'vue';
 
 const page = usePage();
+
+const props = defineProps({
+    vehicles: Array,
+    drivers: Array,
+});
+
 
 const form = useForm({
     vehicle: Number,
@@ -24,12 +31,15 @@ const form = useForm({
 // const handleSubmit = () => {
 //     form.post(route('refuellings.store'));
 // }
+console.log(page.props.auth.user);
 
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
 
     form.refuel_date = new Date();
+    form.description = "";
+    form.driver = page.props.auth.user
 });
 </script>
 
@@ -71,7 +81,7 @@ onBeforeUpdate(() => {
                         <div class="mt-6 max-w-full">
                             <InputLabel value="Condutor" for="driver" />
                             <SelectInput :disabled="!page.props.canSelectDriver" id="driver" :list="drivers"
-                                v-model="form.driver.id" :placeholder="form.driver.id" />
+                                v-model="form.driver.id" :placeholder="form.driver.name" />
                             <InputError :message="form.errors.driver" />
                         </div>
 
@@ -84,8 +94,7 @@ onBeforeUpdate(() => {
 
                         <div class="mt-6 max-w-full">
                             <InputLabel value="Descrição" for="description" />
-                            <Textarea class="w-full" id="description" v-model="form.description"
-                                :placeholder="form.description" />
+                            <Textarea class="w-full" id="description" v-model="form.description" :placeholder="''" />
                             <InputError :message="form.errors.description" />
                         </div>
                         <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">

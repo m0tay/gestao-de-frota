@@ -7,8 +7,10 @@ use Inertia\Inertia;
 use App\Models\Refuellings;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Http\Controllers\BaseAgendaController;
+use Illuminate\Support\Facades\Auth;
 
-class RefuellingsController extends Controller
+class RefuellingsController extends BaseAgendaController
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +37,10 @@ class RefuellingsController extends Controller
 
         $vehicles = Vehicle::select('id', 'plate', 'kms', 'company')->get();
 
-        return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles'));
+        $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles']) || in_array(Auth::user()->email, $this->authorized['emails']);
+
+
+        return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles', 'canSelectDriver'));
     }
 
     /**
