@@ -39,9 +39,25 @@ const authorized = ref([
                                 <NavLink :href="route('agenda')" :active="route().current('agenda')">
                                     Agenda
                                 </NavLink>
-                                <NavLink :href="route('refuellings.index')" :active="route().current('refuellings.*')">
-                                    Abastecimentos
-                                </NavLink>
+
+                                <div
+                                    :class="route().current('refuellings.*')
+                                        ? 'sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
+                                        : 'hidden sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
+
+                                    <Dropdown>
+                                        <template #trigger>
+                                            <span
+                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                                Abastecimentos
+                                            </span>
+                                        </template>
+                                        <template #content>
+                                            <DropdownLink :href="route('refuellings.create')">Adicionar</DropdownLink>
+                                            <DropdownLink :href="route('refuellings.index')">Ver todos</DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </div>
                                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
                                     :href="route('vehicles.index')" :active="route().current('vehicles.*')">
                                     Veículos
@@ -119,7 +135,8 @@ const authorized = ref([
                         <ResponsiveNavLink :href="route('agenda')" :active="route().current('agenda')">
                             Agenda
                         </ResponsiveNavLink>
-                        <div class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                        <div
+                            class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
                             <p>Abastecimentos</p>
                             <ResponsiveNavLink :href="route('refuellings.create')"
                                 :active="route().current('refuellings.create')">

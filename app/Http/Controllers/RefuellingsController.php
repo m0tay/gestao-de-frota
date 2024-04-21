@@ -25,7 +25,7 @@ class RefuellingsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Refuellings/Partials/Create');
+        return Inertia::render('Refuellings/Create');
     }
 
     /**
