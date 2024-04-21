@@ -2,11 +2,11 @@
 import {useVModel} from "@vueuse/core";
 import {ChevronLeft, ChevronRight} from "lucide-vue-next";
 import {DatePicker} from "v-calendar";
+import {addMonths, startOfMonth, endOfMonth, format} from "date-fns";
 import {computed, nextTick, onMounted, ref, useSlots} from "vue";
 import {isVCalendarSlot} from ".";
 import {cn} from "@/lib/utils";
 import {buttonVariants} from "@/Components/ui/button";
-import moment from "moment";
 
 defineOptions({
     inheritAttrs: false,
@@ -25,8 +25,8 @@ const modelValue = useVModel(props, "modelValue", emits, {
 
 const datePicker = ref();
 const calendarRef = computed(() => datePicker.value.calendarRef);
-const today = computed(() => moment().toDate());
-const aMonthAhead = computed(() => moment().add('1', 'month').toDate());
+const today = computed(() => new Date());
+const aMonthAhead = computed(() => endOfMonth(addMonths(new Date(), 1)));
 const rules = ref({
     minutes: [0, 10, 20, 30, 40, 50],
 })
@@ -381,3 +381,4 @@ const vCalendarSlots = computed(() => {
     @apply ml-0.5;
 }
 </style>
+

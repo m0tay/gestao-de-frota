@@ -10,6 +10,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
 import moment from "moment";
 import { onBeforeUpdate, ref } from "vue";
+import { reloadPage } from "@/lib/reloadPage";
 
 const authorized = ref([1, 2]);
 
@@ -72,10 +73,6 @@ onBeforeUpdate(() => {
     form.description = "";
     form.status = "accepted";
 });
-
-const reloadPage = () => {
-    window.location.reload();
-};
 </script>
 
 <template>

@@ -1,6 +1,26 @@
 <script setup>
+import DataTable from '@/Components/ui/data-table.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { columns } from '@/Pages/Refuellings/columns';
+import { Head, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const page = usePage()
+
+const data = ref(page.props.refuellings.map(refueling => ({
+    id: refueling.id,
+    refuel_date: new Date(refueling.refuel_date),
+    vehicle: {
+        licensePlate: (refueling.vehicle.plate).toUpperCase(),
+    },
+    driver: {
+        name: refueling.driver.name,
+    },
+    fuel_type: refueling.fuel_type,
+    mileage: refueling.mileage,
+    amount: Number.parseFloat(refueling.amount),
+    price: Number.parseFloat(refueling.price),
+})))
 </script>
 
 <template>
@@ -11,15 +31,8 @@ import { Head, Link } from '@inertiajs/vue3';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">Index
-                        <ul>
-                            <li>
-                                <Link :href="route('refuellings.create')">Adicionar</Link>
-                            </li>
-                            <li>
-                                <Link :href="route('refuellings.list')">Ver todos</Link>
-                            </li>
-                        </ul>
+                    <div class="p-3 text-gray-900">
+                        <DataTable :columns="columns" :data="data" />
                     </div>
                 </div>
             </div>

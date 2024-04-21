@@ -1,20 +1,5 @@
 <script setup lang="ts" generic="TData, TValue">
-import { Input } from '@/Components/ui/input'
-import type {
-    ColumnDef, ColumnFiltersState,
-} from '@tanstack/vue-table'
-import {
-    FlexRender,
-    getCoreRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    getFilteredRowModel,
-    VisibilityState,
-    useVueTable,
-    SortingState
-} from "@tanstack/vue-table"
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref } from 'vue'
+import { Button } from "@/Components/ui/button"
 import {
     Table,
     TableBody,
@@ -23,19 +8,25 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table"
-import { Button } from "@/Components/ui/button"
 import { valueUpdater } from '@/lib/utils'
+import type {
+    ColumnDef, ColumnFiltersState,
+} from '@tanstack/vue-table'
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/Components/ui/dropdown-menu'
+    FlexRender,
+    SortingState,
+    VisibilityState,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useVueTable
+} from "@tanstack/vue-table"
+import { ref } from 'vue'
 
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    searchableFields: string[]
 }>()
 
 const table = useVueTable({
@@ -133,5 +124,3 @@ const columnVisibility = ref<VisibilityState>({})
         </div>
     </div>
 </template>
-
-

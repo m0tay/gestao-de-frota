@@ -1,15 +1,13 @@
 <script setup>
-import { format } from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-vue-next'
-import { cn } from '@/lib/utils'
 import { Button } from '@/Components/ui/button'
 import { Calendar } from '@/Components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger, } from '@/Components/ui/popover'
+import { cn } from '@/lib/utils'
+import { format } from 'date-fns'
+import { Calendar as CalendarIcon } from 'lucide-vue-next'
+import { ref } from 'vue'
 
-const date = defineModel({
-    type: Date,
-    required: true,
-})
+const date = ref(null)
 </script>
 
 <template>
@@ -28,3 +26,4 @@ const date = defineModel({
         </PopoverContent>
     </Popover>
 </template>
+

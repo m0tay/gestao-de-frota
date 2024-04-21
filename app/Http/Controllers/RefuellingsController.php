@@ -11,16 +11,12 @@ class RefuellingsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return Inertia::render('Refuellings/Index');
-    }
 
-    public function list()
+    public function index()
     {
         $refuellings = Refuellings::with(['driver', 'vehicle'])->get();
 
-        return Inertia::render('Refuellings/Partials/List', compact('refuellings'));
+        return Inertia::render('Refuellings/Index', compact('refuellings'));
     }
 
 
