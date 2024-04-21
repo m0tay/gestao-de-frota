@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Refuellings;
+use App\Models\User;
+use App\Models\Vehicle;
 
 class RefuellingsController extends Controller
 {
@@ -14,7 +16,11 @@ class RefuellingsController extends Controller
 
     public function index()
     {
-        $refuellings = Refuellings::with(['driver', 'vehicle'])->get();
+        $refuellings = Refuellings::with(['driver' => function ($query) {
+            $query->select('id', 'name');
+        }, 'vehicle' => function ($query) {
+            $query->select('id', 'plate');
+        }])->get();
 
         return Inertia::render('Refuellings/Index', compact('refuellings'));
     }
@@ -25,7 +31,11 @@ class RefuellingsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Refuellings/Create');
+        $drivers = User::select('id', 'name')->get();
+
+        $vehicles = Vehicle::select('id', 'plate', 'kms', 'company')->get();
+
+        return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles'));
     }
 
     /**

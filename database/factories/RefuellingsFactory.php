@@ -19,8 +19,8 @@ class RefuellingsFactory extends Factory
     public function definition(): array
     {
         return [
-            'vehicle_id' => Vehicle::factory(),
-            'user_id' => User::factory(),
+            'vehicle_id' => fake()->randomElement(Vehicle::where('group', 'public')->get()),
+            'user_id' => fake()->randomElement(User::all()),
             'amount' => fake()->numberBetween(10, 100),
             'price' => fake()->numberBetween(10, 100),
             'mileage' => fake()->numberBetween(10000, 200000),
