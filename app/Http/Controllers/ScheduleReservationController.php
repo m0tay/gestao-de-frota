@@ -24,15 +24,16 @@ class ScheduleReservationController extends BaseAgendaController
 
         $data = $request->validated();
 
-        $driver = User::find($data['driver_id']);
-        $vehicle = Vehicle::find($data['vehicle_id']);
+        $driver = User::find($data['driver']['id']);
+        $creator = User::find($data['creator']['id']);
+        $vehicle = Vehicle::find($data['vehicle']['id']);
 
         $reservationData = [
             'title' => strtoupper($vehicle->plate) . " - " . $driver->name,
             'description' => $data['description'],
-            'driver_id' => $data['driver_id'],
-            'vehicle_id' => $data['vehicle_id'],
-            'created_by' => $data['creator_id'],
+            'driver_id' => $driver->id,
+            'vehicle_id' => $vehicle->id,
+            'created_by' => $creator->id,
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
             'status' => 'accepted',
