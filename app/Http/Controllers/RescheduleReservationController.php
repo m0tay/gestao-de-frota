@@ -20,22 +20,18 @@ class RescheduleReservationController extends BaseAgendaController
 
         $data = $request->validated();
 
-        // Prepare title
-        $driverName = User::find($data['driver']['id'])->name;
-        $vehiclePlate = Vehicle::find($data['vehicle']['id'])->plate;
-
-        $data['title'] = strtoupper($vehiclePlate) . " - " . $driverName;
-
-        $vehicleKms = Vehicle::find($data['vehicle']['id'])->kms;
+        $driver = User::find($data['driver']['id']);
+        $creator = User::find($data['creator']['id']);
+        $vehicle = Vehicle::find($data['vehicle']['id']);
 
         Reservation::create([
-            'title' => $data['title'],
+            'title' => strtoupper($vehicle->plate) . " - " . $driver->name,
             'rrule' => '',
-            'start_kms' => $vehicleKms,
+            'start_kms' => $vehicle->kms,
             'description' => $data['description'],
-            'driver_id' => $data['driver']['id'],
-            'vehicle_id' => $data['vehicle']['id'],
-            'created_by' => $data['creator']['id'],
+            'driver_id' => $driver->id,
+            'vehicle_id' => $vehicle->id,
+            'created_by' => $creator->id,
             'start' => Carbon::parse($data['start'])->format('Y-m-d H:i'),
             'end' => Carbon::parse($data['end'])->format('Y-m-d H:i'),
             'previous_reservation' => $data['id'],
