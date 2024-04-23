@@ -19,19 +19,18 @@ class ReturningReservationRequest extends FormRequest
             'id' => 'required',
             'start_kms' => 'required|numeric',
             'start' => ['required', 'date'],
-            // todo: uncomment
-            // 'returning' => [
-            //     'required',
-            //     'date',
-            //     'after:start',
-            // ],
+            'returning' => [
+                'required',
+                'date',
+                'after:start',
+            ],
             'return_kms' => [
                 'required',
                 'numeric',
                 'gt:start_kms',
             ],
             'return_condition' => 'required',
-            'return_condition_description' => 'required',
+            'return_condition_description' => 'required_if:return_condition,1',
         ];
     }
 
