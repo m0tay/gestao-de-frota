@@ -5,9 +5,11 @@ import { Popover, PopoverContent, PopoverTrigger, } from '@/Components/ui/popove
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-vue-next'
-import { ref } from 'vue'
 
-const date = ref(null)
+const date = defineModel({
+    type: Date,
+    required: false,
+})
 </script>
 
 <template>
