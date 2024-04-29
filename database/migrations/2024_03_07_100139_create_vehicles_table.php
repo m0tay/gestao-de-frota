@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('group', ['private', 'public']);
             $table->enum('category', ['light', 'heavy']);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('fuel_type');
             $table->timestamps();
         });
     }
