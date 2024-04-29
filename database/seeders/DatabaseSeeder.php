@@ -19,9 +19,11 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
 
-    $this->call([
-      RoleSeeder::class,
-    ]);
+    foreach (['admin', 'manager', 'user'] as $role) {
+      Role::create([
+        'name' => $role
+      ]);
+    }
 
     $roles = [
       'admin' => Role::where('name', 'admin')->first(),
@@ -54,8 +56,8 @@ class DatabaseSeeder extends Seeder
 
     Vehicle::factory(20)->create();
 
-    Reservation::factory(150)->create();
+    Reservation::factory(50)->create();
 
-    Refuellings::factory(150)->create();
+    Refuellings::factory(50)->create();
   }
 }
