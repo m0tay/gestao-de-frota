@@ -29,7 +29,6 @@ class ReservationPolicy
   public function view(User $user, Reservation $reservation): bool
   {
     return true;
-
   }
 
   /**
@@ -38,7 +37,6 @@ class ReservationPolicy
   public function create(User $user): bool
   {
     return true;
-
   }
 
   /**
@@ -46,19 +44,16 @@ class ReservationPolicy
    */
   public function reschedule(User $user, Reservation $reservation): bool
   {
-
     return in_array($user->role->name, $this->authorized);
   }
 
-    public function returning(User $user, Reservation $reservation): bool
-    {
-
-        return in_array($user->role->name, $this->authorized) || $reservation->driver->id === $user->id;
-    }
+  public function returning(User $user, Reservation $reservation): bool
+  {
+    return in_array($user->role->name, $this->authorized) || $reservation->driver->id === $user->id;
+  }
 
   public function cancel(User $user, Reservation $reservation): bool
   {
-
     return in_array($user->role->name, $this->authorized);
   }
 

@@ -39,7 +39,6 @@ class RefuellingsController extends BaseAgendaController
 
         $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles']) || in_array(Auth::user()->email, $this->authorized['emails']);
 
-
         return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles', 'canSelectDriver'));
     }
 
