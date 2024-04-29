@@ -12,15 +12,13 @@ class Refuellings extends Model
 {
     use HasFactory;
 
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'driver_id');
+    }
 
     public function vehicle(): BelongsTo
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
-
-    public function driver(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
 }
