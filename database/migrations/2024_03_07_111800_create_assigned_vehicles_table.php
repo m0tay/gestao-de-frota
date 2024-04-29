@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('assigned_vehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('vehicle_id')->constrained('vehicles', 'id');
+            $table->foreignId('driver_id')->constrained('users', 'id');
             $table->date('assigned_date');
             $table->date('unassigned_date')->nullable();
-            $table->timestamps();
         });
     }
 

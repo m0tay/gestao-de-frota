@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('category', ['light', 'heavy']);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('fuel_type');
+            $table->foreign('fuel_type')->references('fuel_type')->on('fuel_types');
             $table->timestamps();
         });
     }

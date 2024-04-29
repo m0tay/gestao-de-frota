@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->date('refuel_date');
             $table->string('description')->nullable();
             $table->string('fuel_type');
+            $table->foreign('fuel_type')->references('fuel_type')->on('fuel_types');
             $table->timestamps();
         });
     }
