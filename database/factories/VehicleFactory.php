@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\FuelType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,8 @@ class VehicleFactory extends Factory
             'category' => fake()->randomElement(['light', 'heavy']),
             'company' => fake()->randomElement(['roboplan', 'robowork']),
             'status' => 'active',
-            'kms' => fake()->numberBetween(50_000, 200_000)
+            'kms' => fake()->numberBetween(50_000, 200_000),
+            'fuel_type' => fake()->randomElement(FuelType::all())->fuel_type,
         ];
     }
 }
