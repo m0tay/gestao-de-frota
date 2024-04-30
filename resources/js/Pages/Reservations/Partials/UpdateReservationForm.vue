@@ -113,8 +113,6 @@ const setReturningCondition = () => {
 onBeforeUpdate(() => {
     form.reset()
     form.clearErrors()
-    form.reset()
-    form.clearErrors()
     if (props.selectedEvent) {
         form.start = parseISO(props.selectedEvent.start)
         form.end = parseISO(props.selectedEvent.end)
