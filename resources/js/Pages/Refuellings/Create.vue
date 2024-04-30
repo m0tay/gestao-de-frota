@@ -20,9 +20,9 @@ const props = defineProps({
 const form = useForm({
     vehicle: Number,
     driver: Number,
-    amount: Number,
+    liters: Number,
     price: Number,
-    milage: Number,
+    mileage: Number,
     refuel_date: Date,
     description: String,
     fuel_type: String,
