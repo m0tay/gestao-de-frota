@@ -66,6 +66,14 @@
  
     --ring: 216 12.2% 83.9%;
   }
+
+  .w-third {
+    width: 33%;
+  }
+
+  .w-half {
+    width: 50%;
+  }
 }
  
 @layer base {
