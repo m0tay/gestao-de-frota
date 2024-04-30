@@ -12,6 +12,16 @@ class Refuellings extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'vehicle_id',
+        'driver_id',
+        'liters',
+        'price',
+        'refuel_date',
+        'description',
+        'fuel_type',
+    ];
+
     public function driver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'driver_id');
