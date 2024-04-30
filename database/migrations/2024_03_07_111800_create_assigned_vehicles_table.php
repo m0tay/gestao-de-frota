@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('assigned_vehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained('vehicles', 'id');
-            $table->foreignId('driver_id')->constrained('users', 'id');
+            $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->foreignId('driver_id')->constrained('users');
             $table->date('assigned_date');
             $table->date('unassigned_date')->nullable();
         });
