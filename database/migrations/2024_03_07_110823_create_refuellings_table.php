@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('refuellings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->unsignedDecimal('amount', 6, 2);
+            $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->foreignId('driver_id')->constrained('users');
+            $table->unsignedDecimal('liters', 6, 2);
             $table->unsignedDecimal('price', 6, 2);
             $table->unsignedBigInteger('mileage');
             $table->date('refuel_date');
