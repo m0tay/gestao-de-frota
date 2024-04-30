@@ -7,7 +7,7 @@ import SelectInput from '@/Components/SelectInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { onBeforeUpdate } from 'vue';
+import { onBeforeUpdate, onMounted } from 'vue';
 
 const page = usePage();
 
@@ -36,11 +36,14 @@ console.log(page.props.auth.user);
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
+});
 
+onMounted(() => {
+    form.driver = page.props.auth.user
     form.refuel_date = new Date();
     form.description = "";
     form.driver = page.props.auth.user
-});
+})
 </script>
 
 <template>
