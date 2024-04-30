@@ -27,8 +27,8 @@ class RefuellingsFactory extends Factory
 
         return [
             'vehicle_id' => fake()->randomElement(Vehicle::where('group', 'public')->get()),
-            'user_id' => fake()->randomElement(User::all()),
-            'amount' => fake()->numberBetween(10, 100),
+            'driver_id' => fake()->randomElement(User::all()),
+            'liters' => fake()->numberBetween(10, 100),
             'price' => fake()->numberBetween(10, 100),
             'mileage' => $mileage,
             'refuel_date' => fake()->dateTimeThisYear('now'),
