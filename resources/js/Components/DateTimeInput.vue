@@ -10,6 +10,12 @@ const date = defineModel({
     type: Date,
     required: false,
 })
+
+// Function to check if a value is a valid date
+const isValidDate = (d) => d instanceof Date && !isNaN(d);
+
+// Use this function to safely format the date
+const formatDate = (date) => isValidDate(date) ? format(date, 'dd MMM HH:mm') : "Escolha uma data e hora";
 </script>
 
 <template>
@@ -20,7 +26,7 @@ const date = defineModel({
                 !date && 'text-muted-foreground',
             )">
                 <CalendarIcon class="mr-2 h-4 w-4" />
-                <span>{{ date ? format(date, 'dd MMM HH:mm') : "Escolha uma data e hora" }}</span>
+                <pre>{{  formatDate(date) }}</pre>
             </Button>
         </PopoverTrigger>
         <PopoverContent class="w-auto p-0">
