@@ -59,12 +59,12 @@ class DatabaseSeeder extends Seeder
       'company' => 'robowork',
     ]);
 
-    User::factory(5)->create();
+    User::factory(20)->create();
 
     Vehicle::factory(20)->create();
 
-    Reservation::factory(50)->create();
+    Reservation::factory(20)->create();
 
-    Refuellings::factory(50)->create();
+    Refuellings::factory(20)->create();
   }
 }
