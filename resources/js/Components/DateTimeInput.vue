@@ -16,7 +16,7 @@ const date = defineModel({
 const isValidDate = (d) => d instanceof Date && !isNaN(d);
 
 // Use this function to safely format the date
-const formatDate = (date) => isValidDate(date) ? format(date, 'dd MMMM HH:mm', { locale: ptBR }) : "Escolha uma data e hora";
+const formatDate = (date) => isValidDate(date) ? format(date, "EEEEEE, dd 'de' MMMM HH:mm", { locale: ptBR }) : "Escolha uma data e hora";
 </script>
 
 <template>
