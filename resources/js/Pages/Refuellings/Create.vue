@@ -1,13 +1,14 @@
 <script setup>
 import DateTimeInput from '@/Components/DateTimeInput.vue';
 import InputError from '@/Components/InputError.vue';
-import Textarea from '@/Components/ui/textarea/Textarea.vue';
+import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { onBeforeUpdate, onMounted } from 'vue';
+import { onBeforeUpdate, onMounted, watch } from 'vue';
+import { endOfWeekWithOptions, lastDayOfQuarterWithOptions } from 'date-fns/fp';
 
 const page = usePage();
 
@@ -15,7 +16,6 @@ const props = defineProps({
     vehicles: Array,
     drivers: Array,
 });
-
 
 const form = useForm({
     vehicle: Number,
@@ -43,7 +43,18 @@ onMounted(() => {
     form.refuel_date = new Date();
     form.description = "";
     form.driver = page.props.auth.user
+    form.fuel_type = null
 })
+
+watch(
+    () => form.vehicle,
+    (newValue) => {
+        if (newValue) {
+            form.fuel_type = props.vehicles.find(vehicle => vehicle.id === newValue)
+        }
+    }
+)
+
 </script>
 
 <template>
@@ -81,24 +92,25 @@ onMounted(() => {
                             <InputError :message="form.errors.refuel_date" />
                         </div>
 
-                        <div class="mt-6 max-w-full">
-                            <InputLabel value="Condutor" for="driver" />
-                            <SelectInput :disabled="!page.props.canSelectDriver" id="driver" :list="drivers"
-                                v-model="form.driver.id" :placeholder="form.driver.name" />
-                            <InputError :message="form.errors.driver" />
-                        </div>
+                        <div class="flex flex-col sm:flex-row gap-x-4">
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Condutor" for="driver" />
+                                <SelectInput :disabled="!page.props.canSelectDriver" id="driver" :list="drivers"
+                                    v-model="form.driver.id" :placeholder="form.driver.name" />
+                                <InputError :message="form.errors.driver" />
+                            </div>
 
-                        <div class="mt-6 max-w-full">
-                            <InputLabel value="Veículo" for="vehicle" />
-                            <SelectInput id="vehicle" :list="vehicles" v-model="form.vehicle.id"
-                                :placeholder="form.vehicle.plate" />
-                            <InputError :message="form.errors.vehicle" />
-                        </div>
-
-                        <div class="mt-6 max-w-full">
-                            <InputLabel value="Descrição" for="description" />
-                            <Textarea class="w-full" id="description" v-model="form.description" :placeholder="''" />
-                            <InputError :message="form.errors.description" />
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Veículo" for="vehicle" />
+                                <SelectInput id="vehicle" :list="vehicles" v-model="form.vehicle.id"
+                                    :placeholder="form.vehicle.plate" />
+                                <InputError :message="form.errors.vehicle" />
+                            </div>
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Tipo de combustível" for="fuel_type" />
+                                <TextInput disabled class="w-full" id="fuel_type" v-model="form.fuel_type"
+                                    :placeholder="form.fuel_type" />
+                            </div>
                         </div>
                         <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
                             <Button variant="secondary">Mudei de Ideia</Button>
