@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamp('start');
             $table->timestamp('end');
-            $table->timestamp('return')->nullable();
+            $table->timestamp('returned_at')->nullable();
             $table->unsignedMediumInteger('start_kms');
             $table->unsignedMediumInteger('return_kms')->nullable();
             $table->enum('return_condition', ['ok', 'nok'])->nullable(); // nok === not ok

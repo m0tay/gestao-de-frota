@@ -28,6 +28,7 @@ class Reservation extends Model
         'previous_reservation',
         'status',
         'start_kms',
+        'returned_at',
         'return_kms',
         'return_condition',
         'return_condition_description',

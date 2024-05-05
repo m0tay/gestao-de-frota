@@ -19,7 +19,7 @@ class ReturningReservationRequest extends FormRequest
             'id' => 'required',
             'start_kms' => 'required|numeric',
             'start' => ['required', 'date'],
-            'returning' => [
+            'returned_at' => [
                 'required',
                 'date',
                 'after:start',
@@ -37,7 +37,7 @@ class ReturningReservationRequest extends FormRequest
     public function messages()
     {
         return [
-            'returning.after' => 'Não é possível entregar antes do início da requisição.',
+            'returned_at.after' => 'Não é possível entregar antes do início da requisição.',
             'return_kms.required' => 'Os kms devem ser informados.',
             'return_kms.gt' => 'Os kms  devem ser superiores ao kms inicial da requisição.',
         ];

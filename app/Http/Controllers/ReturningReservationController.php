@@ -6,6 +6,7 @@ use App\Http\Requests\ReturningReservationRequest;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 
 class ReturningReservationController extends Controller
 {
@@ -21,6 +22,7 @@ class ReturningReservationController extends Controller
         $reservation->update([
             'status' => 'done',
             'return_kms' => $data['return_kms'],
+            'returned_at' => Carbon::parse($data['returned_at'])->format('Y-m-d H:i'),
         ]);
 
         $vehicle = Vehicle::find($reservation->vehicle_id)->update([

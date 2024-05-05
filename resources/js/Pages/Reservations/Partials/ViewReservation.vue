@@ -48,7 +48,7 @@ const form = useForm({
 
 const formReturning = useForm({
     id: Number,
-    returning: Date,
+    returned_at: Date,
     start: Date,
     start_kms: Number,
     return_kms: Number,
@@ -63,7 +63,7 @@ const emit = defineEmits(['close']);
  * and handles success by resetting the form, emitting a close event, and reloading the page.
  */
 const handleReturning = () => {
-    formReturning.returning = moment().toDate()
+    formReturning.returned_at = new Date()
     formReturning.start = moment(props.selectedEvent.start).toDate()
 
     formReturning.put(route('reservation.returning', { reservation: props.selectedEvent.id }), {
@@ -187,10 +187,18 @@ onBeforeUpdate(() => {
 
             <div class="mt-6 max-w-full"
                 v-show="props.selectedEvent.status === 'done' && authorized.includes(page.props.auth.user.role_id)">
-                <InputLabel value="Quilómetros entregues" for="returned_kms" />
-                <div class="text-muted-foreground flex w-fit rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    id="returned_kms">{{ props.selectedEvent.return_kms }} Km</div>
+                <div>
+                    <InputLabel value="Quilómetros entregues" for="returned_kms" />
+                    <div class="text-muted-foreground flex w-fit rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        id="returned_kms">{{ props.selectedEvent.return_kms }} Km</div>
+                </div>
+                <div>
+                    <InputLabel value="Quilómetros entregues" for="return_time" />
+                    <div class="text-muted-foreground flex w-fit rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        id="return_time">{{ props.selectedEvent.returned_at }}</div>
+                </div>
             </div>
+
 
             <div v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
                 class="mt-6 max-w-full flex flex-col sm:flex-row gap-4">

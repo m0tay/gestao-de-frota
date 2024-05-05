@@ -53,7 +53,7 @@ const formCancel = useForm({
 
 const formReturning = useForm({
     id: Number,
-    returning: Date,
+    returned_at: Date,
     start: Date,
     start_kms: Number,
     return_kms: Number,
@@ -94,7 +94,7 @@ const handleCancel = () => {
 }
 
 const handleReturning = () => {
-    formReturning.returning = new Date()
+    formReturning.returned_at = new Date()
     formReturning.start = parseISO(props.selectedEvent.start)
 
     formReturning.put(route('reservation.returning', { reservation: props.selectedEvent.id }), {
@@ -237,6 +237,8 @@ onBeforeUpdate(() => {
                 <Textarea :disabled="!formReturning.return_condition" class="w-full" id="description"
                     v-model="formReturning.return_condition_description"
                     :placeholder="formReturning.return_condition_description" />
+
+                <InputError class="flex items-end" :message="formReturning.errors.returning" />
 
             </div>
 

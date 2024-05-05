@@ -60,7 +60,7 @@ class ReservationFactory extends Factory
             'start' => $start_date,
             'start_kms' => $startKms,
             'end' => $end_date,
-            'return' => $return,
+            'returned_at' => $return,
             'return_kms' => $returnKms,
             'return_condition' => $condition,
             'return_condition_description' => $condition === "ok" ? '' : fake()->randomElement(['parti o retrovisor', 'risquei a lataria', 'bati a traseira', 'símbolo estranho acendeu-se no odómetro']),
