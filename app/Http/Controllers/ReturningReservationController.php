@@ -20,6 +20,7 @@ class ReturningReservationController extends Controller
 
         $reservation->update([
             'status' => 'done',
+            'return_kms' => $data['return_kms'],
         ]);
 
         $vehicle = Vehicle::find($reservation->vehicle_id)->update([

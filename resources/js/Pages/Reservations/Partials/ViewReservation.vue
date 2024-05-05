@@ -189,7 +189,7 @@ onBeforeUpdate(() => {
                 v-show="props.selectedEvent.status === 'done' && authorized.includes(page.props.auth.user.role_id)">
                 <InputLabel value="Quilómetros entregues" for="returned_kms" />
                 <div class="text-muted-foreground flex w-fit rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    id="returned_kms">{{ props.selectedEvent.vehicle.kms }} Km</div>
+                    id="returned_kms">{{ props.selectedEvent.return_kms }} Km</div>
             </div>
 
             <div v-if="props.selectedEvent.status === 'accepted' && props.selectedEvent.driver.id === page.props.auth.user.id"
