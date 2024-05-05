@@ -11,6 +11,7 @@ import { useWindowSize } from "@vueuse/core";
 import moment from "moment";
 import { onBeforeUpdate, ref } from "vue";
 import { reloadPage } from "@/lib/reloadPage";
+import { addHours } from "date-fns";
 
 const authorized = ref([1, 2]);
 
@@ -42,6 +43,9 @@ const emit = defineEmits(["close"]);
 const handleSubmit = () => {
     form.driver = props.drivers.find((driver) => driver.id === form.driver.id);
     form.creator = page.props.auth.user;
+
+    form.start = addHours(form.start, 1);
+    form.end = addHours(form.end, 1);
 
     form.post(route("reservation.schedule"), {
         onSuccess: () => {
