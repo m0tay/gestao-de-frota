@@ -3,6 +3,7 @@ import { Button } from '@/Components/ui/button'
 import { Calendar } from '@/Components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger, } from '@/Components/ui/popover'
 import { cn } from '@/lib/utils'
+import { ptBR } from 'date-fns/locale'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-vue-next'
 
@@ -15,7 +16,7 @@ const date = defineModel({
 const isValidDate = (d) => d instanceof Date && !isNaN(d);
 
 // Use this function to safely format the date
-const formatDate = (date) => isValidDate(date) ? format(date, 'dd MMM HH:mm') : "Escolha uma data e hora";
+const formatDate = (date) => isValidDate(date) ? format(date, 'dd MMMM HH:mm', { locale: ptBR }) : "Escolha uma data e hora";
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const formatDate = (date) => isValidDate(date) ? format(date, 'dd MMM HH:mm') : 
                 !date && 'text-muted-foreground',
             )">
                 <CalendarIcon class="mr-2 h-4 w-4" />
-                <pre>{{  formatDate(date) }}</pre>
+                <span>{{  formatDate(date) }}</span>
             </Button>
         </PopoverTrigger>
         <PopoverContent class="w-auto p-0">
