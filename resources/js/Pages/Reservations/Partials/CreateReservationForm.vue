@@ -6,12 +6,11 @@ import Modal from "@/Components/Modal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import { Button } from "@/Components/ui/button/index.js";
 import { Textarea } from "@/Components/ui/textarea/index.js";
+import { reloadPage } from "@/lib/reloadPage";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
-import moment from "moment";
+import { addHours, setMinutes, subHours } from "date-fns";
 import { onBeforeUpdate, ref } from "vue";
-import { reloadPage } from "@/lib/reloadPage";
-import { addHours } from "date-fns";
 
 const authorized = ref([1, 2]);
 
@@ -60,17 +59,19 @@ const handleSubmit = () => {
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
+    const now = new Date();
+    const dateToUse = width.value < 700 ? now : new Date(props.clickedDate);
 
-    const now = moment();
-    const dateToUse =
-        width.value < 700
-            ? now
-            : moment(props.clickedDate).hour(now.hour()).minute(now.minute());
-    const minutes = dateToUse.minutes();
+    const minutes = dateToUse.getMinutes();
     const roundedMinutes = minutes + ((10 - (minutes % 10)) % 10);
 
-    form.start = dateToUse.minutes(roundedMinutes).seconds(0).toDate();
-    form.end = dateToUse.add(1, "hours").toDate();
+    // Adjust the start time to round up to the nearest 10 minutes
+    const adjustedStart = setMinutes(subHours(dateToUse, 1), roundedMinutes);
+    form.start = adjustedStart;
+
+    // Adjust the end time to be 1 hour after the adjusted start time
+    const adjustedEnd = addHours(adjustedStart, 1);
+    form.end = adjustedEnd;
 
     form.creator = page.props.auth.user;
     form.driver = page.props.auth.user;
