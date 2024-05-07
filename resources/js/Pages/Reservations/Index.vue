@@ -56,8 +56,7 @@ const closeModal = () => {
 }
 
 const handleSchedule = () => {
-    if (!isDateValid(clickedDate.value)) return;
-
+    // if (!isDateValid(clickedDate.value)) return;
     showModalCreate.value = true;
 };
 
@@ -70,10 +69,6 @@ const handleView = (selectedEventId) => {
 const handleEnlist = () => {
     showModalList.value = true
     eventsList.value = props.reservations
-}
-
-const reloadPage = () => {
-    window.location.reload()
 }
 
 const calendarApp = createCalendar({
