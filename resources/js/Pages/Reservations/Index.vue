@@ -215,15 +215,17 @@ const calendarApp = createCalendar({
                                         </CardHeader>
                                         <CardContent>
                                             <div class="flex flex-col gap-y-4">
-                                                <section class="flex gap-y-4 gap-x-2 justify-evenly  w-full">
+                                                <section
+                                                    :class="width < 400 ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
+                                                    class="w-full">
                                                     <div class="w-full">
-                                                        <InputLabel class="text-white" for="start" value="De:" />
+                                                        <InputLabel class="text-accent" for="start" value="De:" />
                                                         <FakeDateTimeInput id="start"
                                                             :date="(moment(calendarEvent.start).toDate())"
                                                             class="w-full" />
                                                     </div>
                                                     <div class="w-full">
-                                                        <InputLabel class="text-white" for="end" value="Até:" />
+                                                        <InputLabel class="text-accent" for="end" value="Até:" />
                                                         <FakeDateTimeInput id="end"
                                                             :date="(moment(calendarEvent.end).toDate())"
                                                             class="w-full" />
@@ -254,7 +256,8 @@ const calendarApp = createCalendar({
                             </CardHeader>
                             <CardContent>
                                 <div class="flex flex-col gap-y-4">
-                                    <section class="flex gap-y-4 gap-x-2  w-full">
+                                    <section :class="width < 400 ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
+                                        class="w-full">
                                         <div class="w-full">
                                             <InputLabel class="text-accent" for="start" value="De:" />
                                             <FakeDateTimeInput id="start" :date="(moment(calendarEvent.start).toDate())"
