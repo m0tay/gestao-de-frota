@@ -20,7 +20,7 @@ class ReservationFactory extends Factory
      */
     public function definition()
     {
-        $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-05-01', '2024-06-31')->getTimestamp());
+        $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween('2024-05-01', '2024-05-30')->getTimestamp());
         $start_date->minute = fake()->randomElement([0, 30]);
         $end_date = clone $start_date;
         $end_date->minute = fake()->randomElement([0, 30]);

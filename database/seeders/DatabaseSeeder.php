@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
-    foreach(['Gasolina', 'Etanol', 'Diesel', 'Elétrico', 'Híbrido', 'Flex'] as $fuel) {
+    foreach (['Gasolina', 'Etanol', 'Diesel', 'Elétrico', 'Híbrido', 'Flex'] as $fuel) {
       FuelType::create([
         'fuel_type' => $fuel
       ]);
