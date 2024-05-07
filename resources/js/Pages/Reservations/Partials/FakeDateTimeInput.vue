@@ -1,10 +1,10 @@
 <script setup>
 // import {format} from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-vue-next'
+import { Calendar as CalendarIcon } from 'lucide-vue-next';
 
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
 import { useWindowSize } from '@vueuse/core';
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 const { width } = useWindowSize();
 
