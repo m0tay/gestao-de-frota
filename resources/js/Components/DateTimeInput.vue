@@ -27,7 +27,7 @@ const formatDate = (date) => isValidDate(date) ? format(date, "EEEEEE, dd 'de' M
                 !date && 'text-muted-foreground',
             )">
                 <CalendarIcon class="mr-2 h-4 w-4" />
-                <span>{{  formatDate(date) }}</span>
+                <span>{{ formatDate(date) }}</span>
             </Button>
         </PopoverTrigger>
         <PopoverContent class="w-auto p-0">
@@ -35,4 +35,3 @@ const formatDate = (date) => isValidDate(date) ? format(date, "EEEEEE, dd 'de' M
         </PopoverContent>
     </Popover>
 </template>
-
