@@ -14,12 +14,14 @@ const data = ref(page.props.refuellings.map(refueling => ({
         licensePlate: (refueling.vehicle.plate).toUpperCase(),
     },
     driver: {
-        name: refueling.driver.name,
+        name: refueling.driver?.name,
     },
     fuel_type: refueling.fuel_type,
     mileage: refueling.mileage,
-    amount: Number.parseFloat(refueling.amount),
+    liters: Number.parseFloat(refueling.liters),
     price: Number.parseFloat(refueling.price),
+    total: Number.parseFloat(refueling.liters) * Number.parseFloat(refueling.price)
+
 })))
 </script>
 
