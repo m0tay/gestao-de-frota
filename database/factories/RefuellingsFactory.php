@@ -20,21 +20,20 @@ class RefuellingsFactory extends Factory
     public function definition(): array
     {
         $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
-
-        $vehicle->update(['kms' => $vehicle->kms + fake()->numberBetween(5, 250)]);
         $mileage = $vehicle->kms;
         $fuelType = $vehicle->fuel_type;
+        $vehicle->update(['kms' => $vehicle->kms + fake()->numberBetween(5, 250)]);
+
 
         return [
-            'vehicle_id' => fake()->randomElement(Vehicle::where('group', 'public')->get()),
+            'vehicle_id' => $vehicle->id,
             'driver_id' => fake()->randomElement(User::all()),
-            'liters' => fake()->numberBetween(10, 100),
-            'price' => fake()->numberBetween(10, 100),
+            'liters' => $fuelType !== 'Elétrico' ? fake()->numberBetween(10, 100) : 0,
+            'price' => $fuelType !== 'Elétrico' ? fake()->randomFloat(2, 1.5, 2) : 0,
             'mileage' => $mileage,
             'refuel_date' => fake()->dateTimeThisYear('now'),
             'description' => fake()->realText(255),
             'fuel_type' => $fuelType,
         ];
     }
-
 }
