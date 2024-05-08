@@ -7,7 +7,12 @@ import TextInput from '@/Components/TextInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { useWindowSize } from "@vueuse/core";
+import moment from "moment";
 import { onBeforeUpdate, onMounted, watch } from 'vue';
+
+
+const { width } = useWindowSize();
 
 const page = usePage();
 
@@ -30,6 +35,7 @@ const form = useForm({
 // const handleSubmit = () => {
 //     form.post(route('refuellings.store'));
 // }
+
 console.log(page.props.auth.user);
 
 onBeforeUpdate(() => {
@@ -43,16 +49,23 @@ onMounted(() => {
     form.description = "";
     form.driver = page.props.auth.user
     form.fuel_type = null
+    form.mileage = null
+    form.price = null
+    form.liters = null
 })
 
-watch(
-    () => form.vehicle,
-    (newValue) => {
-        if (newValue) {
-            form.fuel_type = props.vehicles.find(vehicle => vehicle.id === newValue)
-        }
-    }
-)
+watch(() => form.refuel_date, () => {
+    const now = moment();
+    const dateToUse =
+        width.value < 700
+            ? now
+            : moment(props.clickedDate).hour(now.hour()).minute(now.minute());
+    const minutes = dateToUse.minutes();
+    const roundedMinutes = minutes + ((10 - (minutes % 10)) % 10);
+
+    form.start = dateToUse.minutes(roundedMinutes).seconds(0).toDate();
+    form.end = dateToUse.add(1, "hours").toDate();
+})
 
 </script>
 
@@ -107,8 +120,27 @@ watch(
                             </div>
                             <div class="mt-6 sm:w-third">
                                 <InputLabel value="Tipo de combustível" for="fuel_type" />
-                                <TextInput disabled class="w-full" id="fuel_type" v-model="form.fuel_type"
-                                    :placeholder="form.fuel_type" />
+                                <TextInput disabled class="w-full hover:cursor-not-allowed" id="fuel_type"
+                                    v-model="form.fuel_type" :placeholder="form.fuel_type" />
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-x-4">
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Quantidade de litros" for="liters" />
+                                <TextInput class="w-full bg-gray-50" id="liters" v-model="form.liters" />
+                                <InputError :message="form.errors.liters" />
+                            </div>
+
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Preço por litro" for="price" />
+                                <TextInput class="w-full" id="price" v-model="form.price" />
+                                <InputError :message="form.errors.price" />
+                            </div>
+                            <div class="mt-6 sm:w-third">
+                                <InputLabel value="Quilómetros" for="mileage" />
+                                <TextInput class="w-full" id="mileage" v-model="form.mileage"
+                                    :placeholder="form.mileage" />
                             </div>
                         </div>
                         <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">

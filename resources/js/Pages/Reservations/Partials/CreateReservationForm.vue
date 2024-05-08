@@ -9,7 +9,8 @@ import { Textarea } from "@/Components/ui/textarea/index.js";
 import { reloadPage } from "@/lib/reloadPage";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
-import { addHours, setMinutes, subHours } from "date-fns";
+import { addHours } from "date-fns";
+import moment from "moment";
 import { onBeforeUpdate, ref } from "vue";
 
 const authorized = ref([1, 2]);
@@ -59,19 +60,17 @@ const handleSubmit = () => {
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
-    const now = new Date();
-    const dateToUse = width.value < 700 ? now : new Date(props.clickedDate);
-
-    const minutes = dateToUse.getMinutes();
+    const now = moment();
+    const dateToUse =
+        width.value < 700
+            ? now
+            : moment(props.clickedDate).hour(now.hour()).minute(now.minute());
+    const minutes = dateToUse.minutes();
     const roundedMinutes = minutes + ((10 - (minutes % 10)) % 10);
 
-    // Adjust the start time to round up to the nearest 10 minutes
-    const adjustedStart = setMinutes(subHours(dateToUse, 1), roundedMinutes);
-    form.start = adjustedStart;
+    form.start = dateToUse.minutes(roundedMinutes).seconds(0).toDate();
+    form.end = dateToUse.add(1, "hours").toDate();
 
-    // Adjust the end time to be 1 hour after the adjusted start time
-    const adjustedEnd = addHours(adjustedStart, 1);
-    form.end = adjustedEnd;
 
     form.creator = page.props.auth.user;
     form.driver = page.props.auth.user;
