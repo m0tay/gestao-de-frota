@@ -35,7 +35,7 @@ class RefuellingsController extends BaseAgendaController
     {
         $drivers = User::select('id', 'name')->get();
 
-        $vehicles = Vehicle::select('id', 'plate', 'kms', 'company')->get();
+        $vehicles = Vehicle::select('id', 'plate', 'kms', 'company', 'fuel_type')->get();
 
         $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles']) || in_array(Auth::user()->email, $this->authorized['emails']);
 
