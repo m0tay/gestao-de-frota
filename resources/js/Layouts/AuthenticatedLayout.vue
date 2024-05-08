@@ -80,10 +80,10 @@ const authorized = ref([
                                     :href="route('agenda')" :active="route().current('drivers')">
                                     Condutores
                                 </NavLink>
-                                <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
+                                <!-- <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
                                     :href="route('agenda')" :active="route().current('reminders')">
                                     Lembretes
-                                </NavLink>
+                                </NavLink> -->
                             </div>
                         </div>
 
@@ -177,10 +177,10 @@ const authorized = ref([
                             :href="route('agenda')" :active="route().current('drivers')">
                             Condutores
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)"
+                        <!-- <ResponsiveNavLink v-if="authorized.includes($page.props.auth.user.role_id)"
                             :href="route('agenda')" :active="route().current('reminders')">
                             Lembretes
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                     </div>
 
                     <!-- Responsive Settings Options -->
