@@ -11,7 +11,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
 import { addHours } from "date-fns";
 import moment from "moment";
-import { onBeforeUpdate, ref } from "vue";
+import { onBeforeUpdate, onUpdated, ref } from "vue";
 
 const authorized = ref([1, 2]);
 
@@ -60,6 +60,9 @@ const handleSubmit = () => {
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
+});
+
+onUpdated(() => {
     const now = moment();
     const dateToUse =
         width.value < 700
@@ -76,7 +79,7 @@ onBeforeUpdate(() => {
     form.driver = page.props.auth.user;
     form.description = "";
     form.status = "accepted";
-});
+})
 </script>
 
 <template>
