@@ -24,7 +24,7 @@ class Refuellings extends Model
 
     public function driver(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'driver_id');
+        return $this->belongsTo(User::class, 'driver_id');
     }
 
     public function vehicle(): BelongsTo
