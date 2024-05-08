@@ -6,78 +6,112 @@ import { Button } from "@/Components/ui/button";
 export const columns = [
     {
         accessorKey: "refuel_date",
-        header: "Refuel Date",
+        header: "Data do Abastecimento",
+        headerStyle: {
+            textAlign: "center",
+        },
         cell: function (row) {
             return h(
                 "div",
-                { class: "flex-1 capitalize" },
+                { class: "flex justify-center items-center" },
                 row.getValue("refuel_date").toLocaleDateString()
             );
         },
     },
     {
         accessorKey: "vehicle",
-        header: "Vehicle",
+        header: "Veículo",
+        headerStyle: {
+            textAlign: "center",
+        },
         cell: function (row) {
             return h(
                 "div",
-                { class: "flex-1 capitalize" },
+                { class: "flex justify-center items-center" },
                 row.getValue("vehicle").licensePlate
             );
         },
     },
     {
         accessorKey: "driver",
-        header: "Driver",
+        header: "Condutor",
+        headerStyle: {
+            textAlign: "center",
+        },
         cell: function (row) {
             return h(
                 "div",
-                { class: "flex-1 capitalize" },
+                { class: "flex justify-center items-center" },
                 row.getValue("driver").name
             );
         },
     },
     {
         accessorKey: "fuel_type",
-        header: "Fuel Type",
+        header: "Tipo de Combustível",
+        headerStyle: {
+            textAlign: "center",
+        },
         cell: function (row) {
             return h(
                 "div",
-                { class: "flex-1 capitalize" },
+                { class: "flex justify-center items-center" },
                 row.getValue("fuel_type")
             );
         },
     },
     {
-        accessorKey: "amount",
-        header: function () {
-            return h("div", { class: "flex-1 text-right" }, "Amount");
+        accessorKey: "liters",
+        header: "Quantidade",
+        headerStyle: {
+            textAlign: "center",
         },
         cell: function (row) {
-            const amount = Number.parseFloat(row.getValue("amount"));
+            const amount = Number.parseFloat(row.getValue("liters"));
 
             return h(
                 "div",
-                { class: "flex-1 text-right font-medium" },
+                { class: "flex justify-center items-center" },
                 amount.toLocaleString() + " L"
             );
         },
     },
     {
         accessorKey: "price",
-        header: function () {
-            return h("div", { class: "flex-1 text-right" }, "Price");
+        header: "Preço",
+        headerStyle: {
+            textAlign: "center",
         },
         cell: function (row) {
             const price = Number.parseFloat(row.getValue("price"));
-            const formatted = new Intl.NumberFormat("en-US", {
+            const formatted = new Intl.NumberFormat("pt-PT", {
                 style: "currency",
-                currency: "USD",
+                currency: "EUR",
             }).format(price);
 
             return h(
                 "div",
-                { class: "flex-1 text-right font-medium" },
+                { class: "flex justify-center items-center" },
+                formatted
+            );
+        },
+    },
+    {
+        accessorKey: "total",
+        header: "Total",
+        headerStyle: {
+            textAlign: "center",
+        },
+        cell: function (row) {
+            const total = Number.parseFloat(row.getValue("total"));
+            const formatted = new Intl.NumberFormat("pt-PT", {
+                style: "currency",
+                currency: "EUR",
+            }).format(total);
+
+            return h(
+                "div",
+                { class: "flex justify-center items-center" },
                 formatted
             );
         },
@@ -85,14 +119,18 @@ export const columns = [
     {
         id: "actions",
         enableHiding: false,
+        headerStyle: {
+            textAlign: "center",
+        },
         cell: function (row) {
             const refueling = row.original;
 
             return h(
                 "div",
-                { class: "relative flex-1" },
+                { class: "flex justify-center items-center" },
                 h(DropdownAction, { refueling })
             );
         },
     },
 ];
+
