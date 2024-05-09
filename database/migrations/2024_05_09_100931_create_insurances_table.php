@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Informação Geral
-            $table->string('company'); // companhia de seguros
+            $table->string('insurance_company'); // companhia de seguros
             /*
             AGEAS
             Fidelidade
