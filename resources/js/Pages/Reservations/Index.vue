@@ -16,6 +16,7 @@ import { ScheduleXCalendar } from '@schedule-x/vue'
 import { useWindowSize } from '@vueuse/core'
 import moment from "moment"
 import { ref } from "vue"
+import { parseISO } from "date-fns"
 
 
 
@@ -219,13 +220,13 @@ const calendarApp = createCalendar({
                                                     <div class="w-full">
                                                         <InputLabel class="text-accent" for="start" value="De:" />
                                                         <FakeDateTimeInput id="start"
-                                                            :date="(moment(calendarEvent.start).toDate())"
+                                                            :date="(parseISO(calendarEvent.start))"
                                                             class="w-full" />
                                                     </div>
                                                     <div class="w-full">
                                                         <InputLabel class="text-accent" for="end" value="Até:" />
                                                         <FakeDateTimeInput id="end"
-                                                            :date="(moment(calendarEvent.end).toDate())"
+                                                            :date="(parseISO(calendarEvent.end))"
                                                             class="w-full" />
                                                     </div>
                                                 </section>
@@ -258,12 +259,12 @@ const calendarApp = createCalendar({
                                         class="w-full">
                                         <div class="w-full">
                                             <InputLabel class="text-accent" for="start" value="De:" />
-                                            <FakeDateTimeInput id="start" :date="(moment(calendarEvent.start).toDate())"
+                                            <FakeDateTimeInput id="start" :date="(parseISO(calendarEvent.start))"
                                                 class="w-full" />
                                         </div>
                                         <div class="w-full">
                                             <InputLabel class="text-accent" for="end" value="Até:" />
-                                            <FakeDateTimeInput id="end" :date="(moment(calendarEvent.end).toDate())"
+                                            <FakeDateTimeInput id="end" :date="(parseISO(calendarEvent.end))"
                                                 class="w-full" />
                                         </div>
                                     </section>
