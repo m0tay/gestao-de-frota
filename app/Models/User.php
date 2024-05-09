@@ -43,6 +43,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'driver_license_categories' => 'array',
     ];
 
     public function role(): belongsTo
@@ -52,10 +53,10 @@ class User extends Authenticatable
 
     public function canAccessDashboard(): bool
     {
-      $roles = [
-        'admin',
-        'manager',
-      ];
-      return in_array($this->role->name, $roles);
+        $roles = [
+            'admin',
+            'manager',
+        ];
+        return in_array($this->role->name, $roles);
     }
 }
