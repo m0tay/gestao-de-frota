@@ -12,10 +12,14 @@ class Vehicle extends Model
 {
     use HasFactory;
 
+    // todo: change to guarded?
     protected $fillable = [
         'kms',
     ];
 
+    protected $casts = [
+        'tires_ref' => 'array',
+    ];
     public function driver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'driver_id');

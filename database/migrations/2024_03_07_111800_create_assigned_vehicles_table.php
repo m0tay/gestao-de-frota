@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('driver_id')->constrained('users');
             $table->date('assigned_date');
             $table->date('unassigned_date')->nullable();
+            $table->integer('mileage_when_given');
+            $table->text('observation')->nullable();
         });
     }
 
