@@ -17,10 +17,7 @@ import { useWindowSize } from '@vueuse/core'
 import moment from "moment"
 import { ref } from "vue"
 
-const authorized = ref([
-    1,
-    2,
-])
+
 
 const { width } = useWindowSize()
 const page = usePage()
@@ -40,6 +37,12 @@ const showModalViewReservation = ref(false)
 const selectedEvent = ref(null)
 const eventsList = ref(false)
 const clickedDate = ref(null)
+const authorized = ref([
+    1,
+    2,
+])
+const mobileFoldingWidth = ref(700)
+const minWidthToFold = ref(380)
 
 const isDateValid = (date) => {
     const providedDate = moment(date);
@@ -178,7 +181,7 @@ const calendarApp = createCalendar({
 <template>
     <AuthenticatedLayout>
         <div>
-            <div v-show="width < 700" class="flex justify-center my-4 gap-x-4">
+            <div v-show="width < mobileFoldingWidth" class="flex justify-center my-4 gap-x-4">
                 <Button @click="handleSchedule">Agendar
                 </Button>
             </div>
@@ -211,7 +214,7 @@ const calendarApp = createCalendar({
                                         <CardContent>
                                             <div class="flex flex-col gap-y-4">
                                                 <section
-                                                    :class="width < 400 ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
+                                                    :class="width < minWidthToFold ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
                                                     class="w-full">
                                                     <div class="w-full">
                                                         <InputLabel class="text-accent" for="start" value="De:" />
@@ -251,7 +254,7 @@ const calendarApp = createCalendar({
                             </CardHeader>
                             <CardContent>
                                 <div class="flex flex-col gap-y-4">
-                                    <section :class="width < 400 ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
+                                    <section :class="width < minWidthToFold ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
                                         class="w-full">
                                         <div class="w-full">
                                             <InputLabel class="text-accent" for="start" value="De:" />

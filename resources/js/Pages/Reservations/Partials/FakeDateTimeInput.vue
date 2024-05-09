@@ -18,7 +18,7 @@ const props = defineProps({
 const isValidDate = (d) => d instanceof Date && !isNaN(d);
 let formatDate;
 
-if (width.value > 464) {
+if (width.value > 380) {
   formatDate = (date) => isValidDate(date) ? format(date, "dd 'de' MMMM HH:mm", { locale: ptBR }) : "Escolha uma data e hora";
 } else {
   formatDate = (date) => isValidDate(date) ? format(date, "dd MMM HH:mm", { locale: ptBR }) : "Escolha uma data e hora";

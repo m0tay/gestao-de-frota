@@ -9,7 +9,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { useWindowSize } from "@vueuse/core";
 import moment from "moment";
-import { onBeforeUpdate, onMounted, watch } from 'vue';
+import { computed, onBeforeUpdate, onMounted, watch } from 'vue';
 
 
 const { width } = useWindowSize();
@@ -32,6 +32,10 @@ const form = useForm({
     fuel_type: String,
 })
 
+const updatedFuelType = computed(() => {
+    return props.vehicles.find(vehicle => vehicle.id === form.vehicle).fuel_type
+})
+
 // const handleSubmit = () => {
 //     form.post(route('refuellings.store'));
 // }
@@ -45,16 +49,13 @@ onBeforeUpdate(() => {
 
 onMounted(() => {
     form.driver = page.props.auth.user
-    form.refuel_date = new Date();
     form.description = "";
     form.driver = page.props.auth.user
-    form.fuel_type = null
+    form.fuel_type = 'hello'
     form.mileage = null
     form.price = null
     form.liters = null
-})
 
-watch(() => form.refuel_date, () => {
     const now = moment();
     const dateToUse =
         width.value < 700
@@ -63,8 +64,7 @@ watch(() => form.refuel_date, () => {
     const minutes = dateToUse.minutes();
     const roundedMinutes = minutes + ((10 - (minutes % 10)) % 10);
 
-    form.start = dateToUse.minutes(roundedMinutes).seconds(0).toDate();
-    form.end = dateToUse.add(1, "hours").toDate();
+    form.refuel_date = dateToUse.minutes(roundedMinutes).seconds(0).toDate();
 })
 
 </script>
@@ -120,8 +120,7 @@ watch(() => form.refuel_date, () => {
                             </div>
                             <div class="mt-6 sm:w-third">
                                 <InputLabel value="Tipo de combustível" for="fuel_type" />
-                                <TextInput disabled class="w-full hover:cursor-not-allowed" id="fuel_type"
-                                    v-model="form.fuel_type" :placeholder="form.fuel_type" />
+                                <div id="fuel_type">{{ form.fuel_type }}</div>
                             </div>
                         </div>
 
