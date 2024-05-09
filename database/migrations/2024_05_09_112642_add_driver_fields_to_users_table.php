@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('surname');
             $table->string('citizen_card');
-            $table->date('citizen_card_expiration_date');
+            $table->date('citizen_card_expiration_date')->nullable();
             $table->string('phone_number')->nullable();
 
             $table->string('address_1');
             $table->string('address_2')->nullable();
-            $table->string('city');
-            $table->string('state');
-            $table->string('postal_code');
+            $table->string('address_city');
+            $table->string('address_state');
+            $table->string('address_code');
 
             $table->string('driver_license');
-            $table->date('driver_license_expiration_date');
+            $table->date('driver_license_expiration_date')->nullable();
             $table->json('driver_license_categories'); // [A, A1, B, B1, BE, C, C1, C1E, CE, D, D1, D1E, DE]
         });
     }
@@ -42,9 +42,9 @@ return new class extends Migration
                 'phone_number',
                 'address_1',
                 'address_2',
-                'city',
-                'state',
-                'postal_code',
+                'address_city',
+                'address_state',
+                'address_code',
                 'driver_license',
                 'driver_license_expiration_date',
                 'driver_license_categories',
@@ -52,4 +52,3 @@ return new class extends Migration
         });
     }
 };
-
