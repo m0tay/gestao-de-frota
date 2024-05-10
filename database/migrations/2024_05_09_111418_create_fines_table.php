@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('address_city');
             $table->string('address_state');
 
-            $table->datetime('infraction_datetime');
+            $table->timestamp('infraction_date');
 
             $table->text('observation')->nullable();
 
