@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\FuelType;
 use App\Models\Reservation;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
@@ -20,12 +19,6 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
-    foreach (['Gasolina', 'Etanol', 'Diesel', 'Elétrico', 'Híbrido', 'Flex'] as $fuel) {
-      FuelType::create([
-        'fuel_type' => $fuel
-      ]);
-    };
-
     foreach (['admin', 'manager', 'user'] as $role) {
       Role::create([
         'name' => $role
