@@ -17,6 +17,10 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
+        $fuelType = fake()->randomElement(config('fueltypes.assigning'));
+
+        // dd($assignedFuelType);
+
         return [
             'plate' => fake()->bothify('??-##-??'), // Simulate a license plate format
             'brand' => fake()->randomElement(['Ford', 'Toyota', 'Honda', 'BMW', 'Volkswagen']),
@@ -26,7 +30,7 @@ class VehicleFactory extends Factory
             'company' => fake()->randomElement(['roboplan', 'robowork']),
             'status' => 'active',
             'kms' => fake()->numberBetween(50_000, 200_000),
-            'fuel_type' => fake()->randomElement(FuelType::all())->fuel_type,
+            'fuel_type' => $fuelType,
         ];
     }
 }

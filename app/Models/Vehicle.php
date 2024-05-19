@@ -24,9 +24,4 @@ class Vehicle extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'driver_id');
     }
-
-    public function fuelType(): BelongsTo
-    {
-        return $this->belongsTo(FuelType::class, 'fuel_type');
-    }
 }

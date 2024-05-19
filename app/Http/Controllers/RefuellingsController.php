@@ -37,9 +37,11 @@ class RefuellingsController extends BaseAgendaController
 
         $vehicles = Vehicle::select('id', 'plate', 'kms', 'company', 'fuel_type')->get();
 
+        $refuellingFuelTypes = config('fueltypes.refuelling');
+
         $canSelectDriver = in_array(Auth::user()->role->name, $this->authorized['roles']) || in_array(Auth::user()->email, $this->authorized['emails']);
 
-        return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles', 'canSelectDriver'));
+        return Inertia::render('Refuellings/Create', compact('drivers', 'vehicles', 'canSelectDriver', 'refuellingFuelTypes'));
     }
 
     /**
@@ -47,7 +49,7 @@ class RefuellingsController extends BaseAgendaController
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

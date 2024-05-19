@@ -21,7 +21,8 @@ class RefuellingsFactory extends Factory
     {
         $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
         $mileage = $vehicle->kms;
-        $fuelType = $vehicle->fuel_type;
+        $fuelType = fake()->randomElement(config('fueltypes.refuelling'));
+        
         $vehicle->update(['kms' => $vehicle->kms + fake()->numberBetween(5, 250)]);
 
 
