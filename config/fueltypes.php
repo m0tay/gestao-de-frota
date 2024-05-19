@@ -2,34 +2,17 @@
 
 return [
     'assigning' => [
-        'gasoline' => [
-            'name' => 'Gasolina',
-        ],
-        'gasoleo' => [
-            'name' => 'Gasóleo',
-        ],
-        'hybrid-gasoline' => [
-            'name' => 'Híbrido (Gasolina)',
-        ],
-        'hybrid-gasoleo' => [
-            'name' => 'Híbrido (Gasóleo)',
-        ],
+        'gasoline' => 'Gasolina',
+        'gasoleo' => 'Gasóleo',
+        'hybrid-gasoline' => 'Híbrido (Gasolina)',
+        'hybrid-gasoleo' => 'Híbrido (Gasóleo)',
     ],
     'refuelling' => [
-        'adblue' => [
-            'name' => 'AdBlue',
-        ],
-        'gasoline' => [
-            'name' => 'Gasolina',
-        ],
-        'gasoline-premium' => [
-            'name' => 'Gasolina Premium',
-        ],
-        'gasoleo' => [
-            'name' => 'Gasóleo',
-        ],
-        'gasoleo-premium' => [
-            'name' => 'Gasóleo Premium',
-        ],
+        'adblue' => 'AdBlue',
+        'gasoline' => 'Gasolina',
+        'gasoline-premium' => 'Gasolina Premium',
+        'gasoleo' => 'Gasóleo',
+        'gasoleo-premium' => 'Gasóleo Premium',
     ],
 ];
+
