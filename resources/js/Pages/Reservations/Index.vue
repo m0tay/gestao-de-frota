@@ -13,14 +13,12 @@ import { usePage } from "@inertiajs/vue3"
 import { createCalendar, viewMonthAgenda, viewMonthGrid, } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
 import { ScheduleXCalendar } from '@schedule-x/vue'
-import { useWindowSize } from '@vueuse/core'
+import { mobileFoldingWidth, minWidthToFold, width } from '@/lib/windowSizing.js';
+
 import moment from "moment"
 import { ref } from "vue"
 import { parseISO } from "date-fns"
 
-
-
-const { width } = useWindowSize()
 const page = usePage()
 
 
@@ -42,8 +40,6 @@ const authorized = ref([
     1,
     2,
 ])
-const mobileFoldingWidth = ref(700)
-const minWidthToFold = ref(380)
 
 const isDateValid = (date) => {
     const providedDate = moment(date);
@@ -181,6 +177,9 @@ const calendarApp = createCalendar({
 
 <template>
     <AuthenticatedLayout>
+        <template #header v-if="width < mobileFoldingWidth">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Agenda</h2>
+        </template>
         <div>
             <div v-show="width < mobileFoldingWidth" class="flex justify-center my-4 gap-x-4">
                 <Button @click="handleSchedule">Agendar
