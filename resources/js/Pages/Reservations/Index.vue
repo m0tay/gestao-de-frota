@@ -70,7 +70,7 @@ const handleEnlist = () => {
     showModalList.value = true
     eventsList.value = props.reservations
 }
-
+    
 
 const calendarApp = createCalendar({
     selectedDate: format(new Date(), 'yyyy-MM-dd'),
