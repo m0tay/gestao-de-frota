@@ -17,7 +17,7 @@ import { mobileFoldingWidth, minWidthToFold, width } from '@/lib/windowSizing.js
 
 import moment from "moment"
 import { ref } from "vue"
-import { parseISO } from "date-fns"
+import { format, parseISO } from "date-fns"
 
 const page = usePage()
 
@@ -71,8 +71,9 @@ const handleEnlist = () => {
     eventsList.value = props.reservations
 }
 
+
 const calendarApp = createCalendar({
-    selectedDate: moment.now(),
+    selectedDate: format(new Date(), 'yyyy-MM-dd'),
     // views: [viewMonthAgenda, viewMonthGrid, viewWeek, viewDay],
     views: [viewMonthAgenda, viewMonthGrid],
     defaultView: viewMonthGrid.name,
