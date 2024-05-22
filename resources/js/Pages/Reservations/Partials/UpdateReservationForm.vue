@@ -139,7 +139,7 @@ onBeforeUpdate(() => {
                 <section class="flex flex-col lg:flex-row justify-between gap-y-6">
                     <div class="group">
                         <h2 class="text-3xl text-center sm:text-left xl:text-4xl font-bold text-gray-900">Gestão de
-                            Agendamento</h2>
+                            Requisição</h2>
                         <div
                             class="flex gap-x-2 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.5"
