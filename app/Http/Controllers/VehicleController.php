@@ -26,7 +26,15 @@ class VehicleController extends Controller
     {
         $this->authorize('create', Vehicle::class);
 
-        return Inertia::render('Vehicles/Create');
+
+
+        return Inertia::render('Vehicles/Create', [
+            'brands' => config('vehicles.brands'),
+            'colors' => config('vehicles.colors'),
+            'categories' => config('vehicles.categories'),
+            'proprietaries' => config('vehicles.proprietaries'),
+            'fuel_types' => config('vehicles.fuel_types.assigning'),
+        ]);
     }
 
     /**
@@ -34,7 +42,9 @@ class VehicleController extends Controller
      */
     public function store(StoreVehicleRequest $request)
     {
-        //
+        $this->authorize('create', Vehicle::class);
+
+        $data = $request->validated();
     }
 
     /**
