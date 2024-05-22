@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
   $user = Auth::user();
   $response = Gate::inspect('accessDashboard', $user);
 
-  if($response->denied()) return Redirect::back(302);
+  if ($response->denied()) return Redirect::back(302);
 
   return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])
@@ -61,24 +61,24 @@ Route::controller(UserController::class)->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/agenda', AgendaController::class)
-        ->name('agenda');
-    Route::post('/agenda', ScheduleReservationController::class)
-        ->name('reservation.schedule');
-    Route::put('/agenda/{reservation}/reschedule', RescheduleReservationController::class)
-        ->name('reservation.reschedule');
-    Route::put('/agenda/{reservation}/cancel', CancelReservationController::class)
-        ->name('reservation.cancel');
-    Route::put('/agenda/{reservation}/returning', ReturningReservationController::class)
-        ->name('reservation.returning');
+  Route::get('/agenda', AgendaController::class)
+    ->name('agenda');
+  Route::post('/agenda', ScheduleReservationController::class)
+    ->name('reservation.schedule');
+  Route::put('/agenda/{reservation}/reschedule', RescheduleReservationController::class)
+    ->name('reservation.reschedule');
+  Route::put('/agenda/{reservation}/cancel', CancelReservationController::class)
+    ->name('reservation.cancel');
+  Route::put('/agenda/{reservation}/returning', ReturningReservationController::class)
+    ->name('reservation.returning');
 });
 
 
 Route::middleware('auth')->match(
-    ['get', 'post'],
-    'refuellings/list',
-    [RefuellingsController::class, 'list']
+  ['get', 'post'],
+  'refuellings/list',
+  [RefuellingsController::class, 'list']
 )->name('refuellings.list');
 Route::middleware('auth')->resource('refuellings', RefuellingsController::class)
-    ->except('list');
+  ->except('list');
 Route::middleware('auth')->resource('vehicles', VehicleController::class);
