@@ -6,13 +6,11 @@ import SelectInput from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { width } from '@/lib/windowSizing.js';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { useWindowSize } from "@vueuse/core";
 import moment from "moment";
-import { computed, onBeforeUpdate, onMounted, watch } from 'vue';
+import { computed, onBeforeUpdate, onMounted } from 'vue';
 
-
-const { width } = useWindowSize();
 
 const page = usePage();
 
@@ -98,9 +96,9 @@ onMounted(() => {
                             </section>
                         </header>
 
-                        <div class="mt-6 max-w-full">
+                        <div class="mt-6 sm:w-third w-full pr-2">
                             <InputLabel value="Data e hora" for="refuel_date" />
-                            <DateTimeInput id="refuel_date" v-model="form.refuel_date" />
+                            <DateTimeInput class="w-full" id="refuel_date" v-model="form.refuel_date" />
                             <InputError :message="form.errors.refuel_date" />
                         </div>
 
@@ -120,7 +118,7 @@ onMounted(() => {
                             </div>
                             <div class="mt-6 sm:w-third">
                                 <InputLabel value="Tipo de combustível" for="fuel_type" />
-                                <div id="fuel_type">{{ form.fuel_type }}</div>
+                                <div id="fuel_type">Gasóleo</div>
                             </div>
                         </div>
 
