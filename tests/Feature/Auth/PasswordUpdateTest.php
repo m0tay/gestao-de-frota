@@ -5,7 +5,6 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 beforeEach(function () {
-    // Create role
     Role::create(['name' => 'user']);
 });
 

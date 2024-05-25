@@ -4,7 +4,6 @@ use App\Providers\RouteServiceProvider;
 use App\Models\Role;
 
 beforeEach(function () {
-    // Create role
     Role::create(['name' => 'user']);
 });
 
