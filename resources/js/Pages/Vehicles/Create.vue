@@ -1,12 +1,12 @@
 <script setup>
 import InputLabel from '@/Components/InputLabel.vue';
 import SelectInput from '@/Components/SelectInput.vue';
+import TextInput from '@/Components/TextInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import { Label } from '@/Components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import TextInput from '@/Components/TextInput.vue';
 import { onBeforeUpdate, onMounted } from 'vue';
 
 const page = usePage();
