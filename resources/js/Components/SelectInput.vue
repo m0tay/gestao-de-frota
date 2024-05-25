@@ -32,7 +32,7 @@ const updateSelectedItem = (newValue) => {
 
 <template>
     <Select v-model="selectedItem" @update:modelValue="updateSelectedItem">
-        <SelectTrigger class="bg-gray-50">
+        <SelectTrigger class="">
             <SelectValue :placeholder/>
         </SelectTrigger>
         <SelectContent>

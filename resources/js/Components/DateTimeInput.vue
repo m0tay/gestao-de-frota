@@ -23,7 +23,7 @@ const formatDate = (date) => isValidDate(date) ? format(date, "EEEEEE, dd 'de' M
     <Popover>
         <PopoverTrigger as-child>
             <Button :variant="'outline'" :class="cn(
-                'w-[280px] justify-start text-left font-normal bg-gray-50',
+                'w-full justify-start text-left font-normal bg-gray-50 border-opacity-10 ring-1 ring-gray-300/50',
                 !date && 'text-muted-foreground',
             )">
                 <CalendarIcon class="mr-2 h-4 w-4" />
