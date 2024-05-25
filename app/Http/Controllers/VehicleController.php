@@ -6,6 +6,7 @@ use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
 use App\Models\Vehicle;
 use Inertia\Inertia;
+use Redirect;
 
 class VehicleController extends Controller
 {
@@ -45,6 +46,10 @@ class VehicleController extends Controller
         $this->authorize('create', Vehicle::class);
 
         $data = $request->validated();
+
+        $vehicle = Vehicle::create($data);
+
+        return Redirect::to(route('vehicles.index'));
     }
 
     /**
