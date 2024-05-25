@@ -1,15 +1,23 @@
 <script setup>
-import DateTimeInput from '@/Components/DateTimeInput.vue';
-import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
+import { Label } from '@/Components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { addMinutes, format, parseISO } from "date-fns";
-import { onBeforeUpdate } from 'vue';
+import TextInput from '@/Components/TextInput.vue';
+import { onBeforeUpdate, onMounted } from 'vue';
 
 const page = usePage();
+
+const props = defineProps({
+    brands: Array,
+    categories: Array,
+    colors: Array,
+    proprietaries: Array,
+    fuelTypes: Array,
+});
 
 const form = useForm({})
 
@@ -18,9 +26,11 @@ const handleSubmit = () => { }
 onBeforeUpdate(() => {
     form.reset();
     form.clearErrors();
-
-    form.refuel_date = new Date();
 });
+
+onMounted(() => {
+
+})
 </script>
 
 <template>
@@ -51,32 +61,127 @@ onBeforeUpdate(() => {
                                 </div>
                             </section>
                         </header>
+                        <div>
+                            <h2 class="text-left font-bold">Informações sobre veículo</h2>
+                            <hr class="border-t border-gray-300" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-x-4">
+                            <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
+                                <div>
+                                    <InputLabel value="Matrícula" for="vehicle_plate" />
+                                    <TextInput class="w-full" id="vehicle_plate" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Marca" for="vehicle_brand" />
+                                    <SelectInput class="w-full" id="vehicle_brand" :list="page.props.brands" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Modelo" for="vehicle_model" />
+                                    <TextInput class="w-full" id="vehicle_model" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Tipo de veículo" for="vehicle_type" />
+                                    <SelectInput class="w-full" id="vehicle_type" :list="page.props.categories" />
+                                </div>
+                                <div>
+                                    <InputLabel value="N&deg; chassi" for="vehicle_chassi" />
+                                    <TextInput class="w-full" id="vehicle_chassi" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Tipo de combustível" for="vehicle_fuel_type" />
+                                    <SelectInput class="w-full" id="vehicle_fuel_type" :list="page.props.fuelTypes" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Capacidade de depósito" for="vehicle_tank_capacity" />
+                                    <TextInput class="w-full" id="vehicle_tank_capacity" />
+                                </div>
+                            </div>
 
-                        <!-- <div class="mt-6 max-w-full"> -->
-                        <!-- <InputLabel value="Data e hora" for="refuel_date" />
-                            <DateTimeInput id="refuel_date" v-model="form.refuel_date" />
-                            <InputError :message="form.errors.refuel_date" /> -->
-                        <!-- </div> -->
+                            <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
+                                <div class="flex gap-x-4 my-5">
+                                    <InputLabel value="AdBlue" for="vehicle_has_adblue" />
+                                    <RadioGroup default-value="no" class="flex" id="vehicle_has_adblue">
+                                        <div class="flex items-center space-x-2">
+                                            <RadioGroupItem id="yes" value="yes" />
+                                            <Label for="yes">Sim</Label>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <RadioGroupItem id="option-two" value="no" />
+                                            <Label for="no">N&atilde;o</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
+                                <div>
+                                    <InputLabel value="Propietário" for="vehicle_proprietary" />
+                                    <SelectInput class="w-full" id="vehicle_proprietary"
+                                        :list="page.props.proprietaries" />
+                                </div>
+                                <div class="flex gap-x-4 my-5">
+                                    <InputLabel value="Leasing" for="vehicle_has_leasing" />
+                                    <RadioGroup default-value="no" class="flex" id="vehicle_has_leasing">
+                                        <div class="flex items-center space-x-2">
+                                            <RadioGroupItem id="yes" value="yes" />
+                                            <Label for="yes">Sim</Label>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <RadioGroupItem id="option-two" value="no" />
+                                            <Label for="no">N&atilde;o</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
+                                <div>
+                                    <InputLabel value="Cor" for="vehicle_color" />
+                                    <SelectInput class="w-full" id="vehicle_color" :list="page.props.colors" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Quilometrágem" for="vehicle_kms" />
+                                    <TextInput class="w-full" id="vehicle_kms" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Pertence à frota" for="vehicle_in_fleet" />
+                                    <SelectInput class="w-full" id="vehicle_in_fleet" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Status" for="vehicle_status" />
+                                    <SelectInput class="w-full" id="vehicle_status" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-left font-bold">Informações adicionais</h2>
+                            <hr class="border-t border-gray-300" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-x-4">
+                            <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
+                                <div>
+                                    <InputLabel value="Cartão frota" for="vehicle_cartao_frota" />
+                                    <TextInput class="w-full" id="vehicle_cartao_frota" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Data de matrícula" for="vehicle_registration_date" />
+                                    <TextInput class="w-full" id="vehicle_registration_date" />
+                                </div>
+                                <div>
+                                    <InputLabel value="Foto do veículo" for="vehicle_photo" />
+                                    <TextInput class="w-full" id="vehicle_photo" />
+                                </div>
+                            </div>
 
-                        <!-- <div class="mt-6 max-w-full">
-                            <InputLabel value="Condutor" for="driver" />
-                            <SelectInput :disabled="!page.props.canSelectDriver" id="driver" :list="drivers"
-                                v-model="form.driver.id" :placeholder="form.driver.id" />
-                            <InputError :message="form.errors.driver" />
-                        </div> -->
-
-                        <!-- <div class="mt-6 max-w-full">
-                            <InputLabel value="Veículo" for="vehicle" />
-                            <TextInput id="vehicle" v-model="form.vehicle.plate" :placeholder="form.vehicle.plate" />
-                            <InputError :message="form.errors.vehicle" />
-                        </div> -->
-
-                        <!-- <div class="mt-6 max-w-full">
-                            <InputLabel value="Descrição" for="description" />
-                            <Textarea class="w-full" id="description" v-model="form.description"
-                                :placeholder="form.description" />
-                            <InputError :message="form.errors.description" />
-                        </div> -->
+                            <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
+                                <div>
+                                    <InputLabel value="Pneus ref. livrete" for="vehicle_tire_ref" />
+                                    <TextInput class="w-full" id="vehicle_tire_ref" />
+                                </div>
+                                <div>
+                                    <InputLabel value="1&deg; eixo" for="vehicle_tire_1st_axis" />
+                                    <TextInput class="w-full" id="vehicle_tire_1st_axis" />
+                                </div>
+                                <div>
+                                    <InputLabel value="2&deg; eixo" for="vehicle_tire_2nd_axis" />
+                                    <TextInput class="w-full" id="vehicle_tire_2nd_axis" />
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mt-6 flex flex-col gap-y-4 justify-end gap-x-4 sm:flex-row">
                             <Button variant="secondary">Mudei de Ideia</Button>
