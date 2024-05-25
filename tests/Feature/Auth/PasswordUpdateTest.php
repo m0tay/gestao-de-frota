@@ -1,7 +1,14 @@
 <?php
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+
+beforeEach(function () {
+    // Create role
+    Role::create(['name' => 'user']);
+});
+
 
 test('password can be updated', function () {
     $user = User::factory()->create();

@@ -1,7 +1,14 @@
 <?php
 
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Models\Role;
+use App\Models\User;
+
+beforeEach(function () {
+    // Create role
+    Role::create(['name' => 'user']);
+});
+
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');

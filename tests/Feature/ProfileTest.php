@@ -1,6 +1,12 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
+
+beforeEach(function () {
+    // Create role
+    Role::create(['name' => 'user']);
+});
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
