@@ -31,7 +31,7 @@ class ReservationFactory extends Factory
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
         $status = Carbon::parse($start_date)->isPast() ? 'done' : fake()->randomElement(['accepted', 'denied']);
         $status2 = fake()->randomElement(['accepted', 'denied', 'rescheduled']);
-        $condition = fake()->randomElement(['ok', 'nok']);
+        $condition = mt_rand(0, 1);
         $vehicle->update(['kms' => $vehicle->kms + fake()->numberBetween(5, 250)]);
         $returnKms = $vehicle->kms;
 
@@ -61,9 +61,9 @@ class ReservationFactory extends Factory
             'start_kms' => $startKms,
             'end' => $end_date,
             'returned_at' => $return,
-            'return_kms' => $returnKms,
-            'return_condition' => $condition,
-            'return_condition_description' => $condition === "ok" ? '' : fake()->randomElement(['parti o retrovisor', 'risquei a lataria', 'bati a traseira', 'símbolo estranho acendeu-se no odómetro']),
+            'returned_kms' => $returnKms,
+            'returned_ok' => $condition,
+            'returned_condition' => $condition === true ? '' : fake()->randomElement(['parti o retrovisor', 'risquei a lataria', 'bati a traseira', 'símbolo estranho acendeu-se no odómetro']),
             'status' => $status2,
             'created_by' => $creator,
             'driver_id' => $driver,

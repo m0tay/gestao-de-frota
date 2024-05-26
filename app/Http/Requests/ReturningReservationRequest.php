@@ -24,13 +24,13 @@ class ReturningReservationRequest extends FormRequest
                 'date',
                 'after:start',
             ],
-            'return_kms' => [
+            'returned_kms' => [
                 'required',
                 'numeric',
                 'gt:start_kms',
             ],
-            'return_condition' => 'required',
-            'return_condition_description' => 'required_if:return_condition,1',
+            'returned_ok' => 'required',
+            'returned_condition' => 'required_if:returned_ok,1',
         ];
     }
 
@@ -38,8 +38,8 @@ class ReturningReservationRequest extends FormRequest
     {
         return [
             'returned_at.after' => 'Não é possível entregar antes do início da requisição.',
-            'return_kms.required' => 'Os kms devem ser informados.',
-            'return_kms.gt' => 'Os kms  devem ser superiores ao kms inicial da requisição.',
+            'returned_kms.required' => 'Os kms devem ser informados.',
+            'returned_kms.gt' => 'Os kms  devem ser superiores ao kms inicial da requisição.',
         ];
     }
 }

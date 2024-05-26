@@ -29,9 +29,9 @@ class Reservation extends Model
         'status',
         'start_kms',
         'returned_at',
-        'return_kms',
-        'return_condition',
-        'return_condition_description',
+        'returned_kms',
+        'returned_ok',
+        'returned_condition',
     ];
 
     /**

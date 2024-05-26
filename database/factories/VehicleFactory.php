@@ -17,20 +17,17 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
-        $fuelType = fake()->randomElement(config('fueltypes.assigning'));
-
-        // dd($assignedFuelType);
-
         return [
-            'plate' => fake()->bothify('??-##-??'), // Simulate a license plate format
-            'brand' => fake()->randomElement(['Ford', 'Toyota', 'Honda', 'BMW', 'Volkswagen']),
-            'model' => fake()->word() . ' ' . fake()->randomNumber(3), // Basic model name
+            'plate' => fake()->bothify('??-##-??'),
+            'brand' => fake()->randomElement(config('vehicles.brands')),
+            'model' => fake()->word() . ' ' . fake()->randomNumber(3),
+            'color' => fake()->randomElement(config('vehicles.colors')),
             'group' => fake()->randomElement(['private', 'public']),
-            'category' => fake()->randomElement(['light', 'heavy']),
-            'company' => fake()->randomElement(['roboplan', 'robowork']),
-            'status' => 'active',
+            'category' => fake()->randomElement(config('vehicles.categories')),
+            'proprietary' => fake()->randomElement(config('vehicles.proprietaries')),
+            'is_active' => true,
             'kms' => fake()->numberBetween(50_000, 200_000),
-            'fuel_type' => $fuelType,
+            'fuel_type' => fake()->randomElement(config('vehicles.fuel_types.assigning')),
         ];
     }
 }
