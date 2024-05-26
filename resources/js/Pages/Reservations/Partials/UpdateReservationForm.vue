@@ -56,9 +56,9 @@ const formReturning = useForm({
     returned_at: Date,
     start: Date,
     start_kms: Number,
-    return_kms: Number,
-    return_condition: String,
-    return_condition_description: String,
+    returned_kms: Number,
+    returned_ok: Boolean,
+    returned_condition: String,
 })
 
 
@@ -107,7 +107,7 @@ const handleReturning = () => {
 }
 
 const setReturningCondition = () => {
-    !formReturning.return_conditions
+    !formReturning.returned_oks
 }
 
 onBeforeUpdate(() => {
@@ -125,8 +125,8 @@ onBeforeUpdate(() => {
         formReturning.id = props.selectedEvent.id
         formReturning.start = form.start
         formReturning.start_kms = props.selectedEvent.vehicle.kms
-        formReturning.return_condition = false
-        formReturning.return_condition_description = ''
+        formReturning.returned_ok = false
+        formReturning.returned_condition = ''
     }
 })
 
@@ -205,7 +205,7 @@ onBeforeUpdate(() => {
             </div>
 
             <div class="mt-6 max-w-full">
-                <InputLabel for="reason_for_status_change" value="Pretexo do cancelamento ou reagendamento" />
+                <InputLabel for="reason_for_status_change" value="Motivo do cancelamento ou reagendamento" />
                 <Textarea id="reason_for_status_change" v-model="form.reason_for_status_change"
                     :placeholder="form.reason_for_status_change" class="w-full" />
                 <InputError :message="form.errors.reason_for_status_change" />
@@ -221,22 +221,22 @@ onBeforeUpdate(() => {
                     <ArrowBigDownDash v-else />
                 </div>
                 <div>
-                    <InputLabel for="return_kms" value="Quilómetros à entrega" />
-                    <TextInput class="border-1 w-full" id="return_kms" type="number"
-                        v-model="formReturning.return_kms" />
-                    <InputError class="flex items-end" :message="formReturning.errors.return_kms" />
+                    <InputLabel for="returned_kms" value="Quilómetros à entrega" />
+                    <TextInput class="border-1 w-full" id="returned_kms" type="number"
+                        v-model="formReturning.returned_kms" />
+                    <InputError class="flex items-end" :message="formReturning.errors.returned_kms" />
                 </div>
             </div>
 
             <div class="mt-6 max-w-full">
                 <div class="flex gap-2 mb-4">
-                    <InputLabel for="return_condition" value="Houve alguma avaria?" />
-                    <input class="size-4" type="checkbox" id="returning" v-model="formReturning.return_condition" />
+                    <InputLabel for="returned_ok" value="Houve alguma avaria?" />
+                    <input class="size-4" type="checkbox" id="returning" v-model="formReturning.returned_ok" />
                 </div>
                 <InputLabel value="Descrição" for="description" />
-                <Textarea :disabled="!formReturning.return_condition" class="w-full" id="description"
-                    v-model="formReturning.return_condition_description"
-                    :placeholder="formReturning.return_condition_description" />
+                <Textarea :disabled="!formReturning.returned_ok" class="w-full" id="description"
+                    v-model="formReturning.returned_condition"
+                    :placeholder="formReturning.returned_condition" />
 
                 <InputError class="flex items-end" :message="formReturning.errors.returning" />
 
