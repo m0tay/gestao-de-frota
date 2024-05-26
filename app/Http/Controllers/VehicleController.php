@@ -34,7 +34,7 @@ class VehicleController extends Controller
             'colors' => config('vehicles.colors'),
             'categories' => config('vehicles.categories'),
             'proprietaries' => config('vehicles.proprietaries'),
-            'fuel_types' => config('vehicles.fuel_types.assigning'),
+            'fuelTypes' => config('vehicles.fuel_types.assigning'),
         ]);
     }
 
@@ -46,6 +46,8 @@ class VehicleController extends Controller
         $this->authorize('create', Vehicle::class);
 
         $data = $request->validated();
+
+        dd($data);
 
         $vehicle = Vehicle::create($data);
 
