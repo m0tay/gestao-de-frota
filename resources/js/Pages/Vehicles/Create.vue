@@ -1,6 +1,6 @@
 <script setup>
 import InputLabel from '@/Components/InputLabel.vue';
-import SelectInput from '@/Components/SelectInput.vue';
+import SelectInput from '@/Components/Vehicles/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import { Label } from '@/Components/ui/label';
