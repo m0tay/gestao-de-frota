@@ -35,7 +35,7 @@ class RefuellingsController extends BaseAgendaController
     {
         $drivers = User::select('id', 'name')->get();
 
-        $vehicles = Vehicle::select('id', 'plate', 'kms', 'company', 'fuel_type')->get();
+        $vehicles = Vehicle::select('id', 'plate', 'kms', 'proprietary', 'fuel_type')->get();
 
         $refuellingFuelTypes = config('fueltypes.refuelling');
 
