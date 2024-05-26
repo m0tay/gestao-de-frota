@@ -21,14 +21,14 @@ class ReturningReservationController extends Controller
 
         $reservation->update([
             'status' => 'done',
-            'return_kms' => $data['return_kms'],
+            'returned_kms' => $data['returned_kms'],
             'returned_at' => Carbon::parse($data['returned_at'])->format('Y-m-d H:i'),
         ]);
 
         $vehicle = Vehicle::find($reservation->vehicle_id)->update([
-            'kms' => bcadd($data['return_kms'], 0),
-            'return_condition' => $data['return_condition'] ? 'ok' : 'nok',
-            'return_condition_description' => $data['return_condition_description'],
+            'kms' => bcadd($data['returned_kms'], 0),
+            'returned_ok' => $data['returned_ok'],
+            'returned_condition' => $data['returned_condition'],
         ]);
 
         # todo: make change status inactive when returned not-ok
