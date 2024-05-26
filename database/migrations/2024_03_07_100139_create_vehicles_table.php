@@ -16,13 +16,15 @@ return new class extends Migration
             $table->string('plate');
             $table->string('brand');
             $table->string('model');
-            $table->enum('company', ['roboplan', 'robowork']);
+            $table->string('color');
+            $table->string('proprietary');
             $table->unsignedMediumInteger('kms')->nullable();
-            $table->enum('group', ['private', 'public']);
-            $table->enum('category', ['light', 'heavy']);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->boolean('returned_ok')->default(true);
+            $table->text('returned_condition')->nullable();
+            $table->string('group');
+            $table->string('category');
+            $table->boolean('is_active')->default(true);
             $table->string('fuel_type');
-            // $table->foreign('fuel_type')->references('fuel_type')->on('fuel_types');
             $table->timestamps();
         });
     }
