@@ -16,9 +16,9 @@ return new class extends Migration {
             $table->timestamp('end');
             $table->timestamp('returned_at')->nullable();
             $table->unsignedMediumInteger('start_kms');
-            $table->unsignedMediumInteger('return_kms')->nullable();
-            $table->enum('return_condition', ['ok', 'nok'])->nullable(); // nok === not ok
-            $table->mediumText('return_condition_description')->nullable();
+            $table->unsignedMediumInteger('returned_kms')->nullable();
+            $table->boolean('returned_ok')->nullable();
+            $table->mediumText('returned_condition')->nullable();
             $table->enum('status', ['accepted', 'denied', 'done', 'rescheduled']);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('driver_id')->constrained('users');
