@@ -13,9 +13,7 @@ class Vehicle extends Model
     use HasFactory;
 
     // todo: change to guarded?
-    protected $fillable = [
-        'kms',
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'tires_ref' => 'array',
