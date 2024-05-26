@@ -41,10 +41,11 @@ const updateSelectedItem = (newValue) => {
                     <span v-if="item.plate" class="flex gap-x-2 items-center">
                         <img :src="'https://picsum.photos/'+item.id+'/100'" class="w-8 h-8 rounded-full" alt="">
                         {{ item.plate.toUpperCase() }}
-                        <Badge :class="{'bg-purple-500 text-white': item.company === 'robowork',
+                        <!-- hiding for now -->
+                        <!-- <Badge :class="{'bg-purple-500 text-white': item.company === 'robowork',
                                         'bg-sky-500 text-white': item.company === 'roboplan',}
                         ">
-                            {{ item.company.charAt(0).toUpperCase()+item.company.slice(1) }}</Badge>
+                            {{ item.company.charAt(0).toUpperCase()+item.company.slice(1) }}</Badge> -->
                     </span>
                     <span v-if="item.name" class="flex gap-x-2 items-center"><img
                         :src="`https://randomuser.me/api/portraits/thumb/men/${item.id}.jpg`"
