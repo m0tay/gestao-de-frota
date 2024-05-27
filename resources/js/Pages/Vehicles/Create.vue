@@ -24,7 +24,19 @@ const props = defineProps({
     tireAxles: Array,
 });
 
-const form = useForm({})
+const form = useForm({
+    plate: String,
+    brand: String,
+    model: String,
+    color: String,
+    category: String,
+    proprietary: String,
+    is_active: Boolean,
+    kms: Number,
+    fuel_type: String,
+    has_adblue: Boolean,
+    has_leasing: Boolean,
+});
 
 const handleSubmit = () => {
     console.log('form');
@@ -37,7 +49,17 @@ onBeforeUpdate(() => {
 });
 
 onMounted(() => {
-
+    form.has_adblue = false;
+    form.has_leasing = false;
+    form.is_active = true;
+    form.kms = null;
+    form.model = '';
+    form.plate = '';
+    form.category = null;
+    form.fuel_type = null;
+    form.proprietary = null;
+    form.brand = null;
+    form.color = null;
 })
 </script>
 
