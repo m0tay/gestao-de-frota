@@ -2,71 +2,74 @@
 
 # Gestão de Frota
 
-Gestão de Frota is a fleet management app developed by Douglas Lobo as his Professional Aptitude Project (PAP) for school. It was created for Robolan, a company where he is interning.
+A aplicação Gestão de Frota é um aplicação desenvolvida para atender às necessidades da empresa Roboplan, também sendo a minha Prova de Aptidão Profissional.
 
-## About the Project
+## Sobre o projeto
 
-The main objective of this project is to provide a comprehensive solution for managing a fleet of vehicles, allowing for tracking maintenance, usage records, vehicle allocation, among other essential functionalities. Leveraging modern technologies such as Vue.js 3, Laravel 10, Inertia, and Vite, combined with the efficiency of Docker (Laravel Sail).
+O objetivo deste projeto é prover uma soluação sob medida à EPEP Roboplan para gerir sua frota e condutores, por meio gestão e registo de revisões, requisição de veículos para serviços, veículos e condutores e os seus dados pertinentes. Alavancando com tecnologias modernas e reconhecidas pelo mercado como os _frameworks_ Laravel, Vue.js e o _build tool_ Vite.
 
-## Features
+## Recursos
 
-- Live calendar for vehicle allocation requesting and managemnt
-- Mileage logging
-- Fuel level monitoring
-- Maintenance tracking and scheduling
-- Issue reporting
+- Agenda interativa para requisição de veículos;
+- Gestão e registo de condutores e veículos;
+- Gestão e registo de manutenções e revisões;
+- Registo de abastecimentos;
+- Relatar avarias;
 
-## Usage
+## Uso pretendido
 
-Gestão de Frota is intended for use by Robolan and its fleet of service vehicles. It provides visibility and oversight of the company's assets to improve efficiency.
+A aplicação ainda é embrionária e, no momento, visa-se a utilização apenas pela EPEP Roboplan. Destarte, a aplicação é feita à medida da EPEP para maior eficiência e satisfação.
 
-## Development
+## Desenvolvimento
 
-Gestão de Frota utilizes technologies like Vue.js 3, Laravel 10, Inertia, and Vite, and tools like Docker and DBeaver for its development. Future enhancements may include driver scoring, accident reporting, and inventory management.
+Desenvolvi a aplicação Gestão de Frota utilizando uma combinação de tecnologias avançadas e modernas, assegurando um desempenho robusto e eficiente. No núcleo do desenvolvimento, utilizei os _frameworks_ Laravel (10.x) e Vue.js (3.x), conhecidos pela sua flexibilidade e poder de criação de interfaces ricas e interativas. Além disso, para garantir uma integração perfeita entre o front-end e o back-end, recorri ao Inertia.js (1.x), uma biblioteca que facilita a construção de aplicações monolíticas de página única (SPA) sem a complexidade habitual.
 
+Para a gestão de recursos e a compilação de código, optei pelo Vite (5.x), uma ferramenta de _build_ extremamente rápida que melhora significativamente o tempo de desenvolvimento. E para assegurar que a aplicação pode ser executada em qualquer ambiente, de forma consistente e isolada, utilizei o Docker, permitindo-me criar contêineres que replicam com precisão o ambiente de produção.
 
-### Technologies Used
+Estas escolhas tecnológicas não só aumentaram a eficiência do processo de desenvolvimento, mas também garantiram que a aplicação Gestão de Frota é altamente escalável, fácil de manter e adaptável às necessidades futuras.
 
-- Vue.js 3: A progressive framework for building user interfaces.
-- Laravel 10: A PHP framework for web application development.
-- Inertia: A library that enables building single-page applications (SPAs) without the need for REST APIs.
-- Vite: A next-generation build tool for modern web projects.
-- Docker (Laravel Sail): Facilitates setting up and running the development environment.
-- DBeaver: Database management tool used during development.
+### Tecnologias utilizadas
 
-## Setting Up the Development Environment
+- Vue.js 3: Um _framework_ progressivo para construir interfaces de utilizador.
+- Laravel 10: Um _framework_ PHP para o desenvolvimento de aplicações web.
+- Inertia: Uma biblioteca que permite construir aplicações de página única (SPAs) sem a necessidade de APIs REST.
+- Vite: Uma ferramenta de _build_ de nova geração para projetos web modernos.
+- Docker (Laravel Sail): Facilita a configuração e execução do ambiente de desenvolvimento.
+- DBeaver: Ferramenta de gestão de bases de dados utilizada durante o desenvolvimento.
 
-To set up the development environment and run the project locally, follow the steps below:
+## Configurando o ambiente de desenvolvimento
 
-1. Clone this repository to your development environment:
+Para configurar o ambiente de desenvolvimento e executar o projeto localmente, siga as etapas abaixo:
+
+1. Clone este repositório em seu ambiente de desenvolvimento:
    
 ```bash
 git clone https://github.com/m0tay/gestao-de-frota.git
 ```
 
-2. Install frontend and backend dependencies:
+2. Instale dependências de front-end e back-end:
    
 ```bash
-cd fleet-management
+cd <endereço-do-projeto>
 npm install
 composer install
 ```
 
-3. Copy the example .env.example file and rename it to .env. Configure the environment variables as needed.
+3. Copie o arquivo de exemplo .env.example e renomeie-o para .env. Configure as variáveis ​​de ambiente conforme necessário.
 
-4. Start the development environment using Docker (Laravel Sail):
+4. Inicie o ambiente de desenvolvimento usando Docker (Laravel Sail):
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-5. Run database migrations and seeders:
+5. Execute migrações e propagadores de banco de dados:
 ```bash
 ./vendor/bin/sail artisan migrate --seed
 ```
 
-## Contributing
-If you'd like to contribute improvements or fixes to the project, feel free to submit pull requests. Before submitting a pull request, make sure to follow the contribution guidelines and ensure local tests have been successfully executed.
+## Contribuindo
+Se você quiser contribuir com melhorias ou correções para o projeto, sinta-se à vontade para enviar pull requests. Antes de enviar uma solicitação pull, certifique-se de seguir as diretrizes de contribuição e garantir que os testes locais foram executados com sucesso.
 
-## License
-This project is licensed under the MIT License.
+## Licença
+Este projeto está licenciado sob a licença MIT.
