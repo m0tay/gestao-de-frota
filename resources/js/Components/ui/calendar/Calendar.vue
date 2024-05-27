@@ -16,6 +16,16 @@ const props = defineProps({
     modelModifiers: {type: Object, required: false},
     columns: {type: Number, required: false, default: 1},
     type: {type: String, required: false, default: "single"},
+    minDate: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
+    maxDate: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
 });
 const emits = defineEmits(["update:modelValue"]);
 
@@ -27,6 +37,18 @@ const datePicker = ref();
 const calendarRef = computed(() => datePicker.value.calendarRef);
 const today = computed(() => new Date());
 const aMonthAhead = computed(() => endOfMonth(addMonths(new Date(), 1)));
+const minDate = computed(() => {
+    const { minDate } = props;
+    if (!minDate) return null;
+    if (minDate) return today.value;
+    return new Date(minDate);
+});
+const maxDate = computed(() => {
+    const { maxDate } = props;
+    if (!maxDate) return null;
+    if (maxDate) return aMonthAhead.value;
+    return new Date(maxDate);
+});
 const rules = ref({
     minutes: [0, 10, 20, 30, 40, 50],
 })
@@ -102,8 +124,9 @@ const vCalendarSlots = computed(() => {
             hide-time-header
             :timezone
             first-day-of-week="1.0"
-            :min-date="today"
-            :max-date="aMonthAhead"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :type="type"
         >
             <template v-for="(_, slot) of vCalendarSlots" #[slot]="scope">
                 <slot :name="slot" v-bind="scope"/>
