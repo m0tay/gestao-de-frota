@@ -16,7 +16,9 @@ const authorized = ref([
 ])
 
 defineProps({
-    placeholder: '',
+    placeholder: {
+        type: String,
+        default: '',},
     list: Array,
 })
 
