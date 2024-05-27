@@ -21,7 +21,10 @@ const props = defineProps({
 
 const form = useForm({})
 
-const handleSubmit = () => { }
+const handleSubmit = () => {
+    console.log('form');
+    form.post(route("vehicles.store"));
+}
 
 onBeforeUpdate(() => {
     form.reset();
@@ -69,38 +72,38 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div>
                                     <InputLabel value="Matrícula" for="vehicle_plate" />
-                                    <TextInput class="w-full" id="vehicle_plate" />
+                                    <TextInput class="w-full" id="vehicle_plate" v-model="form.plate"/>
                                 </div>
                                 <div>
                                     <InputLabel value="Marca" for="vehicle_brand" />
-                                    <SelectInput class="w-full" id="vehicle_brand" :list="page.props.brands" />
+                                    <SelectInput class="w-full" id="vehicle_brand" :list="page.props.brands" v-model="form.brand" />
                                 </div>
                                 <div>
                                     <InputLabel value="Modelo" for="vehicle_model" />
-                                    <TextInput class="w-full" id="vehicle_model" />
+                                    <TextInput class="w-full" id="vehicle_model" v-model="form.model" />
                                 </div>
                                 <div>
                                     <InputLabel value="Tipo de veículo" for="vehicle_type" />
-                                    <SelectInput class="w-full" id="vehicle_type" :list="page.props.categories" />
+                                    <SelectInput class="w-full" id="vehicle_type" :list="page.props.categories" v-model="form.category" />
                                 </div>
                                 <div>
                                     <InputLabel value="N&deg; chassi" for="vehicle_chassi" />
-                                    <TextInput class="w-full" id="vehicle_chassi" />
+                                    <TextInput class="w-full" id="vehicle_chassi" v-model="form.chassi" />
                                 </div>
                                 <div>
                                     <InputLabel value="Tipo de combustível" for="vehicle_fuel_type" />
-                                    <SelectInput class="w-full" id="vehicle_fuel_type" :list="page.props.fuelTypes" />
+                                    <SelectInput class="w-full" id="vehicle_fuel_type" :list="page.props.fuelTypes" v-model="form.fuel_type" />
                                 </div>
                                 <div>
                                     <InputLabel value="Capacidade de depósito" for="vehicle_tank_capacity" />
-                                    <TextInput class="w-full" id="vehicle_tank_capacity" />
+                                    <TextInput class="w-full" id="vehicle_tank_capacity" v-model="form.tank_capacity" />
                                 </div>
                             </div>
 
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="AdBlue" for="vehicle_has_adblue" />
-                                    <RadioGroup default-value="no" class="flex" id="vehicle_has_adblue">
+                                    <RadioGroup v-model="form.has_adblue" default-value="no" class="flex" id="vehicle_has_adblue">
                                         <div class="flex items-center space-x-2">
                                             <RadioGroupItem id="yes" value="yes" />
                                             <Label for="yes">Sim</Label>
@@ -114,11 +117,11 @@ onMounted(() => {
                                 <div>
                                     <InputLabel value="Propietário" for="vehicle_proprietary" />
                                     <SelectInput class="w-full" id="vehicle_proprietary"
-                                        :list="page.props.proprietaries" />
+                                        :list="page.props.proprietaries" v-model="form.proprietary" />
                                 </div>
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="Leasing" for="vehicle_has_leasing" />
-                                    <RadioGroup default-value="no" class="flex" id="vehicle_has_leasing">
+                                    <RadioGroup v-model="form.has_leasing" default-value="no" class="flex" id="vehicle_has_leasing">
                                         <div class="flex items-center space-x-2">
                                             <RadioGroupItem id="yes" value="yes" />
                                             <Label for="yes">Sim</Label>
@@ -131,15 +134,15 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Cor" for="vehicle_color" />
-                                    <SelectInput class="w-full" id="vehicle_color" :list="page.props.colors" />
+                                    <SelectInput class="w-full" id="vehicle_color" :list="page.props.colors" v-model="form.color" />
                                 </div>
                                 <div>
                                     <InputLabel value="Quilometrágem" for="vehicle_kms" />
-                                    <TextInput class="w-full" id="vehicle_kms" />
+                                    <TextInput class="w-full" id="vehicle_kms" v-model="form.kms" />
                                 </div>
                                 <div>
                                     <InputLabel value="Pertence à frota" for="vehicle_in_fleet" />
-                                    <SelectInput class="w-full" id="vehicle_in_fleet" />
+                                    <SelectInput class="w-full" id="vehicle_in_fleet" :list="page.props.fleets" v-model="form.fleet" />
                                 </div>
                                 <div>
                                     <InputLabel value="Status" for="vehicle_status" />
