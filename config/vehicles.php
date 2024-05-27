@@ -46,7 +46,7 @@ return [
         'Locarent(Portugal)',
         'Não pertence à frota/Foi Vendido',
     ],
-    'status' => [
+    'statuses' => [
         'Atribuído',
         'Comunitário',
         'Não atribuído',

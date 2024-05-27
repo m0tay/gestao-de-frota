@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { onBeforeUpdate, onMounted } from 'vue';
+import DateTimeInput from '@/Components/DateTimeInput.vue';
 
 const page = usePage();
 
@@ -17,6 +18,10 @@ const props = defineProps({
     colors: Array,
     proprietaries: Array,
     fuelTypes: Array,
+    statuses: Array,
+    tireBooklet: Array,
+    tireBrands: Array,
+    tireAxles: Array,
 });
 
 const form = useForm({})
@@ -72,11 +77,12 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div>
                                     <InputLabel value="Matrícula" for="vehicle_plate" />
-                                    <TextInput class="w-full" id="vehicle_plate" v-model="form.plate"/>
+                                    <TextInput class="w-full" id="vehicle_plate" v-model="form.plate" />
                                 </div>
                                 <div>
                                     <InputLabel value="Marca" for="vehicle_brand" />
-                                    <SelectInput class="w-full" id="vehicle_brand" :list="page.props.brands" v-model="form.brand" />
+                                    <SelectInput class="w-full" id="vehicle_brand" :list="page.props.brands"
+                                        v-model="form.brand" />
                                 </div>
                                 <div>
                                     <InputLabel value="Modelo" for="vehicle_model" />
@@ -84,7 +90,8 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Tipo de veículo" for="vehicle_type" />
-                                    <SelectInput class="w-full" id="vehicle_type" :list="page.props.categories" v-model="form.category" />
+                                    <SelectInput class="w-full" id="vehicle_type" :list="page.props.categories"
+                                        v-model="form.category" />
                                 </div>
                                 <div>
                                     <InputLabel value="N&deg; chassi" for="vehicle_chassi" />
@@ -92,7 +99,8 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Tipo de combustível" for="vehicle_fuel_type" />
-                                    <SelectInput class="w-full" id="vehicle_fuel_type" :list="page.props.fuelTypes" v-model="form.fuel_type" />
+                                    <SelectInput class="w-full" id="vehicle_fuel_type" :list="page.props.fuelTypes"
+                                        v-model="form.fuel_type" />
                                 </div>
                                 <div>
                                     <InputLabel value="Capacidade de depósito" for="vehicle_tank_capacity" />
@@ -103,7 +111,8 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="AdBlue" for="vehicle_has_adblue" />
-                                    <RadioGroup v-model="form.has_adblue" default-value="no" class="flex" id="vehicle_has_adblue">
+                                    <RadioGroup v-model="form.has_adblue" default-value="no" class="flex"
+                                        id="vehicle_has_adblue">
                                         <div class="flex items-center space-x-2">
                                             <RadioGroupItem id="yes" value="yes" />
                                             <Label for="yes">Sim</Label>
@@ -121,7 +130,8 @@ onMounted(() => {
                                 </div>
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="Leasing" for="vehicle_has_leasing" />
-                                    <RadioGroup v-model="form.has_leasing" default-value="no" class="flex" id="vehicle_has_leasing">
+                                    <RadioGroup v-model="form.has_leasing" default-value="no" class="flex"
+                                        id="vehicle_has_leasing">
                                         <div class="flex items-center space-x-2">
                                             <RadioGroupItem id="yes" value="yes" />
                                             <Label for="yes">Sim</Label>
@@ -134,7 +144,8 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Cor" for="vehicle_color" />
-                                    <SelectInput class="w-full" id="vehicle_color" :list="page.props.colors" v-model="form.color" />
+                                    <SelectInput class="w-full" id="vehicle_color" :list="page.props.colors"
+                                        v-model="form.color" />
                                 </div>
                                 <div>
                                     <InputLabel value="Quilometrágem" for="vehicle_kms" />
@@ -142,11 +153,13 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Pertence à frota" for="vehicle_in_fleet" />
-                                    <SelectInput class="w-full" id="vehicle_in_fleet" :list="page.props.fleets" v-model="form.fleet" />
+                                    <SelectInput class="w-full" id="vehicle_in_fleet" />
+                                    <!-- TODO -->
                                 </div>
                                 <div>
                                     <InputLabel value="Status" for="vehicle_status" />
-                                    <SelectInput class="w-full" id="vehicle_status" />
+                                    <SelectInput class="w-full" id="vehicle_status" :list="page.props.statuses"
+                                        v-model="form.status" />
                                 </div>
                             </div>
                         </div>
@@ -162,7 +175,7 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Data de matrícula" for="vehicle_registration_date" />
-                                    <TextInput class="w-full" id="vehicle_registration_date" />
+                                    <DateTimeInput class="w-full" id="vehicle_registration_date" :min-date="false" :max-date="false" :type="'date'" />
                                 </div>
                                 <div>
                                     <InputLabel value="Foto do veículo" for="vehicle_photo" />
@@ -173,15 +186,18 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div>
                                     <InputLabel value="Pneus ref. livrete" for="vehicle_tire_ref" />
-                                    <TextInput class="w-full" id="vehicle_tire_ref" />
+                                    <SelectInput class="w-full" id="vehicle_tire_ref" :list="page.props.tireBooklet"
+                                        v-model="form.booklet" />
                                 </div>
                                 <div>
                                     <InputLabel value="1&deg; eixo" for="vehicle_tire_1st_axis" />
-                                    <TextInput class="w-full" id="vehicle_tire_1st_axis" />
+                                    <SelectInput class="w-full" id="vehicle_tire_1st_axis" :list="page.props.tireAxles"
+                                        v-model="form.axle_1st" />
                                 </div>
                                 <div>
                                     <InputLabel value="2&deg; eixo" for="vehicle_tire_2nd_axis" />
-                                    <TextInput class="w-full" id="vehicle_tire_2nd_axis" />
+                                    <SelectInput class="w-full" id="vehicle_tire_2nd_axis" :list="page.props.tireAxles"
+                                        v-model="form.axle_2nd" />
                                 </div>
                             </div>
                         </div>
