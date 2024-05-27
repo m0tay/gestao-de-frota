@@ -22,12 +22,13 @@ class VehicleFactory extends Factory
             'brand' => fake()->randomElement(config('vehicles.brands')),
             'model' => fake()->word() . ' ' . fake()->randomNumber(3),
             'color' => fake()->randomElement(config('vehicles.colors')),
-            'group' => fake()->randomElement(['private', 'public']),
+            'chassis' => fake()->bothify('##-##-##-##-##-##-##-##-##-##'),
             'category' => fake()->randomElement(config('vehicles.categories')),
             'proprietary' => fake()->randomElement(config('vehicles.proprietaries')),
             'is_active' => true,
             'kms' => fake()->numberBetween(50_000, 200_000),
             'fuel_type' => fake()->randomElement(config('vehicles.fuel_types.assigning')),
+            'status' => fake()->randomElement(config('vehicles.statuses')),
         ];
     }
 }

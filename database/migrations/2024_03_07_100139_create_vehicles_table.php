@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('model');
             $table->string('color');
             $table->string('proprietary');
+            $table->string('chassis');
             $table->unsignedMediumInteger('kms')->nullable();
-            $table->string('group');
             $table->string('category');
             $table->boolean('is_active')->default(true);
             $table->string('fuel_type');
