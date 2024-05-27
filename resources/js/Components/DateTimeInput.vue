@@ -40,7 +40,7 @@ const formatDate = (date) => {
             </Button>
         </PopoverTrigger>
         <PopoverContent class="w-auto p-0">
-            <Calendar v-model="date" :mode="type" :min-date="minDate" :max-date="maxDate"/>
+            <Calendar v-model="date" :mode="type" :min-date="minDate" :max-date="maxDate" />
         </PopoverContent>
     </Popover>
 </template>
