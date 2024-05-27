@@ -12,7 +12,7 @@ use App\Models\TireSet;
 class Vehicle extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = ['id'];
 
     public function driver(): BelongsTo
@@ -23,5 +23,10 @@ class Vehicle extends Model
     public function tireSet(): HasOne
     {
         return $this->hasOne(TireSet::class);
+    }
+
+    public function fleetCard(): HasOne
+    {
+        return $this->hasOne(FleetCard::class);
     }
 }
