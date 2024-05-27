@@ -9,6 +9,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { onBeforeUpdate, onMounted } from 'vue';
 import DateTimeInput from '@/Components/DateTimeInput.vue';
+import  {parseISO } from 'date-fns';
 
 const page = usePage();
 
@@ -36,10 +37,19 @@ const form = useForm({
     fuel_type: String,
     has_adblue: Boolean,
     has_leasing: Boolean,
+    chassis: String,
+    tank_capacity: Number,
+    status: String,
+    fleet_card: String,
+    registration_date: Date,
+    tireBooklet: String,
+    tire1_brand: String,
+    tire1_axle: String,
+    tire2_brand: String,
+    tire2_axle: String,
 });
 
 const handleSubmit = () => {
-    console.log('form');
     form.post(route("vehicles.store"));
 }
 
@@ -60,6 +70,15 @@ onMounted(() => {
     form.proprietary = null;
     form.brand = null;
     form.color = null;
+    form.chassis = null;
+    form.tank_capacity = null;
+    form.registration_date = new Date();
+    form.tireBooklet = null;
+    form.tire1_brand = null;
+    form.tire1_axle = null;
+    form.tire2_brand = null;
+    form.tire2_axle = null;
+    form.fleet_card = null;
 })
 </script>
 
@@ -116,8 +135,8 @@ onMounted(() => {
                                         v-model="form.category" />
                                 </div>
                                 <div>
-                                    <InputLabel value="N&deg; chassi" for="vehicle_chassi" />
-                                    <TextInput class="w-full" id="vehicle_chassi" v-model="form.chassi" />
+                                    <InputLabel value="N&deg; chassi" for="vehicle_chassis" />
+                                    <TextInput class="w-full" id="vehicle_chassis" v-model="form.chassis" />
                                 </div>
                                 <div>
                                     <InputLabel value="Tipo de combustível" for="vehicle_fuel_type" />
@@ -133,14 +152,14 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="AdBlue" for="vehicle_has_adblue" />
-                                    <RadioGroup v-model="form.has_adblue" default-value="no" class="flex"
+                                    <RadioGroup v-model="form.has_adblue" :default-value="false" class="flex"
                                         id="vehicle_has_adblue">
                                         <div class="flex items-center space-x-2">
-                                            <RadioGroupItem id="yes" value="yes" />
+                                            <RadioGroupItem id="yes" :value="true" />
                                             <Label for="yes">Sim</Label>
                                         </div>
                                         <div class="flex items-center space-x-2">
-                                            <RadioGroupItem id="option-two" value="no" />
+                                            <RadioGroupItem id="option-two" :value="false" />
                                             <Label for="no">N&atilde;o</Label>
                                         </div>
                                     </RadioGroup>
@@ -152,14 +171,14 @@ onMounted(() => {
                                 </div>
                                 <div class="flex gap-x-4 my-5">
                                     <InputLabel value="Leasing" for="vehicle_has_leasing" />
-                                    <RadioGroup v-model="form.has_leasing" default-value="no" class="flex"
+                                    <RadioGroup v-model="form.has_leasing" :default-value="false" class="flex"
                                         id="vehicle_has_leasing">
                                         <div class="flex items-center space-x-2">
-                                            <RadioGroupItem id="yes" value="yes" />
+                                            <RadioGroupItem id="yes" :value="true" />
                                             <Label for="yes">Sim</Label>
                                         </div>
                                         <div class="flex items-center space-x-2">
-                                            <RadioGroupItem id="option-two" value="no" />
+                                            <RadioGroupItem id="option-two" :value="false" />
                                             <Label for="no">N&atilde;o</Label>
                                         </div>
                                     </RadioGroup>
@@ -175,7 +194,7 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <InputLabel value="Pertence à frota" for="vehicle_in_fleet" />
-                                    <SelectInput class="w-full" id="vehicle_in_fleet" />
+                                    <SelectInput disabled class="w-full" id="vehicle_in_fleet" />
                                     <!-- TODO -->
                                 </div>
                                 <div>
@@ -193,15 +212,16 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div>
                                     <InputLabel value="Cartão frota" for="vehicle_cartao_frota" />
-                                    <TextInput class="w-full" id="vehicle_cartao_frota" />
+                                    <TextInput class="w-full" id="vehicle_cartao_frota" v-model="form.fleet_card" />
                                 </div>
                                 <div>
                                     <InputLabel value="Data de matrícula" for="vehicle_registration_date" />
-                                    <DateTimeInput class="w-full" id="vehicle_registration_date" :min-date="false" :max-date="false" :type="'date'" />
+                                    <DateTimeInput class="w-full" id="vehicle_registration_date" :min-date="false"
+                                        :max-date="false" :type="'date'" v-model="form.registration_date" />
                                 </div>
                                 <div>
                                     <InputLabel value="Foto do veículo" for="vehicle_photo" />
-                                    <TextInput class="w-full" id="vehicle_photo" />
+                                    <TextInput disabled class="w-full" id="vehicle_photo" />
                                 </div>
                             </div>
 
@@ -209,17 +229,27 @@ onMounted(() => {
                                 <div>
                                     <InputLabel value="Pneus ref. livrete" for="vehicle_tire_ref" />
                                     <SelectInput class="w-full" id="vehicle_tire_ref" :list="page.props.tireBooklet"
-                                        v-model="form.booklet" />
+                                        v-model="form.tireBooklet" />
                                 </div>
                                 <div>
                                     <InputLabel value="1&deg; eixo" for="vehicle_tire_1st_axis" />
                                     <SelectInput class="w-full" id="vehicle_tire_1st_axis" :list="page.props.tireAxles"
-                                        v-model="form.axle_1st" />
+                                        v-model="form.tire1_axle" />
+                                </div>
+                                <div>
+                                    <InputLabel value="1&deg; marca" for="vehicle_tire_1st_axis_brand" />
+                                    <SelectInput class="w-full" id="vehicle_tire_1st_axis_brand"
+                                        :list="page.props.tireBrands" v-model="form.tire1_brand" />
                                 </div>
                                 <div>
                                     <InputLabel value="2&deg; eixo" for="vehicle_tire_2nd_axis" />
                                     <SelectInput class="w-full" id="vehicle_tire_2nd_axis" :list="page.props.tireAxles"
-                                        v-model="form.axle_2nd" />
+                                        v-model="form.tire2_axle" />
+                                </div>
+                                <div>
+                                    <InputLabel value="2&deg; marca" for="vehicle_tire_2nd_axis_brand" />
+                                    <SelectInput class="w-full" id="vehicle_tire_2nd_axis_brand"
+                                        :list="page.props.tireBrands" v-model="form.tire2_brand" />
                                 </div>
                             </div>
                         </div>
