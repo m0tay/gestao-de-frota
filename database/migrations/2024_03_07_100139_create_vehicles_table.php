@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+
             $table->string('plate');
             $table->string('brand');
             $table->string('model');
             $table->string('color');
             $table->string('proprietary');
             $table->unsignedMediumInteger('kms')->nullable();
-            $table->boolean('returned_ok')->default(true);
-            $table->text('returned_condition')->nullable();
             $table->string('group');
             $table->string('category');
             $table->boolean('is_active')->default(true);
             $table->string('fuel_type');
-            $table->timestamps();
+            $table->string('status')->default(config('vehicles.statuses')[2]);
         });
     }
 
