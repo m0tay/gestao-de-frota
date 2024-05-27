@@ -15,8 +15,6 @@ class ScheduleReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start' => ['required', 'date', 'after_or_equal:now', new NoOverlappingReservations($this->user()->id, $this->vehicle)],
-            'end' => ['required', 'date', 'after:start', new NoOverlappingReservations($this->user()->id, $this->vehicle)],
             'driver' => 'required',
             'creator' => 'required',
             'vehicle' => ['required', function ($attribute, $value, $fail) {
@@ -24,6 +22,8 @@ class ScheduleReservationRequest extends FormRequest
                     $fail('Escolha um veículo.');
                 }
             }],
+            'start' => ['required', 'date', 'after_or_equal:now', new NoOverlappingReservations($this->input('driver.id'), $this->vehicle)],
+            'end' => ['required', 'date', 'after:start', new NoOverlappingReservations($this->input('driver.id'), $this->vehicle)],
 
             'description' => 'required',
         ];

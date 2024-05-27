@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Rules;
 
 use Closure;
@@ -30,18 +29,34 @@ class NoOverlappingReservations implements DataAwareRule, ValidationRule
         $start = $this->data['start'];
         $end = $this->data['end'];
 
-        $overlappingReservations = Reservation::where(function ($query) use ($start, $end) {
+        $userOverlappingReservations = Reservation::where(function ($query) use ($start, $end) {
             $query->whereBetween('start', [$start, $end])
-                ->orWhereBetween('end', [$start, $end]);
-        })->where(function ($query) {
-            $query->where('driver_id', $this->userId)
-                ->orWhere('vehicle_id', $this->vehicleId);
-        })->where('status', 'accepted')
+                ->orWhereBetween('end', [$start, $end])
+                ->orWhere(function ($query) use ($start, $end) {
+                    $query->where('start', '<=', $start)
+                          ->where('end', '>=', $end);
+                });
+        })->where('driver_id', $this->userId)
+        ->where('status', 'accepted')
         ->exists();
 
-        if ($overlappingReservations) {
-            $fail('A data e hora introduzidas sobrepõem-se a uma requisição existente. Verifique a agenda.');
-        }
-    }
+        $vehicleOverlappingReservations = Reservation::where(function ($query) use ($start, $end) {
+            $query->whereBetween('start', [$start, $end])
+                ->orWhereBetween('end', [$start, $end])
+                ->orWhere(function ($query) use ($start, $end) {
+                    $query->where('start', '<=', $start)
+                          ->where('end', '>=', $end);
+                });
+        })->where('vehicle_id', $this->vehicleId)
+        ->where('status', 'accepted')
+        ->exists();
 
+        if ($userOverlappingReservations) {
+            $fail('Já possui uma reserva durante este período de tempo. Por favor, escolha um horário diferente.');
+        }
+        
+        if ($vehicleOverlappingReservations) {
+            $fail('Este veículo já está reservado durante este período de tempo. Por favor, escolha um veículo ou horário diferente.');
+        }        
+    }
 }
