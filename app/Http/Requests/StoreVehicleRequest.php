@@ -22,7 +22,7 @@ class StoreVehicleRequest extends FormRequest
             'proprietary' => ['required', 'string', 'in:' . implode(',', array_keys(config('vehicles.proprietaries')))],
             'status' => ['required', 'string', 'in:active'],
             'kms' => ['required', 'integer'],
-            'fuel_type' => ['required', 'string', 'in:' . implode(',', array_keys(config('vehicles.fueltypes.assigning')))],
+            'fuel_type' => ['required', 'string', 'in:' . implode(',', array_keys(config('vehicles.fuel_types.assigning')))],
         ];
     }
 }
