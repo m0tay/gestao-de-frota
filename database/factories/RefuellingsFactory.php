@@ -19,7 +19,7 @@ class RefuellingsFactory extends Factory
      */
     public function definition(): array
     {
-        $vehicle = fake()->randomElement(Vehicle::where('group', 'public')->get());
+        $vehicle = fake()->randomElement(Vehicle::where('status', config('vehicles.statuses')[1])->get());
         $mileage = $vehicle->kms;
         $fuelType = fake()->randomElement(config('vehicles.fuel_types.refuelling'));
         
