@@ -19,14 +19,4 @@ class Vehicle extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'driver_id');
     }
-
-    public function tireSet(): HasOne
-    {
-        return $this->hasOne(TireSet::class);
-    }
-
-    public function fleetCard(): HasOne
-    {
-        return $this->hasOne(FleetCard::class);
-    }
 }
