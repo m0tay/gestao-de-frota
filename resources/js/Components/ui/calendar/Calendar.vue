@@ -46,7 +46,8 @@ const minDate = computed(() => {
 const maxDate = computed(() => {
     const { maxDate } = props;
     if (!maxDate) return null;
-    if (maxDate) return aMonthAhead.value;
+    if (maxDate == 'today') return today.value;
+    if (maxDate != 'today') return aMonthAhead.value;
     return new Date(maxDate);
 });
 const rules = ref({
