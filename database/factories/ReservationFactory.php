@@ -25,7 +25,7 @@ class ReservationFactory extends Factory
         $end_date = clone $start_date;
         $end_date->minute = fake()->randomElement([0, 30]);
         $end_date->modify(fake()->randomElement(['+1 hour', '+2 hour', '+3 hour', '+4 hour', '+1 day']));
-        $vehicle = fake()->randomElement(Vehicle::where('status', config('vehicles.statuses')[1])->get());
+        $vehicle = fake()->randomElement(Vehicle::where('active', 1)->where('private', 0)->where('status', config('vehicles.statuses')[1])->get());
         $startKms = $vehicle->kms;
         $driver = fake()->randomElement(User::all());
         $title = strtoupper($vehicle->plate) . " - " . $driver->name;
