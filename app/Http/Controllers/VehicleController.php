@@ -18,7 +18,9 @@ class VehicleController extends Controller
     {
         $this->authorize('viewAny', Vehicle::class);
 
-        return Inertia::render('Vehicles/Index');
+        $vehicles = Vehicle::all();
+
+        return Inertia::render('Vehicles/Index', compact('vehicles'));
     }
 
     /**
@@ -54,6 +56,14 @@ class VehicleController extends Controller
         $vehicleData = $request->validated();
 
         $vehicle = Vehicle::create($vehicleData);
+
+        if($vehicle->status == config('vehicles.statuses')[0]) {
+            $vehicle->update(['private' => 1]);
+        } else if($vehicle->status == config('vehicles.statuses')[1]) {
+            $vehicle->update(['private' => 0]);
+        } else {
+            $vehicle->update(['active' => 0]);
+        }
 
         $tireSetData = [
             'vehicle_id' => $vehicle->id,
