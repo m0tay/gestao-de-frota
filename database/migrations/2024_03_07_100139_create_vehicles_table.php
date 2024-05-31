@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('chassis');
             $table->unsignedMediumInteger('kms')->nullable();
             $table->string('category');
-            $table->boolean('is_active')->default(true);
+            $table->boolean('active')->default(true);
+            $table->boolean('private')->default(false);
             $table->string('fuel_type');
             $table->string('status')->default(config('vehicles.statuses')[2]);
         });
