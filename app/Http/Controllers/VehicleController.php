@@ -38,7 +38,6 @@ class VehicleController extends Controller
             'categories' => config('vehicles.categories'),
             'proprietaries' => config('vehicles.proprietaries'),
             'fuelTypes' => config('vehicles.fuel_types.assigning'),
-            'driverLicenseCategories' => config('vehicles.driver_license_categories'),
             'statuses' => config('vehicles.statuses'),
             'tireBooklet' => config('vehicles.tires.booklet'),
             'tireBrands' => config('vehicles.tires.brands'),
