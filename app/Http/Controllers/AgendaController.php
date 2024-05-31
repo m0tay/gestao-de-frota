@@ -36,15 +36,10 @@ class AgendaController extends BaseAgendaController
         if (!$canSelectDriver) {
             $drivers = User::find(Auth::user());
         } else {
-            $drivers = User::query(function ($query) {
-                return $query->select('id', 'name');
-            })->get();
+            $drivers = User::select('id', 'name')->get();
         }
 
-        $vehicles = Vehicle::where('group', 'public')->getQuery(function ($query) {
-            return $query->select('id', 'plate');
-        })->get();
-
+        $vehicles = Vehicle::select('id', 'plate')->where('active', 1)->where('private', 0)->get();
 
         return Inertia::render('Reservations/Index', compact('reservations', 'previousReservations', 'drivers', 'vehicles', 'canSelectDriver'));
     }
