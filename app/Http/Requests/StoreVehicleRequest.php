@@ -36,4 +36,26 @@ class StoreVehicleRequest extends FormRequest
             'tire2_axle' => ['required', 'string'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'kms' => 'quilómetros',
+            'tank_capacity' => 'capacidade do tanque',
+            'fleet_card' => 'cartão da frota',
+            'registration_date' => 'data de registro',
+            'tireBooklet' => 'livrete de ref. dos pneus',
+            'tire1_brand' => 'marca',
+            'tire1_axle' => 'eixo',
+            'tire2_brand' => 'marca',
+            'tire2_axle' => 'eixo',
+            'chassis' => 'chassi',
+            'fuel_type' => 'tipo de combustível',
+            'plate' => 'matrícula',
+            'brand' => 'marca',
+            'model' => 'modelo',
+            'proprietary' => 'proprietário',
+            'color' => 'cor',
+        ];
+    }
 }
