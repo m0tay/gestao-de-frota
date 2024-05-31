@@ -76,7 +76,7 @@ export const columns = [
     },
     {
         accessorKey: "active",
-        header: "Estado",
+        header: "Em atividade",
         cell: ({ row }) =>
             h(
                 "div",
@@ -85,13 +85,13 @@ export const columns = [
             ),
     },
     {
-        accessorKey: "private",
-        header: "Tipo de Veículo",
+        accessorKey: "status",
+        header: "Estado",
         cell: ({ row }) =>
             h(
                 "div",
                 { class: "flex items-center" },
-                row.getValue("private")
+                row.getValue("status")
             ),
     },
     {
@@ -104,16 +104,7 @@ export const columns = [
                 row.getValue("fuel_type")
             ),
     },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) =>
-            h(
-                "div",
-                { class: "flex items-center" },
-                row.getValue("status")
-            ),
-    },
+    
 ];
 
 
