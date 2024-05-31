@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
+use App\Models\TireSet;
 use App\Models\Vehicle;
 use Inertia\Inertia;
 use Redirect;
@@ -50,11 +51,20 @@ class VehicleController extends Controller
     {
         $this->authorize('create', Vehicle::class);
 
-        $data = $request->validated();
+        $vehicleData = $request->validated();
 
-        dd($data);
+        $vehicle = Vehicle::create($vehicleData);
 
-        $vehicle = Vehicle::create($data);
+        $tireSetData = [
+            'vehicle_id' => $vehicle->id,
+            'tire_booklet' => $vehicleData['tire_booklet'],
+            'tire1_brand' => $vehicleData['tire1_brand'],
+            'tire1_axle' => $vehicleData['tire1_axle'],
+            'tire2_brand' => $vehicleData['tire2_brand'],
+            'tire2_axle' => $vehicleData['tire2_axle'],
+        ];
+
+        $vehicle->tireSet()->create($tireSetData);
 
         return Redirect::to(route('vehicles.index'));
     }

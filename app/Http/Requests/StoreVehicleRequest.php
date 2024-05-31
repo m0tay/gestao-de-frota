@@ -29,7 +29,7 @@ class StoreVehicleRequest extends FormRequest
             'tank_capacity' => ['required', 'numeric'],
             'fleet_card' => ['required', 'string'],
             'registration_date' => ['required', 'date'],
-            'tireBooklet' => ['required', 'string'],
+            'tire_booklet' => ['required', 'string'],
             'tire1_brand' => ['required', 'string'],
             'tire1_axle' => ['required', 'string'],
             'tire2_brand' => ['required', 'string'],
