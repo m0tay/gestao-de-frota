@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\AgendaController;
-use App\Http\Controllers\CancelReservationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RefuellingsController;
-use App\Http\Controllers\RescheduleReservationController;
-use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\ReturningReservationController;
-use App\Http\Controllers\ScheduleReservationController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VehicleController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\FleetCardController;
+use App\Http\Controllers\RefuellingsController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\CancelReservationController;
+use App\Http\Controllers\ScheduleReservationController;
+use App\Http\Controllers\ReturningReservationController;
+use App\Http\Controllers\RescheduleReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +83,5 @@ Route::middleware('auth')->match(
 Route::middleware('auth')->resource('refuellings', RefuellingsController::class)
   ->except('list');
 Route::middleware('auth')->resource('vehicles', VehicleController::class);
+
+Route::middleware('auth')->resource('fleet_cards', FleetCardController::class);
