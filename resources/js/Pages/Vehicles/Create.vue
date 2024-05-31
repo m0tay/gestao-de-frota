@@ -43,7 +43,7 @@ const form = useForm({
     status: String,
     fleet_card: String,
     registration_date: Date,
-    tireBooklet: String,
+    tire_booklet: String,
     tire1_brand: String,
     tire1_axle: String,
     tire2_brand: String,
@@ -74,7 +74,7 @@ onMounted(() => {
     form.chassis = null;
     form.tank_capacity = null;
     form.registration_date = new Date();
-    form.tireBooklet = null;
+    form.tire_booklet = null;
     form.tire1_brand = null;
     form.tire1_axle = null;
     form.tire2_brand = null;
@@ -246,8 +246,8 @@ onMounted(() => {
                                 <div>
                                     <InputLabel value="Pneus ref. livrete" for="vehicle_tire_ref" />
                                     <SelectInput class="w-full" id="vehicle_tire_ref" :list="page.props.tireBooklet"
-                                        v-model="form.tireBooklet" />
-                                    <InputError :message="form.errors.tireBooklet" />
+                                        v-model="form.tire_booklet" />
+                                    <InputError :message="form.errors.tire_booklet" />
                                 </div>
                                 <div>
                                     <InputLabel value="1&deg; eixo" for="vehicle_tire_1st_axis" />
