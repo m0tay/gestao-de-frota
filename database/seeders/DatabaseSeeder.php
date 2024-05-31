@@ -32,32 +32,30 @@ class DatabaseSeeder extends Seeder
 
     $adminUser = User::factory()->create([
       'name' => 'Mykola',
-      'email' => 'admin@admin.com',
-      'password' => bcrypt('password'),
+      'email' => 'a@a.com',
       'company' => 'roboplan',
       'role_id' => $roles['admin']
     ]);
 
     $managerUser = User::factory()->create([
       'name' => 'José',
-      'email' => 'manager@manager.com',
-      'password' => bcrypt('password'),
+      'email' => 'm@m.com',
       'company' => 'roboplan',
       'role_id' => $roles['manager']
     ]);
 
     $userUser = User::factory()->create([
       'name' => 'User',
-      'email' => 'user@user.com',
+      'email' => 'u@u.com',
       'company' => 'robowork',
     ]);
 
     User::factory(20)->create();
 
-    Vehicle::factory(20)->create();
+    // Vehicle::factory(20)->create();
 
-    Reservation::factory(20)->create();
+    // Reservation::factory(20)->create();
 
-    Refuellings::factory(20)->create();
+    // Refuellings::factory(20)->create();
   }
 }
