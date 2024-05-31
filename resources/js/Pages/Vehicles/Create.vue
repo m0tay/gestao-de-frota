@@ -33,7 +33,7 @@ const form = useForm({
     color: String,
     category: String,
     proprietary: String,
-    is_active: Boolean,
+    active: Boolean,
     kms: Number,
     fuel_type: String,
     has_adblue: Boolean,
@@ -225,18 +225,18 @@ onMounted(() => {
                             <div class="mt-6 sm:w-half gap-y-4 flex flex-col">
                                 <div>
                                     <InputLabel value="Cartão frota" for="vehicle_cartao_frota" />
-                                    <TextInput class="w-full" id="vehicle_cartao_frota" v-model="form.fleet_card" />
+                                    <TextInput disabled class="w-full cursor-not-allowed" id="vehicle_cartao_frota" v-model="form.fleet_card" />
                                     <InputError :message="form.errors.fleet_card" />
                                 </div>
                                 <div>
                                     <InputLabel value="Data de matrícula" for="vehicle_registration_date" />
                                     <DateTimeInput class="w-full" id="vehicle_registration_date" :min-date="false"
-                                        :max-date="false" :type="'date'" v-model="form.registration_date" />
+                                        :max-date="'today'" :type="'date'" v-model="form.registration_date" />
                                     <InputError :message="form.errors.registration_date" />
                                 </div>
                                 <div>
                                     <InputLabel value="Foto do veículo" for="vehicle_photo" />
-                                    <TextInput disabled class="w-full" id="vehicle_photo" />
+                                    <TextInput disabled class="w-full cursor-not-allowed" id="vehicle_photo" />
                                     <!-- TODO -->
                                 </div>
                             </div>
