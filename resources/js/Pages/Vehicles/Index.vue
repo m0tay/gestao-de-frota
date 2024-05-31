@@ -22,9 +22,8 @@ async function getData() {
         kms: `${vehicle.kms ?? '-'} km`,
         category: vehicle.category,
         active: vehicle.active ? 'Ativo' : 'Desativado',
-        private: vehicle.active ? vehicle.private ? 'Particular' : 'Comunitário' : '-',
+        status: vehicle.active ? vehicle.status : '-',
         fuel_type: vehicle.fuel_type,
-        status: vehicle.status,
     }))
 }
 
