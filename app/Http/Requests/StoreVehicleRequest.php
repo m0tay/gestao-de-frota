@@ -14,7 +14,7 @@ class StoreVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plate' => ['required', 'string', 'regex:(^(?:[A-Z]{2}-\d{2}-\d{2})|(?:\d{2}-[A-Z]{2}-\d{2})|(?:\d{2}-\d{2}-[A-Z]{2})|(?:[A-Z]{2}-\d{2}-[A-Z]{2})$)'],
+            'plate' => ['required', 'string', 'unique:vehicles,plate', 'regex:(^(?:[A-Z]{2}-\d{2}-\d{2})|(?:\d{2}-[A-Z]{2}-\d{2})|(?:\d{2}-\d{2}-[A-Z]{2})|(?:[A-Z]{2}-\d{2}-[A-Z]{2})$)'],
             'brand' => ['required', 'string', 'in:' . implode(',', config('vehicles.brands'))],
             'model' => ['required', 'string'],
             'color' => ['required', 'string'],
@@ -56,6 +56,13 @@ class StoreVehicleRequest extends FormRequest
             'model' => 'modelo',
             'proprietary' => 'proprietário',
             'color' => 'cor',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'plate.unique' => 'Já existe um veículo registado com está matrícula.'
         ];
     }
 }
