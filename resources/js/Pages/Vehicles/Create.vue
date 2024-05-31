@@ -51,15 +51,14 @@ const form = useForm({
 });
 
 const handleSubmit = () => {
-    form.post(route("vehicles.store"));
+    form.post(route("vehicles.store"), {
+        onError: () => {},
+    });
 }
 
-onBeforeUpdate(() => {
+onMounted(() => {
     form.reset();
     form.clearErrors();
-});
-
-onMounted(() => {
     form.has_adblue = false;
     form.has_leasing = false;
     form.is_active = true;
