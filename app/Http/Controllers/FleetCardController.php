@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Vehicle;
 use App\Models\FleetCard;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class FleetCardController extends Controller
 {
@@ -13,7 +15,9 @@ class FleetCardController extends Controller
      */
     public function index()
     {
-        
+        return Inertia::render('FleetCards/Index', [
+            'fleetCards' => FleetCard::all(),
+        ]);
     }
 
     /**
@@ -21,7 +25,12 @@ class FleetCardController extends Controller
      */
     public function create()
     {
-        return Inertia::render('FleetCards/Create');
+        return Inertia::render('FleetCards/Create', [
+            'fleetCards' => FleetCard::all(),
+            'vehicles' => Vehicle::whereNotIn('id', FleetCard::pluck('vehicle_id'))->select('id', 'plate')->get(),
+            'companies' => ['Roboplan', 'Robowork'],
+            'types' => ['Combustível', 'Elétrico']
+        ]);
     }
 
     /**
@@ -29,7 +38,22 @@ class FleetCardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'vehicle_id' => 'required',
+            'company' => 'required',
+            'type' => 'required',
+            'pin' => 'required',
+            'code' => 'required',
+            'expire_at' => 'required|date',
+        ]);
+
+        $validatedData['expire_at'] = date('Y-m-d', strtotime($validatedData['expire_at']));
+
+        $fleetCard = FleetCard::create($validatedData);
+        $fleetCard->vehicle()->associate($validatedData['vehicle_id']);
+        $fleetCard->save();
+
+        return redirect()->route('fleet_cards.index');
     }
 
     /**
