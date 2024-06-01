@@ -33,22 +33,25 @@ const authorized = ref([
                             <!-- Navigation Links -->
                             <div class="hidden space-x-0 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
-                                    :href="route('dashboard')" :active="route().current('dashboard')">
+                                    :href="route('dashboard')" :active="route().current('dashboard')"
+                                    :class="route().current('dashboard') ? 'text-indigo-700 bg-indigo-50' : '' ">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('agenda')" :active="route().current('agenda')">
+                                <NavLink :href="route('agenda')" :active="route().current('agenda')"
+                                    :class="route().current('agenda') ? 'bg-indigo-50 text-indigo-700 text-indigo' : ''">
                                     Agenda
                                 </NavLink>
 
                                 <div
                                     :class="route().current('refuellings.*')
-                                        ? 'sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-                                        : 'hidden sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
+                                        ? 'bg-indigo-50 text-indigo-700 sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
+                                        : 'hidden sm:flex sm:items-center sm:ms-6 items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
 
                                     <Dropdown>
                                         <template #trigger>
                                             <span
-                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            :class="route().current('refuellings.*') ? 'text-indigo-700' : '' "
+                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 Abastecimentos
                                             </span>
                                         </template>
@@ -60,19 +63,39 @@ const authorized = ref([
                                 </div>
                                 <div
                                     :class="route().current('vehicles.*')
-                                        ? 'sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-                                        : 'hidden sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
+                                        ? 'bg-indigo-50 text-indigo-700 sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5  focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
+                                        : 'hidden sm:flex sm:items-center sm:ms-6  items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
 
                                     <Dropdown>
                                         <template #trigger>
                                             <span
-                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            :class="route().current('vehicles.*') ? 'text-indigo-700' : '' "
+                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 Veículos
                                             </span>
                                         </template>
                                         <template #content>
                                             <DropdownLink :href="route('vehicles.create')">Adicionar</DropdownLink>
                                             <DropdownLink :href="route('vehicles.index')">Ver todos</DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+                                <div
+                                    :class="route().current('fleet_cards.*')
+                                        ? 'bg-indigo-50 text-indigo-700 sm:flex sm:items-center sm:ms-6 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
+                                        : 'hidden sm:flex sm:items-center sm:ms-6 items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'">
+
+                                    <Dropdown>
+                                        <template #trigger>
+                                            <span
+                                            :class="route().current('fleet_cards.*') ? 'text-indigo-700' : '' "
+                                                class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                                Cartão Frota
+                                            </span>
+                                        </template>
+                                        <template #content>
+                                            <DropdownLink :href="route('fleet_cards.create')">Adicionar</DropdownLink>
+                                            <DropdownLink :href="route('fleet_cards.index')">Ver todos</DropdownLink>
                                         </template>
                                     </Dropdown>
                                 </div>
