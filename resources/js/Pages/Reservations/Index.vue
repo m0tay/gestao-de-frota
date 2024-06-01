@@ -186,8 +186,6 @@ const calendarApp = createCalendar({
                 <Button @click="handleSchedule">Agendar
                 </Button>
             </div>
-
-            <!--      <ScheduleXCalendar class="sm:h-screen" :calendar-app="calendarApp"/>-->
             <ScheduleXCalendar :calendar-app="calendarApp" class="h-screen">
                 <template #monthGridEvent="{ calendarEvent }">
                     <div :class="{
