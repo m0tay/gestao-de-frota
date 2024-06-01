@@ -11,6 +11,7 @@ const props = defineProps({
     type: { type: String, required: false, default: 'datetime' },
     minDate: { type: String, required: false },
     maxDate: { type: String, required: false },
+    showYear: { type: Boolean, required: false, default: false },
 })
 
 const date = defineModel({
@@ -23,7 +24,7 @@ const isValidDate = (d) => d instanceof Date && !isNaN(d);
 
 // Use this function to safely format the date
 const formatDate = (date) => {
-    const formatToUse = props.type === 'datetime' ? "EEEEEE, dd 'de' MMMM HH:mm" : "EEEEEE, dd 'de' MMMM";
+    const formatToUse = props.showYear ? (props.type === 'datetime' ? "EEEEEE, dd 'de' MMMM 'de' yyyy HH:mm" : "EEEEEE, dd 'de' MMMM 'de' yyyy") : (props.type === 'datetime' ? "EEEEEE, dd 'de' MMMM HH:mm" : "EEEEEE, dd 'de' MMMM");
     return isValidDate(date) ? format(date, formatToUse, { locale: ptBR }) : props.type === 'datetime' ? "Escolha uma data e hora" : "Escolha uma data";
 }
 </script>
