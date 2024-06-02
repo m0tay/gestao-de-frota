@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationPolicy
 {
-
-  protected array $authorized = [
-    'admin',
-    'manager'
-  ];
-
   /**
    * Determine whether the user can view any models.
    */
@@ -44,17 +38,17 @@ class ReservationPolicy
    */
   public function reschedule(User $user, Reservation $reservation): bool
   {
-    return in_array($user->role->name, $this->authorized);
+    return in_array($user->role->name, config('authorized.roles'));
   }
 
   public function returning(User $user, Reservation $reservation): bool
   {
-    return in_array($user->role->name, $this->authorized) || $reservation->driver->id === $user->id;
+    return in_array($user->role->name, config('authorized.roles')) || $reservation->driver->id === $user->id;
   }
 
   public function cancel(User $user, Reservation $reservation): bool
   {
-    return in_array($user->role->name, $this->authorized);
+    return in_array($user->role->name, config('authorized.roles'));
   }
 
   /**
@@ -62,7 +56,7 @@ class ReservationPolicy
    */
   public function delete(User $user, Reservation $reservation): bool
   {
-    return $user->role->name === $this->authorized['admin'];
+    return $user->role->name === config('authorized.roles')[0];
   }
 
   /**

@@ -7,17 +7,12 @@ use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
-    protected array $authorized = [
-        'admin',
-        'manager'
-    ];
-
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role->name, $this->authorized);
+        return in_array($user->role->name, config('authorized.roles'));
     }
 
 
@@ -27,7 +22,7 @@ class UserPolicy
     public function view(User $user, user $model): bool
     {
 //        return $user->role->name === 'admin';
-        return $user->id === $model->id || in_array($user->role->name, $this->authorized);
+        return $user->id === $model->id || in_array($user->role->name, config('authorized.roles'));
     }
 
     /**

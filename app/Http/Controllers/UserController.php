@@ -18,18 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        Auth::loginUsingId(1);
-
-        $this->authorize('viewAny', User::class);
-
-        return [
-            'logged_as' => Auth::user()->role->name,
-            'message' => 'You are authorized to view any user.',
-            'users' => [
-                'robplan' => User::where('company', 'roboplan')->get(),
-                'robowork' => User::where('company', 'robowork')->get()
-            ]
-        ];
+        //
     }
 
     /**
