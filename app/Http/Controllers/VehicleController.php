@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
-use App\Models\TireSet;
 use App\Models\Vehicle;
 use Inertia\Inertia;
 use Redirect;
@@ -30,8 +29,6 @@ class VehicleController extends Controller
     {
         $this->authorize('create', Vehicle::class);
 
-
-
         return Inertia::render('Vehicles/Create', [
             'brands' => config('vehicles.brands'),
             'colors' => config('vehicles.colors'),
@@ -56,9 +53,9 @@ class VehicleController extends Controller
 
         $vehicle = Vehicle::create($vehicleData);
 
-        if($vehicle->status == config('vehicles.statuses')[0]) {
+        if ($vehicle->status == config('vehicles.statuses')[0]) {
             $vehicle->update(['private' => 1]);
-        } else if($vehicle->status == config('vehicles.statuses')[1]) {
+        } elseif ($vehicle->status == config('vehicles.statuses')[1]) {
             $vehicle->update(['private' => 0]);
         } else {
             $vehicle->update(['active' => 0]);

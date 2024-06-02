@@ -1,16 +1,16 @@
 <script setup>
+import DateTimeInput from '@/Components/DateTimeInput.vue';
 import FormSection from '@/Components/FormSection.vue';
 import FormTwoColumn from '@/Components/FormTwoColumn.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import SelectInputVehicle from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/Vehicles/SelectInput.vue';
-import SelectInputVehicle from '@/Components/SelectInput.vue';
 import Button from '@/Components/ui/button/Button.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
-import DateTimeInput from '@/Components/DateTimeInput.vue';
 
 const props = defineProps({
     companies: Array,
@@ -76,7 +76,8 @@ onMounted(() => {
                             <template #left>
                                 <div>
                                     <InputLabel for="company" value="Cliente" />
-                                    <SelectInput id="company" type="text" class="w-full" :list="companies" v-model="form.company" />
+                                    <SelectInput id="company" type="text" class="w-full" :list="companies"
+                                        v-model="form.company" />
                                     <InputError :message="form.errors.company" />
                                 </div>
                                 <div>
@@ -94,17 +95,20 @@ onMounted(() => {
                             <template #right>
                                 <div>
                                     <InputLabel for="type" value="Tipo" />
-                                    <SelectInput id="type" type="text" class="w-full" :list="types" v-model="form.type" />
+                                    <SelectInput id="type" type="text" class="w-full" :list="types"
+                                        v-model="form.type" />
                                     <InputError :message="form.errors.type" />
                                 </div>
                                 <div>
                                     <InputLabel for="expire_at" value="Validade do cartão frota" />
-                                    <DateTimeInput :min-date="true" :max-date="false" showYear id="expire_at" type="text" class="w-full" v-model="form.expire_at" />
+                                    <DateTimeInput :min-date="true" :max-date="false" showYear id="expire_at"
+                                        type="text" class="w-full" v-model="form.expire_at" />
                                     <InputError :message="form.errors.expire_at" />
                                 </div>
                                 <div>
                                     <InputLabel for="vehicle_id" value="Veículo associado" />
-                                    <SelectInputVehicle id="vehicle_id" type="text" class="w-full" :list="vehicles" v-model="form.vehicle_id" />
+                                    <SelectInputVehicle id="vehicle_id" type="text" class="w-full" :list="vehicles"
+                                        v-model="form.vehicle_id" />
                                     <InputError :message="form.errors.vehicle_id" />
                                 </div>
                             </template>

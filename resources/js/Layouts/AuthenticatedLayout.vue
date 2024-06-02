@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const showingNavigationDropdown = ref(false);
 
@@ -34,7 +34,7 @@ const authorized = ref([
                             <div class="hidden space-x-0 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink v-if="authorized.includes($page.props.auth.user.role_id)"
                                     :href="route('dashboard')" :active="route().current('dashboard')"
-                                    :class="route().current('dashboard') ? 'text-indigo-700 bg-indigo-50' : '' ">
+                                    :class="route().current('dashboard') ? 'text-indigo-700 bg-indigo-50' : ''">
                                     Dashboard
                                 </NavLink>
                                 <NavLink :href="route('agenda')" :active="route().current('agenda')"
@@ -49,8 +49,7 @@ const authorized = ref([
 
                                     <Dropdown>
                                         <template #trigger>
-                                            <span
-                                            :class="route().current('refuellings.*') ? 'text-indigo-700' : '' "
+                                            <span :class="route().current('refuellings.*') ? 'text-indigo-700' : ''"
                                                 class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 Abastecimentos
                                             </span>
@@ -68,8 +67,7 @@ const authorized = ref([
 
                                     <Dropdown>
                                         <template #trigger>
-                                            <span
-                                            :class="route().current('vehicles.*') ? 'text-indigo-700' : '' "
+                                            <span :class="route().current('vehicles.*') ? 'text-indigo-700' : ''"
                                                 class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 Veículos
                                             </span>
@@ -87,8 +85,7 @@ const authorized = ref([
 
                                     <Dropdown>
                                         <template #trigger>
-                                            <span
-                                            :class="route().current('fleet_cards.*') ? 'text-indigo-700' : '' "
+                                            <span :class="route().current('fleet_cards.*') ? 'text-indigo-700' : ''"
                                                 class="inline-flex border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 Cartão Frota
                                             </span>

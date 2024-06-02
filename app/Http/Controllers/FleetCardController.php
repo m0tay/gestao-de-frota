@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Models\Vehicle;
 use App\Models\FleetCard;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class FleetCardController extends Controller
 {
@@ -29,7 +28,7 @@ class FleetCardController extends Controller
             'fleetCards' => FleetCard::all(),
             'vehicles' => Vehicle::whereNotIn('id', FleetCard::pluck('vehicle_id'))->select('id', 'plate')->get(),
             'companies' => ['Roboplan', 'Robowork'],
-            'types' => ['Combustível', 'Elétrico']
+            'types' => ['Combustível', 'Elétrico'],
         ]);
     }
 

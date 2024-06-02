@@ -1,23 +1,23 @@
 <script setup>
-import InputLabel from "@/Components/InputLabel.vue"
-import { Button } from "@/Components/ui/button/index.js"
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card/index.js"
+import InputLabel from '@/Components/InputLabel.vue'
+import { Button } from '@/Components/ui/button/index.js'
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card/index.js'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/Components/ui/tooltip'
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
-import CreateReservationForm from "@/Pages/Reservations/Partials/CreateReservationForm.vue"
-import FakeDateTimeInput from "@/Pages/Reservations/Partials/FakeDateTimeInput.vue"
-import ListReservations from "@/Pages/Reservations/Partials/ListReservations.vue"
-import UpdateReservationForm from "@/Pages/Reservations/Partials/UpdateReservationForm.vue"
-import ViewReservation from "@/Pages/Reservations/Partials/ViewReservation.vue"
-import { usePage } from "@inertiajs/vue3"
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import CreateReservationForm from '@/Pages/Reservations/Partials/CreateReservationForm.vue'
+import FakeDateTimeInput from '@/Pages/Reservations/Partials/FakeDateTimeInput.vue'
+import ListReservations from '@/Pages/Reservations/Partials/ListReservations.vue'
+import UpdateReservationForm from '@/Pages/Reservations/Partials/UpdateReservationForm.vue'
+import ViewReservation from '@/Pages/Reservations/Partials/ViewReservation.vue'
+import { minWidthToFold, mobileFoldingWidth, width } from '@/lib/windowSizing.js'
+import { usePage } from '@inertiajs/vue3'
 import { createCalendar, viewMonthAgenda, viewMonthGrid, } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
 import { ScheduleXCalendar } from '@schedule-x/vue'
-import { mobileFoldingWidth, minWidthToFold, width } from '@/lib/windowSizing.js';
 
-import moment from "moment"
-import { ref } from "vue"
-import { format, parseISO } from "date-fns"
+import { format, parseISO } from 'date-fns'
+import moment from 'moment'
+import { ref } from 'vue'
 
 const page = usePage()
 
@@ -70,7 +70,7 @@ const handleEnlist = () => {
     showModalList.value = true
     eventsList.value = props.reservations
 }
-    
+
 
 const calendarApp = createCalendar({
     selectedDate: format(new Date(), 'yyyy-MM-dd'),
@@ -218,14 +218,12 @@ const calendarApp = createCalendar({
                                                     <div class="w-full">
                                                         <InputLabel class="text-accent" for="start" value="De:" />
                                                         <FakeDateTimeInput id="start"
-                                                            :date="(parseISO(calendarEvent.start))"
-                                                            class="w-full" />
+                                                            :date="(parseISO(calendarEvent.start))" class="w-full" />
                                                     </div>
                                                     <div class="w-full">
                                                         <InputLabel class="text-accent" for="end" value="Até:" />
                                                         <FakeDateTimeInput id="end"
-                                                            :date="(parseISO(calendarEvent.end))"
-                                                            class="w-full" />
+                                                            :date="(parseISO(calendarEvent.end))" class="w-full" />
                                                     </div>
                                                 </section>
                                             </div>
@@ -253,7 +251,8 @@ const calendarApp = createCalendar({
                             </CardHeader>
                             <CardContent>
                                 <div class="flex flex-col gap-y-4">
-                                    <section :class="width < minWidthToFold ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
+                                    <section
+                                        :class="width < minWidthToFold ? 'flex flex-col gap-y-4' : 'flex gap-y-4 gap-x-2'"
                                         class="w-full">
                                         <div class="w-full">
                                             <InputLabel class="text-accent" for="start" value="De:" />
