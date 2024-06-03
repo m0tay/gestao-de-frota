@@ -15,25 +15,25 @@ class StoreVehicleRequest extends FormRequest
     {
         return [
             'plate' => ['required', 'string', 'unique:vehicles,plate', 'regex:(^(?:[A-Z]{2}-\d{2}-\d{2})|(?:\d{2}-[A-Z]{2}-\d{2})|(?:\d{2}-\d{2}-[A-Z]{2})|(?:[A-Z]{2}-\d{2}-[A-Z]{2})$)'],
-            'brand' => ['required', 'string', 'in:' . implode(',', config('vehicles.brands'))],
+            'brand' => ['required', 'string', 'in:'.implode(',', config('vehicles.brands'))],
             'model' => ['required', 'string'],
             'color' => ['required', 'string'],
-            'category' => ['required', 'string', 'in:' . implode(',', config('vehicles.categories'))],
-            'proprietary' => ['required', 'string', 'in:' . implode(',', config('vehicles.proprietaries'))],
-            'status' => ['required', 'string', 'in:' . implode(',', config('vehicles.statuses'))],
-            'kms' => ['nullable', 'integer', 'gt:0' ],
-            'fuel_type' => ['required', 'string', 'in:' . implode(',', config('vehicles.fuel_types.assigning'))],
+            'category' => ['required', 'string', 'in:'.implode(',', config('vehicles.categories'))],
+            'proprietary' => ['required', 'string', 'in:'.implode(',', config('vehicles.proprietaries'))],
+            'status' => ['required', 'string', 'in:'.implode(',', config('vehicles.statuses'))],
+            'kms' => ['nullable', 'integer', 'gt:0'],
+            'fuel_type' => ['required', 'string', 'in:'.implode(',', config('vehicles.fuel_types.assigning'))],
             'has_adblue' => ['required', 'boolean'],
             'has_leasing' => ['required', 'boolean'],
-            'chassis' => ['required', 'string'],
+            'chassis' => ['required', 'string', 'unique:vehicles,chassis'],
             'tank_capacity' => ['required', 'numeric'],
             'fleet_card' => ['nullable', 'string'],
             'registration_date' => ['required', 'date'],
-            'tire_booklet' => ['required', 'string'],
-            'tire1_brand' => ['required', 'string'],
-            'tire1_axle' => ['required', 'string'],
-            'tire2_brand' => ['required', 'string'],
-            'tire2_axle' => ['required', 'string'],
+            'tire_booklet' => ['required', 'string', 'in:'.implode(',', config('vehicles.tires.booklet'))],
+            'tire1_brand' => ['required', 'string', 'in:'.implode(',', config('vehicles.tires.brands'))],
+            'tire1_axle' => ['required', 'string', 'in:'.implode(',', config('vehicles.tires.axles'))],
+            'tire2_brand' => ['required', 'string', 'in:'.implode(',', config('vehicles.tires.brands'))],
+            'tire2_axle' => ['required', 'string', 'in:'.implode(',', config('vehicles.tires.axles'))],
         ];
     }
 
@@ -62,7 +62,7 @@ class StoreVehicleRequest extends FormRequest
     public function messages()
     {
         return [
-            'plate.unique' => 'Já existe um veículo registado com está matrícula.'
+            'plate.unique' => 'Já existe um veículo registado com está matrícula.',
         ];
     }
 }
