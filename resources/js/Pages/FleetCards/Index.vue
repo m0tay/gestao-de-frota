@@ -18,7 +18,7 @@ async function getData() {
         pin: item.pin,
         type: item.type,
         expire_at: item.expire_at,
-        vehicle_id: item.vehicle_id,
+        vehicle: item.vehicle.plate,
     }))
 }
 

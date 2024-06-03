@@ -78,18 +78,18 @@ export const columns = [
         },
     },
     {
-        accessorKey: "vehicle_id",
+        accessorKey: "vehicle",
         header: "Veículo",
         headerStyle: {
             textAlign: "center",
         },
         cell: function (row) {
-            const vehicleId = row.getValue("vehicle_id");
+            const vehicle = row.getValue("vehicle");
 
             return h(
                 "div",
                 { class: "flex items-center" },
-                vehicleId ? vehicleId : "Nenhum"
+                vehicle ? vehicle : "Nenhum"
             );
         },
     },
