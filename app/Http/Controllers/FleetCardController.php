@@ -15,7 +15,7 @@ class FleetCardController extends Controller
     public function index()
     {
         return Inertia::render('FleetCards/Index', [
-            'fleetCards' => FleetCard::all(),
+            'fleetCards' => FleetCard::with('vehicle:id,plate')->get(),
         ]);
     }
 
