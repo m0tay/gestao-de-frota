@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('plate');
+            $table->string('plate')->unique();
             $table->string('brand');
             $table->string('model');
             $table->string('color');
             $table->string('proprietary');
-            $table->string('chassis');
+            $table->string('chassis')->unique();
             $table->unsignedMediumInteger('kms')->nullable();
             $table->string('category');
             $table->boolean('active')->default(true);
