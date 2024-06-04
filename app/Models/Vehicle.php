@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\User;
 use App\Models\FleetCard;
+use App\Models\TireSet;
+use App\Models\Insurance;
 
 class Vehicle extends Model
 {
