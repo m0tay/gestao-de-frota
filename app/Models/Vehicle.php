@@ -44,4 +44,9 @@ class Vehicle extends Model
     {
         return $this->hasOne(ViaVerde::class);
     }
+
+    public function insurance(): HasOne
+    {
+        return $this->hasOne(Insurance::class);
+    }
 }
