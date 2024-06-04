@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Vehicle;
 
 class Insurance extends Model
@@ -13,8 +13,8 @@ class Insurance extends Model
 
     protected $guarded = ['id'];
 
-    public function vehicle(): BelongsTo
+    public function vehicle(): BelongsToMany
     {
-        return $this->BelongsTo(Vehicle::class);
+        return $this->BelongsToMany(Vehicle::class);
     }
 }
