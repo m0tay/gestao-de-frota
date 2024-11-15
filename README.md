@@ -1,75 +1,82 @@
-![Roboplan company](https://img.interempresas.net/fotos/3353727.jpeg)
 
-# Gestão de Frota
+# Gestão de Frota 🚗
 
-A aplicação Gestão de Frota é um aplicação desenvolvida para atender às necessidades da empresa Roboplan, também sendo a minha Prova de Aptidão Profissional.
+Uma aplicação desenvolvida para atender às necessidades de gestão de frota e condutores da **Roboplan**. Este projeto é também a minha Prova de Aptidão Profissional.
 
-## Sobre o projeto
+## Sobre o Projeto 🛠️
 
-O objetivo deste projeto é prover uma soluação sob medida à EPEP Roboplan para gerir sua frota e condutores, por meio gestão e registo de revisões, requisição de veículos para serviços, veículos e condutores e os seus dados pertinentes. Alavancando com tecnologias modernas e reconhecidas pelo mercado como os _frameworks_ Laravel, Vue.js e o _build tool_ Vite.
+O objetivo é oferecer uma solução personalizada para a **EPEP Roboplan**, facilitando a gestão de:
+- Revisões e manutenções;
+- Requisição de veículos e condutores;
+- Registro de abastecimentos e relatórios de avarias.
 
-## Recursos
+A aplicação utiliza tecnologias modernas como **Laravel**, **Vue.js**, **Vite** e **Docker**, garantindo desempenho, escalabilidade e facilidade de manutenção.
 
-- Agenda interativa para requisição de veículos;
-- Gestão e registo de condutores e veículos;
-- Gestão e registo de manutenções e revisões;
-- Registo de abastecimentos;
-- Relatar avarias;
+---
 
-## Uso pretendido
+## Recursos Principais ✨
+- 📅 **Agenda interativa** para requisição de veículos.
+- 🚘 Gestão de **veículos** e seus dados.
+- 👤 Registro e controle de **condutores**.
+- 🔧 Gerenciamento de **manutenções e revisões**.
+- ⛽ Registro de **abastecimentos**.
+- ⚠️ Relatório de **avarias**.
 
-A aplicação ainda é embrionária e, no momento, visa-se a utilização apenas pela EPEP Roboplan. Destarte, a aplicação é feita à medida da EPEP para maior eficiência e satisfação.
+---
 
-## Desenvolvimento
+## Tecnologias Utilizadas 🖥️
 
-Desenvolvi a aplicação Gestão de Frota utilizando uma combinação de tecnologias avançadas e modernas, assegurando um desempenho robusto e eficiente. No núcleo do desenvolvimento, utilizei os _frameworks_ Laravel (10.x) e Vue.js (3.x), conhecidos pela sua flexibilidade e poder de criação de interfaces ricas e interativas. Além disso, para garantir uma integração perfeita entre o front-end e o back-end, recorri ao Inertia.js (1.x), uma biblioteca que facilita a construção de aplicações monolíticas de página única (SPA) sem a complexidade habitual.
+- **Vue.js 3**: Para criação de interfaces interativas e dinâmicas.  
+- **Laravel 10**: Framework PHP robusto e eficiente para back-end.  
+- **Inertia.js**: Permite criar aplicações de página única (_SPA_) sem APIs REST.  
+- **Vite 5**: Ferramenta de _build_ moderna e rápida.  
+- **Docker (Laravel Sail)**: Proporciona consistência no ambiente de desenvolvimento.  
+- **DBeaver**: Gerenciamento de bases de dados.
 
-Para a gestão de recursos e a compilação de código, optei pelo Vite (5.x), uma ferramenta de _build_ extremamente rápida que melhora significativamente o tempo de desenvolvimento. E para assegurar que a aplicação pode ser executada em qualquer ambiente, de forma consistente e isolada, utilizei o Docker, permitindo-me criar contêineres que replicam com precisão o ambiente de produção.
+---
 
-Estas escolhas tecnológicas não só aumentaram a eficiência do processo de desenvolvimento, mas também garantiram que a aplicação Gestão de Frota é altamente escalável, fácil de manter e adaptável às necessidades futuras.
+## Configuração do Ambiente de Desenvolvimento ⚙️
 
-### Tecnologias utilizadas
+Siga as etapas abaixo para configurar e executar o projeto localmente:
 
-- Vue.js 3: Um _framework_ progressivo para construir interfaces de utilizador.
-- Laravel 10: Um _framework_ PHP para o desenvolvimento de aplicações web.
-- Inertia: Uma biblioteca que permite construir aplicações de página única (SPAs) sem a necessidade de APIs REST.
-- Vite: Uma ferramenta de _build_ de nova geração para projetos web modernos.
-- Docker (Laravel Sail): Facilita a configuração e execução do ambiente de desenvolvimento.
-- DBeaver: Ferramenta de gestão de bases de dados utilizada durante o desenvolvimento.
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/m0tay/gestao-de-frota.git
+   ```
 
-## Configurando o ambiente de desenvolvimento
+2. **Instale as dependências**:
+   ```bash
+   cd <endereço-do-projeto>
+   npm install
+   composer install
+   ```
 
-Para configurar o ambiente de desenvolvimento e executar o projeto localmente, siga as etapas abaixo:
+3. **Configure o ambiente**:
+   Copie o arquivo `.env.example` e renomeie para `.env`. Edite as variáveis conforme necessário.
 
-1. Clone este repositório em seu ambiente de desenvolvimento:
-   
-```bash
-git clone https://github.com/m0tay/gestao-de-frota.git
-```
+4. **Inicie o ambiente de desenvolvimento**:
+   ```bash
+   ./vendor/bin/sail up -d
+   ```
 
-2. Instale dependências de front-end e back-end:
-   
-```bash
-cd <endereço-do-projeto>
-npm install
-composer install
-```
+5. **Execute migrações e _seeders_**:
+   ```bash
+   ./vendor/bin/sail artisan migrate --seed
+   ```
 
-3. Copie o arquivo de exemplo .env.example e renomeie-o para .env. Configure as variáveis ​​de ambiente conforme necessário.
+---
 
-4. Inicie o ambiente de desenvolvimento usando Docker (Laravel Sail):
+## Contribuindo 💡
 
-```bash
-./vendor/bin/sail up -d
-```
+Contribuições são bem-vindas!  
+Siga as diretrizes de contribuição antes de enviar um _pull request_ e certifique-se de que todos os testes locais passaram com sucesso.
 
-5. Execute migrações e propagadores de banco de dados:
-```bash
-./vendor/bin/sail artisan migrate --seed
-```
+---
 
-## Contribuindo
-Se você quiser contribuir com melhorias ou correções para o projeto, sinta-se à vontade para enviar pull requests. Antes de enviar uma solicitação pull, certifique-se de seguir as diretrizes de contribuição e garantir que os testes locais foram executados com sucesso.
+## Licença 📜
 
-## Licença
-Este projeto está licenciado sob a licença MIT.
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
+
+---
+
+Desenvolvido com ❤️ por [m0tay](https://github.com/m0tay).
